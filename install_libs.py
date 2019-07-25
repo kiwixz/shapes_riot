@@ -27,11 +27,11 @@ def install_vcpkg():
         logging.warning("vcpkg seems already installed, trying to update")
         subprocess.check_call(["git", "-C", "vcpkg", "reset", "--hard"])
         subprocess.check_call(["git", "-C", "vcpkg", "clean", "-df"])
+        subprocess.check_call(["git", "-C", "vcpkg", "fetch", "-p"])
         if (subprocess.check_output(["git", "-C", "vcpkg", "rev-parse", "HEAD"])
                 == subprocess.check_output(["git", "-C", "vcpkg", "rev-parse", VCPKG_REF])):
             logging.warning("vcpkg seems already up-to-date, skipping")
             return
-        subprocess.check_call(["git", "-C", "vcpkg", "fetch", "-p"])
     else:
         subprocess.check_call(["git", "clone", "https://github.com/Microsoft/vcpkg"])
     subprocess.check_call(["git", "-C", "vcpkg", "checkout", VCPKG_REF])
