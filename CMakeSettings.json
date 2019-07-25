@@ -1,0 +1,34 @@
+﻿{
+  "configurations": [
+    {
+      "name": "debug",
+      "configurationType": "Debug",
+      "generator": "Ninja",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}/build/${name}",
+      "variables": [
+        {
+          "name": "CMAKE_CXX_FLAGS",
+          "value": ""
+        }
+      ],
+      "cmakeCommandArgs": "--no-warn-unused-cli",
+      "ctestCommandArgs": "--output-on-failure -E check_clang"
+    },
+    {
+      "name": "release",
+      "configurationType": "Release",
+      "generator": "Ninja",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}/build/${name}",
+      "variables": [
+        {
+          "name": "CMAKE_CXX_FLAGS",
+          "value": ""
+        }
+      ],
+      "cmakeCommandArgs": "--no-warn-unused-cli",
+      "ctestCommandArgs": "--output-on-failure -E check_clang"
+    }
+  ]
+}
