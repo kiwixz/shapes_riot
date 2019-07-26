@@ -33,7 +33,7 @@ private:
         explicit SharedCallable(T&& callable);
 
         template <typename... Args>
-        auto operator()(Args&&... args);
+        decltype(auto) operator()(Args&&... args);
 
     private:
         std::shared_ptr<T> callable_;
@@ -82,7 +82,7 @@ ThreadPool::SharedCallable<T>::SharedCallable(T&& callable) :
 
 template <typename T>
 template <typename... Args>
-auto ThreadPool::SharedCallable<T>::operator()(Args&&... args)
+decltype(auto) ThreadPool::SharedCallable<T>::operator()(Args&&... args)
 {
     return (*callable_)(std::forward<Args>(args)...);
 }
