@@ -28,7 +28,7 @@ TEST_SUITE("bind_front")
         decltype(auto) b = bind_front(ref)(a);
         bind_front(ref)(b) = 5;
         CHECK(bind_front(ref)(a) == 5);
-        CHECK((bind_front)(ref, std::ref(a)) == 5);  // parenthesis block ADL
+        CHECK(bind_front(ref, std::ref(a))() == 5);
     }
 }
 #endif
