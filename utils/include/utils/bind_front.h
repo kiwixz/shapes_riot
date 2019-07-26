@@ -10,6 +10,7 @@ template <typename Function, typename... Args>
 [[nodiscard]] auto bind_front(Function&& callable, Args&&... args);
 
 
+// do not forget to wrap references in std::ref when appropriate
 template <typename Function, typename... Args>
 auto bind_front(Function&& callable, Args&&... args)
 {

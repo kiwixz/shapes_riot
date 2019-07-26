@@ -27,7 +27,8 @@ TEST_SUITE("bind_front")
         CHECK(bind_front(ref)(a) == 4);
         decltype(auto) b = bind_front(ref)(a);
         bind_front(ref)(b) = 5;
-        CHECK(bind_front(ref, a)() == 5);
+        CHECK(bind_front(ref)(a) == 5);
+        CHECK(bind_front(ref, std::ref(a)) == 5);
     }
 }
 #endif
