@@ -12,6 +12,10 @@ from pathlib import Path
 
 VCPKG_REF = "2019.06"
 VCPKG_LIBS = [
+    # gl
+    "glad",
+    "glfw3",
+
     "doctest",
     "fmt",
 ]

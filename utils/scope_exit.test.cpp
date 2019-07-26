@@ -5,11 +5,11 @@ namespace utils::test {
 
 TEST_SUITE("scope_exit")
 {
-    TEST_CASE("generic")
+    TEST_CASE("simple")
     {
         bool pass = false;
         {
-            ScopeExitGeneric scope_exit{[&] {
+            ScopeExit scope_exit{[&] {
                 pass = true;
             }};
             CHECK(!pass);
@@ -17,10 +17,23 @@ TEST_SUITE("scope_exit")
         CHECK(pass);
     }
 
+    TEST_CASE("release")
+    {
+        int c = 0;
+        {
+            ScopeExit scope_exit{[&] {
+                ++c;
+            }};
+            CHECK(c == 0);
+            scope_exit.release()();
+            CHECK(c == 1);
+        }
+        CHECK(c == 1);
+    }
+
     TEST_CASE("false")
     {
-        ScopeExitGeneric{};
-        ScopeExit<>{};
+        ScopeExit{};
     }
 }
 

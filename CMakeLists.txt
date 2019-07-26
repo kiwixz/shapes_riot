@@ -45,6 +45,7 @@ add_test(NAME "check_clang_tidy"
 )
 
 
+add_subdirectory("gfx")
 add_subdirectory("utils")
 
 add_subdirectory("shapes_riot")

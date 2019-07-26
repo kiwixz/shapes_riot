@@ -16,7 +16,7 @@ template <typename F, typename... Args>
 [[nodiscard]] auto bind_front(F&& f, Args&&... args);
 
 
-// do not forget to wrap references in std::ref when appropriate
+/// Do not forget to wrap references in std::ref when appropriate.
 template <typename F, typename... Args>
 auto bind_front(F&& f, Args&&... args)
 {
