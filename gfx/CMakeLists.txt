@@ -1,0 +1,24 @@
+cmake_minimum_required(VERSION 3.12)
+include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
+
+set(target "gfx")
+
+file(GLOB_RECURSE src "*.cpp")
+list(FILTER src EXCLUDE REGEX ".test.cpp$")
+
+add_library("${target}" "${src}")
+target_include_directories("${target}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+
+file(GLOB_RECURSE test_src "*.test.cpp")
+test_target_cpp("${target}" "${test_src}")
+
+
+find_package("glad" CONFIG REQUIRED)
+find_package("glfw3" CONFIG REQUIRED)
+
+target_link_libraries("${target}"
+    "utils"
+
+    "glad::glad"
+    "glfw"
+)

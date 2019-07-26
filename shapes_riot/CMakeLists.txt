@@ -18,6 +18,7 @@ test_target_cpp("${target}_base" "${test_src}")
 find_package("fmt" CONFIG REQUIRED)
 
 target_link_libraries("${target}_base"
+    "gfx"
     "utils"
 
     "fmt::fmt"
