@@ -10,6 +10,12 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Install system dependencies
+          command: |
+            pacman --color=always --needed --noconfirm -Sy  \
+                libxcursor libxinerama libxrandr  `# glfw`
+
       - restore_cache:
           name: Restore vcpkg cache
           keys:
