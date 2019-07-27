@@ -10,19 +10,22 @@ Window::Window(utils::Vec2i size, std::string_view title, GLFWmonitor* monitor, 
         throw utils::Exception{"could not create window"};
     window_.reset(window);
 
-    bind_context();
+    glfwMakeContextCurrent(window_.get());
 
     if (!gladLoadGLLoader([](char const* name) {
             return reinterpret_cast<void*>(glfwGetProcAddress(name));
         }))
         throw utils::Exception{"could not load opengl"};
-
-    glfwSwapInterval(1);
 }
 
-void Window::bind_context()
+GLFWwindow* Window::ptr()
 {
-    glfwMakeContextCurrent(window_.get());
+    return window_.get();
+}
+
+GLFWwindow const* Window::ptr() const
+{
+    return window_.get();
 }
 
 }  // namespace gfx
