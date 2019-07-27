@@ -7,7 +7,7 @@
 namespace shapes_riot {
 
 struct ScreenStack {
-    Screen& top() const;
+    [[nodiscard]] Screen& top() const;
 
     void pop();
 

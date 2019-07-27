@@ -32,7 +32,7 @@ std::shared_ptr<void> SharedHandle<TInit, TCleanup>::get_instance()
         return instance;
 
     init();
-    std::shared_ptr<void> instance{nullptr, [](auto) {
+    std::shared_ptr<void> instance{nullptr, [](auto /*ptr*/) {
                                        cleanup();
                                    }};
     old_instance = instance;

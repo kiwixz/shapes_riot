@@ -11,8 +11,8 @@ struct Window {
     Window() = default;
     Window(utils::Vec2i size, std::string_view title, GLFWmonitor* monitor = nullptr, Window* shared = nullptr);
 
-    GLFWwindow* ptr();
-    GLFWwindow const* ptr() const;
+    [[nodiscard]] GLFWwindow* ptr();
+    [[nodiscard]] GLFWwindow const* ptr() const;
 
 private:
     GlfwHandle glfw_handle_;

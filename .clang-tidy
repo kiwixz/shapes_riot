@@ -8,6 +8,9 @@ Checks: "*  ,\
   -bugprone-integer-division  ,\
   -bugprone-use-after-move  ,\
   \
+  -clang-diagnostic-unused-parameter  ,\
+  -clang-diagnostic-unused-private-field  ,\
+  \
   -cppcoreguidelines-avoid-magic-numbers  ,\
   -cppcoreguidelines-pro-bounds-constant-array-index  ,\
   -cppcoreguidelines-pro-bounds-pointer-arithmetic  ,\
@@ -33,6 +36,8 @@ Checks: "*  ,\
   -llvm-include-order  ,\
   -llvm-namespace-comment  ,\
   \
+  -misc-unused-parameters  ,\
+  \
   -readability-braces-around-statements  ,\
   -readability-else-after-return  ,\
   -readability-implicit-bool-conversion  ,\
@@ -44,6 +49,10 @@ HeaderFilterRegex: ".*"
 AnalyzeTemporaryDtors: false
 FormatStyle: none
 CheckOptions:
+  - key: cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+    value: 1
+  - key: hicpp-special-member-functions.AllowSoleDefaultDtor
+    value: 1
   - key: hicpp-move-const-arg.CheckTriviallyCopyableMove
     value: 0
   - key: performance-move-const-arg.CheckTriviallyCopyableMove

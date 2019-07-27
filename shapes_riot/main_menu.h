@@ -8,10 +8,10 @@ struct MainMenu : Screen {
     MainMenu() = default;
     explicit MainMenu(ScreenStack& screens);
 
-    virtual void tick(double delta) override;
+    void tick(double delta) override;
 
-    virtual void on_focus() override;
-    virtual void on_unfocus() override;
+    void on_focus() override;
+    void on_unfocus() override;
 
 private:
     ScreenStack* screens_;
