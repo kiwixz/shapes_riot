@@ -42,8 +42,8 @@ jobs:
       - run:
           name: Test debug
           environment:
-            CXXFLAGS: -fdiagnostics-color=always -Werror
-            LDFLAGS: -fdiagnostics-color=always -Werror -fuse-ld=lld
+            CXXFLAGS: -fdiagnostics-color=always
+            LDFLAGS: -fdiagnostics-color=always -fuse-ld=lld
             ASAN_OPTIONS: check_initialization_order=1
             UBSAN_OPTIONS: print_stacktrace=1
           command: |
@@ -55,8 +55,8 @@ jobs:
       - run:
           name: Test release
           environment:
-            CXXFLAGS: -fdiagnostics-color=always -Werror
-            LDFLAGS: -fdiagnostics-color=always -Werror -fuse-ld=lld
+            CXXFLAGS: -fdiagnostics-color=always
+            LDFLAGS: -fdiagnostics-color=always -fuse-ld=lld
           command: |
             mkdir -p "build/release"
             cd "build/release"
