@@ -1,26 +1,53 @@
 #include "main_window.h"
 #include "main_menu.h"
 #include <chrono>
+#include <string_view>
 
 namespace shapes_riot {
 
-MainWindow::MainWindow()
+MainWindow::Glfw::Glfw()
 {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_SAMPLES, 8);
 #ifdef DEBUG
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
+}
 
-    window_ = {{1600, 900}, "Shapes Riot"};
+
+MainWindow::MainWindow() :
+    window_{{1600, 900}, "Shapes Riot"}
+{
     glfwSwapInterval(1);
-
     glfwSetWindowUserPointer(window_.ptr(), this);
     glfwSetKeyCallback(window_.ptr(), [](GLFWwindow* window, int key, int scancode, int action, int mods) {
         return reinterpret_cast<MainWindow*>(glfwGetWindowUserPointer(window))->on_key(key, scancode, action, mods);
     });
+
+    constexpr std::string_view vertex_source = R"(
+            #version 450
+            layout(location=0) in vec2 pos;
+            out vec2 tex_coords;
+            void main() {
+                gl_Position = vec4(pos, 0.0f, 1.0f);
+                tex_coords = vec2((pos.x + 1) / 2, (3 - pos.y) / 2);
+            }
+        )";
+    constexpr std::string_view fragment_source = R"(
+            #version 450
+            in vec2 tex_coords;
+            out vec4 color;
+            uniform sampler2D tex;
+            void main() {
+                color = texture2D(tex, tex_coords);
+            }
+        )";
+    program_.attach({GL_VERTEX_SHADER, vertex_source});
+    program_.attach({GL_FRAGMENT_SHADER, fragment_source});
+    program_.link();
 }
 
 void MainWindow::loop()
