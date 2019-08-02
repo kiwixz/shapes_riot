@@ -9,6 +9,7 @@ MainMenu::MainMenu(ScreenStack& screens) :
 
 void MainMenu::tick(double delta)
 {
+    glClearColor(0.4f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 

@@ -30,19 +30,19 @@ MainWindow::MainWindow() :
     constexpr std::string_view vertex_source = R"(
             #version 450
             layout(location=0) in vec2 pos;
-            out vec2 tex_coords;
+            layout(location=1) in vec4 color;
+            out vec4 color_v;
             void main() {
                 gl_Position = vec4(pos, 0.0f, 1.0f);
-                tex_coords = vec2((pos.x + 1) / 2, (3 - pos.y) / 2);
+                color_v = color;
             }
         )";
     constexpr std::string_view fragment_source = R"(
             #version 450
-            in vec2 tex_coords;
+            in vec4 color_v;
             out vec4 color;
-            uniform sampler2D tex;
             void main() {
-                color = texture2D(tex, tex_coords);
+                color = color_v;
             }
         )";
     program_.attach({GL_VERTEX_SHADER, vertex_source});

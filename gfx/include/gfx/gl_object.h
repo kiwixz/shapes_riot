@@ -35,6 +35,7 @@ private:
 template <GlArrayDeleter* Tdeleter, size_t Tsize = 1>
 struct GlArrayObject {
     static constexpr GlDeleter* deleter = Tdeleter;
+    static constexpr size_t size = Tsize;
 
     GlArrayObject() = default;
     ~GlArrayObject();
@@ -44,12 +45,11 @@ struct GlArrayObject {
     GlArrayObject& operator=(GlArrayObject&& other) noexcept;
 
     GLuint operator[](size_t index) const;
-    constexpr GLsizei size() const;
 
     GLuint* ptr();
 
 private:
-    std::array<GLuint, Tsize> ids_ = {};
+    std::array<GLuint, size> ids_ = {};
 };
 
 
@@ -134,12 +134,6 @@ template <GlArrayDeleter* Tdeleter, size_t Tsize>
 GLuint GlArrayObject<Tdeleter, Tsize>::operator[](size_t index) const
 {
     return ids_[index];
-}
-
-template <GlArrayDeleter* Tdeleter, size_t Tsize>
-constexpr GLsizei GlArrayObject<Tdeleter, Tsize>::size() const
-{
-    return static_cast<GLsizei>(ids_.size());
 }
 
 template <GlArrayDeleter* Tdeleter, size_t Tsize>
