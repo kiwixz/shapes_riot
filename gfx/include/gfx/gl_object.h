@@ -34,7 +34,7 @@ private:
 
 template <GlArrayDeleter* Tdeleter, size_t Tsize = 1>
 struct GlArrayObject {
-    static constexpr GlDeleter* deleter = Tdeleter;
+    static constexpr GlArrayDeleter* deleter = Tdeleter;
     static constexpr size_t size = Tsize;
 
     GlArrayObject() = default;
