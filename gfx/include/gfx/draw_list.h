@@ -26,7 +26,7 @@ struct DrawList {
 private:
     std::vector<ColoredVertex> vertices_;
     std::vector<Index> indexes_;
-    int max_index_;
+    Index next_index_;
 
     GlBuffers<2> buffers_;
     GlVertexArrays<> vertex_array_;
