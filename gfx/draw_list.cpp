@@ -37,7 +37,7 @@ void DrawList::push(const std::vector<ColoredVertex>& vertices)
     std::copy(vertices.begin(), vertices.end(), std::back_inserter(vertices_));
 
     indexes_.reserve(indexes_.size() + vertices.size());
-    for (unsigned i = 0; i < vertices.size(); ++i)
+    for (int i = 0; i < static_cast<int>(vertices.size()); ++i)
         indexes_.push_back(max_index_ + 1 + i);
     max_index_ += static_cast<int>(vertices.size());
 }
@@ -48,9 +48,10 @@ void DrawList::push(const std::vector<ColoredVertex>& vertices, const std::vecto
     std::copy(vertices.begin(), vertices.end(), std::back_inserter(vertices_));
 
     indexes_.reserve(indexes_.size() + index.size());
-    for (unsigned i = 0; i < index.size(); ++i)
-        indexes_.push_back(max_index_ + 1 + index[i]);
-    max_index_ += static_cast<int>(index.size());
+    for (const auto& idx : index) {
+        indexes_.push_back(max_index_ + 1 + idx);
+        max_index_ = std::max(max_index_, idx);
+    }
 }
 
 void DrawList::draw()
