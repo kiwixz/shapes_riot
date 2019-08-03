@@ -12,9 +12,9 @@ TEST_SUITE("bind_front")
             return a + b;
         };
         CHECK(add(1, 2) == 3);
-        CHECK(bind_front(&add)(1, 2) == 3);
-        CHECK(bind_front(&add, 1)(2) == 3);
-        CHECK(bind_front(&add, 1, 2)() == 3);
+        CHECK(bind_front(add)(1, 2) == 3);
+        CHECK(bind_front(add, 1)(2) == 3);
+        CHECK(bind_front(add, 1, 2)() == 3);
     }
 
     TEST_CASE("ref")
@@ -24,11 +24,11 @@ TEST_SUITE("bind_front")
         };
         int a = 4;
         CHECK(ref(a) == 4);
-        CHECK(bind_front(&ref)(a) == 4);
-        decltype(auto) b = bind_front(&ref)(a);
-        bind_front(&ref)(b) = 5;
-        CHECK(bind_front(&ref)(a) == 5);
-        CHECK(bind_front(&ref, std::ref(a))() == 5);
+        CHECK(bind_front(ref)(a) == 4);
+        decltype(auto) b = bind_front(ref)(a);
+        bind_front(ref)(b) = 5;
+        CHECK(bind_front(ref)(a) == 5);
+        CHECK(bind_front(ref, std::ref(a))() == 5);
     }
 }
 #endif
