@@ -4,39 +4,68 @@
 
 namespace utils {
 
-template <void (*TInit)(), void (*TCleanup)()>
+template <void (*Tinit)(), void (*Tdestroy)()>
 struct SharedHandle {
-    static constexpr void (*init)() = TInit;
-    static constexpr void (*cleanup)() = TCleanup;
+    static constexpr void (*init)() = Tinit;
+    static constexpr void (*destroy)() = Tdestroy;
 
     SharedHandle();
+    ~SharedHandle();
+    SharedHandle(const SharedHandle& other);
+    SharedHandle& operator=(const SharedHandle& other);
+    SharedHandle(SharedHandle&& other);
+    SharedHandle& operator=(SharedHandle&& other);
 
 private:
-    std::shared_ptr<void> instance_;
-
-    static std::shared_ptr<void> get_instance();
+    static int& counter();
 };
 
 
-template <void (*TInit)(), void (*TCleanup)()>
-SharedHandle<TInit, TCleanup>::SharedHandle() :
-    instance_{get_instance()}
+template <void (*Tinit)(), void (*Tdestroy)()>
+SharedHandle<Tinit, Tdestroy>::SharedHandle()
+{
+    int& c = counter();
+    ++c;
+    if (c == 1)  // was zero
+        init();
+}
+
+template <void (*Tinit)(), void (*Tdestroy)()>
+SharedHandle<Tinit, Tdestroy>::~SharedHandle()
+{
+    int& c = counter();
+    --c;
+    if (c == 0)
+        destroy();
+}
+
+template <void (*Tinit)(), void (*Tdestroy)()>
+SharedHandle<Tinit, Tdestroy>::SharedHandle(const SharedHandle& other) :
+    SharedHandle{}
 {}
 
-template <void (*TInit)(), void (*TCleanup)()>
-std::shared_ptr<void> SharedHandle<TInit, TCleanup>::get_instance()
+template <void (*Tinit)(), void (*Tdestroy)()>
+SharedHandle<Tinit, Tdestroy>& SharedHandle<Tinit, Tdestroy>::operator=(const SharedHandle& other)
 {
-    static std::weak_ptr<void> old_instance;
+    return *this;
+}
 
-    if (std::shared_ptr<void> instance = old_instance.lock())
-        return instance;
+template <void (*Tinit)(), void (*Tdestroy)()>
+SharedHandle<Tinit, Tdestroy>::SharedHandle(SharedHandle&& other) :
+    SharedHandle{}
+{}
 
-    init();
-    std::shared_ptr<void> instance{nullptr, [](auto /*ptr*/) {
-                                       cleanup();
-                                   }};
-    old_instance = instance;
-    return instance;
+template <void (*Tinit)(), void (*Tdestroy)()>
+SharedHandle<Tinit, Tdestroy>& SharedHandle<Tinit, Tdestroy>::operator=(SharedHandle&& other)
+{
+    return *this;
+}
+
+template <void (*Tinit)(), void (*Tdestroy)()>
+int& SharedHandle<Tinit, Tdestroy>::counter()
+{
+    static int counter;
+    return counter;
 }
 
 }  // namespace utils
