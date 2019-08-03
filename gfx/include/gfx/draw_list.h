@@ -1,6 +1,7 @@
 #pragma once
 
-#include "gl_object.h"
+#include "gfx/gl_object.h"
+#include "gfx/shader.h"
 #include "utils/vec.h"
 #include <vector>
 
@@ -28,6 +29,7 @@ private:
     std::vector<Index> indexes_;
     Index next_index_;
 
+    ShaderProgram program_;
     GlBuffers<2> buffers_;
     GlVertexArrays<> vertex_array_;
 };

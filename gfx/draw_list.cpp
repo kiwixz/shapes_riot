@@ -1,11 +1,34 @@
 #include "gfx/draw_list.h"
 #include <glad/glad.h>
 #include <algorithm>
+#include <string_view>
 
 namespace gfx {
 
 DrawList::DrawList()
 {
+    constexpr std::string_view vertex_source = R"(
+            #version 450
+            layout(location=0) in vec2 pos;
+            layout(location=1) in vec4 color;
+            layout(location=0) out vec4 color_v;
+            void main() {
+                gl_Position = vec4(pos, 0.0, 1.0);
+                color_v = color;
+            }
+        )";
+    constexpr std::string_view fragment_source = R"(
+            #version 450
+            layout(location=0) in vec4 color_v;
+            out vec4 color;
+            void main() {
+                color = color_v;
+            }
+        )";
+    program_.attach({GL_VERTEX_SHADER, vertex_source});
+    program_.attach({GL_FRAGMENT_SHADER, fragment_source});
+    program_.link();
+
     glCreateVertexArrays(vertex_array_.size, vertex_array_.ptr());
     glCreateBuffers(buffers_.size, buffers_.ptr());
 
@@ -58,9 +81,12 @@ void DrawList::push(const std::vector<ColoredVertex>& vertices, const std::vecto
 void DrawList::draw()
 {
     glBindVertexArray(vertex_array_[0]);
-    glNamedBufferData(buffers_[0], vertices_.size() * sizeof(ColoredVertex), vertices_.data(), GL_STREAM_DRAW);
-    glNamedBufferData(buffers_[1], indexes_.size() * sizeof(Index), indexes_.data(), GL_STREAM_DRAW);
-    glDrawElements(GL_TRIANGLES, static_cast<int>(indexes_.size()), GL_UNSIGNED_INT, nullptr);
+    {
+        utils::ScopeExit program_binding = program_.bind();
+        glNamedBufferData(buffers_[0], vertices_.size() * sizeof(ColoredVertex), vertices_.data(), GL_STREAM_DRAW);
+        glNamedBufferData(buffers_[1], indexes_.size() * sizeof(Index), indexes_.data(), GL_STREAM_DRAW);
+        glDrawElements(GL_TRIANGLES, static_cast<int>(indexes_.size()), GL_UNSIGNED_INT, nullptr);
+    }
     glBindVertexArray(0);
 }
 

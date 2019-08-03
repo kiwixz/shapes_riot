@@ -1,7 +1,6 @@
 #include "main_window.h"
 #include "main_menu.h"
 #include <chrono>
-#include <string_view>
 
 namespace shapes_riot {
 
@@ -26,29 +25,6 @@ MainWindow::MainWindow() :
     glfwSetKeyCallback(window_.ptr(), [](GLFWwindow* window, int key, int scancode, int action, int mods) {
         return reinterpret_cast<MainWindow*>(glfwGetWindowUserPointer(window))->on_key(key, scancode, action, mods);
     });
-
-    constexpr std::string_view vertex_source = R"(
-            #version 450
-            layout(location=0) in vec2 pos;
-            layout(location=1) in vec4 color;
-            layout(location=0) out vec4 color_v;
-            void main() {
-                gl_Position = vec4(pos, 0.0f, 1.0f);
-                color_v = color;
-            }
-        )";
-    constexpr std::string_view fragment_source = R"(
-            #version 450
-            layout(location=0) in vec4 color_v;
-            out vec4 color;
-            void main() {
-                //color = color_v;
-                color = vec4( 1.0, 0.0, 0.0, 1.0 );
-            }
-        )";
-    program_.attach({GL_VERTEX_SHADER, vertex_source});
-    program_.attach({GL_FRAGMENT_SHADER, fragment_source});
-    program_.link();
 }
 
 void MainWindow::loop()
