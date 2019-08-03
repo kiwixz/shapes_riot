@@ -31,7 +31,7 @@ MainWindow::MainWindow() :
             #version 450
             layout(location=0) in vec2 pos;
             layout(location=1) in vec4 color;
-            out vec4 color_v;
+            layout(location=0) out vec4 color_v;
             void main() {
                 gl_Position = vec4(pos, 0.0f, 1.0f);
                 color_v = color;
@@ -39,10 +39,11 @@ MainWindow::MainWindow() :
         )";
     constexpr std::string_view fragment_source = R"(
             #version 450
-            in vec4 color_v;
+            layout(location=0) in vec4 color_v;
             out vec4 color;
             void main() {
-                color = color_v;
+                //color = color_v;
+                color = vec4( 1.0, 0.0, 0.0, 1.0 );
             }
         )";
     program_.attach({GL_VERTEX_SHADER, vertex_source});
