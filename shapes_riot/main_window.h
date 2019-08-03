@@ -11,14 +11,6 @@ struct MainWindow {
     void loop();
 
 private:
-    struct Glfw {
-        Glfw();
-
-    private:
-        gfx::GlfwHandle handle_;
-    };
-
-    Glfw glfw_;
     gfx::Window window_;
     ScreenStack screens_;
 

@@ -4,7 +4,7 @@
 
 namespace shapes_riot {
 
-MainWindow::Glfw::Glfw()
+MainWindow::MainWindow()
 {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
@@ -14,12 +14,9 @@ MainWindow::Glfw::Glfw()
 #ifdef DEBUG
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
-}
 
+    window_ = {{1600, 900}, "Shapes Riot"};
 
-MainWindow::MainWindow() :
-    window_{{1600, 900}, "Shapes Riot"}
-{
     glfwSwapInterval(1);
     glfwSetWindowUserPointer(window_.ptr(), this);
     glfwSetKeyCallback(window_.ptr(), [](GLFWwindow* window, int key, int scancode, int action, int mods) {
