@@ -12,9 +12,9 @@ struct SharedHandle {
     SharedHandle();
     ~SharedHandle();
     SharedHandle(const SharedHandle& other);
-    SharedHandle& operator=(const SharedHandle& other);
-    SharedHandle(SharedHandle&& other);
-    SharedHandle& operator=(SharedHandle&& other);
+    SharedHandle& operator=(const SharedHandle& other) = default;
+    SharedHandle(SharedHandle&& other) noexcept;
+    SharedHandle& operator=(SharedHandle&& other) noexcept = default;
 
 private:
     static int& counter();
@@ -40,26 +40,14 @@ SharedHandle<Tinit, Tdestroy>::~SharedHandle()
 }
 
 template <void (*Tinit)(), void (*Tdestroy)()>
-SharedHandle<Tinit, Tdestroy>::SharedHandle(const SharedHandle& other) :
+SharedHandle<Tinit, Tdestroy>::SharedHandle(const SharedHandle& /*other*/) :
     SharedHandle{}
 {}
 
 template <void (*Tinit)(), void (*Tdestroy)()>
-SharedHandle<Tinit, Tdestroy>& SharedHandle<Tinit, Tdestroy>::operator=(const SharedHandle& other)
-{
-    return *this;
-}
-
-template <void (*Tinit)(), void (*Tdestroy)()>
-SharedHandle<Tinit, Tdestroy>::SharedHandle(SharedHandle&& other) :
+SharedHandle<Tinit, Tdestroy>::SharedHandle(SharedHandle&& /*other*/) noexcept :
     SharedHandle{}
 {}
-
-template <void (*Tinit)(), void (*Tdestroy)()>
-SharedHandle<Tinit, Tdestroy>& SharedHandle<Tinit, Tdestroy>::operator=(SharedHandle&& other)
-{
-    return *this;
-}
 
 template <void (*Tinit)(), void (*Tdestroy)()>
 int& SharedHandle<Tinit, Tdestroy>::counter()
