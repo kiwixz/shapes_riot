@@ -7,7 +7,7 @@
 namespace gfx {
 
 struct DrawList {
-    using Index = unsigned int;
+    using Index = unsigned;
 
     struct ColoredVertex {
         utils::Vec2f pos;
