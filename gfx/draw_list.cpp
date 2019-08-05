@@ -55,7 +55,7 @@ void DrawList::clear()
     next_index_ = 0;
 }
 
-void DrawList::push(const std::vector<ColoredVertex>& vertices)
+void DrawList::push(utils::Span<ColoredVertex> vertices)
 {
     vertices_.reserve(vertices_.size() + vertices.size());
     std::copy(vertices.begin(), vertices.end(), std::back_inserter(vertices_));
@@ -66,7 +66,7 @@ void DrawList::push(const std::vector<ColoredVertex>& vertices)
     next_index_ += static_cast<int>(vertices.size());
 }
 
-void DrawList::push(const std::vector<ColoredVertex>& vertices, const std::vector<Index>& index)
+void DrawList::push(utils::Span<ColoredVertex> vertices, utils::Span<Index> index)
 {
     vertices_.reserve(vertices_.size() + vertices.size());
     std::copy(vertices.begin(), vertices.end(), std::back_inserter(vertices_));

@@ -2,6 +2,7 @@
 
 #include "gfx/gl_object.h"
 #include "gfx/shader.h"
+#include "utils/span.h"
 #include "utils/vec.h"
 #include <vector>
 
@@ -19,8 +20,8 @@ struct DrawList {
     DrawList();
 
     void clear();
-    void push(const std::vector<ColoredVertex>& vertices);
-    void push(const std::vector<ColoredVertex>& vertices, const std::vector<Index>& indexes);
+    void push(utils::Span<ColoredVertex> vertices);
+    void push(utils::Span<ColoredVertex> vertices, utils::Span<Index> indexes);
 
     void draw();
 
