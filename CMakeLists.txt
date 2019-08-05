@@ -3,7 +3,7 @@ include("${CMAKE_SOURCE_DIR}/cmake/install_vcpkg.cmake")
 
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING "")
 set(CMAKE_CXX_COMPILER "clang++" CACHE FILEPATH "")
-install_vcpkg("2019.06"
+install_vcpkg("2019.07"
     LIBS
         # gfx
         "glad"
