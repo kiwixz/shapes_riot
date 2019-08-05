@@ -12,6 +12,7 @@ Checks: "*  ,\
   -clang-diagnostic-unused-private-field  ,\
   \
   -cppcoreguidelines-avoid-magic-numbers  ,\
+  -cppcoreguidelines-macro-usage  ,\
   -cppcoreguidelines-pro-bounds-constant-array-index  ,\
   -cppcoreguidelines-pro-bounds-pointer-arithmetic  ,\
   -cppcoreguidelines-pro-type-const-cast  ,\
@@ -28,6 +29,7 @@ Checks: "*  ,\
   -google-runtime-references  ,\
   \
   -hicpp-braces-around-statements  ,\
+  -hicpp-explicit-conversions  ,\
   -hicpp-invalid-access-moved  ,\
   -hicpp-member-init  ,\
   -hicpp-signed-bitwise  ,\
