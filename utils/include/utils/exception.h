@@ -21,7 +21,7 @@ struct [[nodiscard]] Exception : std::runtime_error
     template <typename... Args>
     Exception(std::string from, std::string_view format, Args... args);
 
-    const std::string& from() const;
+    [[nodiscard]] const std::string& from() const;
 
 private:
     std::string from_;

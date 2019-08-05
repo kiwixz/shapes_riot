@@ -12,7 +12,7 @@ struct Span {
     constexpr Span(Element* data, size_t size);
 
     template <typename T>
-    constexpr explicit Span(T& container);
+    constexpr Span(T& container);
 
     [[nodiscard]] constexpr Element& operator[](size_t idx) const;
 

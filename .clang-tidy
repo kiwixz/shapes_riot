@@ -21,6 +21,7 @@ Checks: "*  ,\
   -cppcoreguidelines-pro-type-vararg  ,\
   \
   -google-build-using-namespace  ,\
+  -google-explicit-constructor  ,\
   -google-readability-braces-around-statements  ,\
   -google-readability-namespace-comments  ,\
   -google-readability-todo  ,\
