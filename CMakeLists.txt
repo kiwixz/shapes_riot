@@ -1,8 +1,17 @@
 cmake_minimum_required(VERSION 3.12)
+include("${CMAKE_SOURCE_DIR}/cmake/install_vcpkg.cmake")
 
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING "")
 set(CMAKE_CXX_COMPILER "clang++" CACHE FILEPATH "")
-set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE FILEPATH "")
+install_vcpkg("2019.06"
+    LIBS
+        # gfx
+        "glad"
+        "glfw3"
+
+        "doctest"
+        "fmt"
+)
 
 project("shapes_riot" CXX)
 
