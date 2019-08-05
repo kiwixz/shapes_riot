@@ -7,8 +7,8 @@ Exception::Exception(std::string_view what) :
 {}
 
 Exception::Exception(std::string from, std::string_view what) :
-    from_{std::move(from)},
-    std::runtime_error{what.data()}
+    std::runtime_error{what.data()},
+    from_{std::move(from)}
 {}
 
 const std::string& Exception::from() const
