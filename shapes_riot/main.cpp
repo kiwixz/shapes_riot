@@ -1,12 +1,23 @@
 #include "main_window.h"
+#include "utils/exception.h"
+#include <fmt/printf.h>
 
 namespace shapes_riot {
 namespace {
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    MainWindow{}.loop();
-    return 0;
+    try {
+        MainWindow{}.loop();
+        return 0;
+    }
+    catch (const utils::Exception& ex) {
+        fmt::print("fatal exception: {}\nfrom: {}\n", ex.what(), ex.from());
+    }
+    catch (const std::exception& ex) {
+        fmt::print("fatal exception: {}\n", ex.what());
+    }
+    return 1;
 }
 
 }  // namespace

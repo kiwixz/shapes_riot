@@ -6,7 +6,7 @@ namespace gfx {
 void glfw_handle_init()
 {
     if (!glfwInit())
-        throw utils::Exception{"could not initialize glfw"};
+        throw MAKE_EXCEPTION("could not initialize glfw");
 }
 
 }  // namespace gfx

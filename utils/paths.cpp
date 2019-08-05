@@ -18,7 +18,7 @@ std::filesystem::path get_kiwixz_home(std::string_view app_name)
 #ifdef _WIN32
     wchar_t* base;
     if (SHGetKnownFolderPath(FOLDERID_RoamingAppData, KF_FLAG_CREATE, nullptr, &base) != S_OK)
-        throw utils::Exception{"could not get appdata"};
+        throw MAKE_EXCEPTION("could not get appdata");
     ScopeExit free_base{[&] {
         CoTaskMemFree(base);
     }};

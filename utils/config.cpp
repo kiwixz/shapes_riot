@@ -136,7 +136,7 @@ void Config::parse_file_content(std::string_view content, bool allow_unknown)
             while (!(is_endline(ptr) || *ptr == ']'))
                 ++ptr;
             if (ptr >= end)
-                throw utils::Exception{"config has mismatched '['"};
+                throw MAKE_EXCEPTION("config has mismatched '['");
             const char* section_end = ptr;
             while (section_end > section_begin && is_blank(section_end[-1]))  // trim blanks at end
                 --section_end;
@@ -205,7 +205,7 @@ void Config::set_parsed_option(std::string key, std::string value, bool allow_un
         if (allow_unknown)
             options_.insert({std::move(key), std::move(value)});
         else
-            throw utils::Exception{"unknown option '{}'", key};
+            throw MAKE_EXCEPTION("unknown option '{}'", key);
     }
     else
         it->second = std::move(value);
