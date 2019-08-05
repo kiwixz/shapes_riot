@@ -31,8 +31,9 @@ TEST_SUITE("span")
 
     TEST_CASE("constexpr")
     {
-        constexpr std::array<const char, 6> container{"hello"};
-        constexpr Span<const char> span = container;
+        static constexpr std::array<const char, 6> container{"hello"};
+        constexpr Span<const char> midspan = container;
+        constexpr Span<const char> span{midspan.data(), midspan.size()};
         static_assert(*span.begin() == 'h');
         static_assert(span.data() == container.data());
         static_assert(span[2] == 'l');

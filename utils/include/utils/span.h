@@ -9,6 +9,7 @@ struct Span {
     using Element = TElement;
 
     constexpr Span() = default;
+    constexpr Span(Element* data, size_t size);
 
     template <typename T>
     constexpr Span(T& container);
@@ -30,8 +31,13 @@ private:
 template <typename TElement>
 template <typename T>
 constexpr Span<TElement>::Span(T& container) :
-    data_{container.data()},
-    size_{container.size()}
+    Span{container.data(), container.size()}
+{}
+
+template <typename TElement>
+constexpr Span<TElement>::Span(Element* data, size_t size) :
+    data_{data},
+    size_{size}
 {}
 
 template <typename TElement>
