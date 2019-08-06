@@ -12,8 +12,8 @@ struct WindowEvent {
         int mods;
     };
 
-    template <typename T, std::enable_if_t<!std::is_same_v<T, WindowEvent>, int> = 0>
-    explicit WindowEvent(T&& event);  // NOLINT(bugprone-forwarding-reference-overload)
+    template <typename T>
+    explicit WindowEvent(T event);
 
     template <typename T>
     [[nodiscard]] T* as();
@@ -28,8 +28,8 @@ private:
 };
 
 
-template <typename T, std::enable_if_t<!std::is_same_v<T, WindowEvent>, int>>
-WindowEvent::WindowEvent(T&& event) :
+template <typename T>
+WindowEvent::WindowEvent(T event) :
     variant_{event}
 {}
 
