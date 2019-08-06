@@ -13,7 +13,7 @@ struct WindowEvent {
     };
 
     template <typename T, std::enable_if_t<!std::is_same_v<T, WindowEvent>, int> = 0>
-    explicit WindowEvent(T&& event);
+    explicit WindowEvent(T&& event);  // NOLINT(bugprone-forwarding-reference-overload)
 
     template <typename T>
     [[nodiscard]] T* as();
