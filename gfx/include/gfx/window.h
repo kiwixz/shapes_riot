@@ -13,8 +13,10 @@ struct Window {
     Window() = default;
     Window(utils::Vec2i size, std::string_view title, GLFWmonitor* monitor = nullptr, Window* shared = nullptr);
     ~Window() = default;
-    Window(Window&& other) noexcept;
-    Window& operator=(Window&& other) noexcept;
+    Window(const Window& other) noexcept = delete;
+    Window& operator=(const Window& other) noexcept = delete;
+    Window(Window&& other) noexcept = delete;
+    Window& operator=(Window&& other) noexcept = delete;
 
     [[nodiscard]] void poll_events(const std::function<void(WindowEvent&&)>& event_handler);
 

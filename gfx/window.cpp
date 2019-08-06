@@ -23,21 +23,6 @@ Window::Window(utils::Vec2i size, std::string_view title, GLFWmonitor* monitor, 
     });
 }
 
-Window::Window(Window&& other) noexcept
-{
-    *this = std::move(other);
-}
-
-Window& Window::operator=(Window&& other) noexcept
-{
-    glfw_handle_ = std::move(other.glfw_handle_);
-    window_ = std::move(other.window_);
-    event_queue_ = std::move(other.event_queue_);
-
-    glfwSetWindowUserPointer(window_.get(), this);
-    return *this;
-}
-
 void Window::poll_events(const std::function<void(WindowEvent&&)>& event_handler)
 {
     glfwPollEvents();
