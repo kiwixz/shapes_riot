@@ -23,6 +23,9 @@ void MainMenu::tick(double delta)
     draw_list.draw();
 }
 
+void MainMenu::window_event(gfx::WindowEvent&& event)
+{}
+
 void MainMenu::on_focus()
 {}
 

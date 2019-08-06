@@ -9,6 +9,7 @@ struct MainMenu : Screen {
     explicit MainMenu(ScreenStack& screens);
 
     void tick(double delta) override;
+    void window_event(gfx::WindowEvent&& event) override;
 
     void on_focus() override;
     void on_unfocus() override;

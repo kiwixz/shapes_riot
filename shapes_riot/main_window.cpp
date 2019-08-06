@@ -18,10 +18,6 @@ MainWindow::MainWindow()
     window_ = {{1600, 900}, "Shapes Riot"};
 
     glfwSwapInterval(1);
-    glfwSetWindowUserPointer(window_.ptr(), this);
-    glfwSetKeyCallback(window_.ptr(), [](GLFWwindow* window, int key, int scancode, int action, int mods) {
-        return reinterpret_cast<MainWindow*>(glfwGetWindowUserPointer(window))->on_key(key, scancode, action, mods);
-    });
 }
 
 void MainWindow::loop()
@@ -36,7 +32,15 @@ void MainWindow::loop()
         double delta = std::chrono::duration<double>(now - last_frame).count();
         last_frame = now;
 
-        glfwPollEvents();
+        window_.poll_events([&](gfx::WindowEvent&& event) {
+            if (auto* key_event = event.as<gfx::WindowEvent::KeyEvent>()) {
+                if (key_event->action == GLFW_RELEASE
+                    && key_event->mods == 0
+                    && key_event->key == GLFW_KEY_ESCAPE)
+                    glfwSetWindowShouldClose(window_.ptr(), true);
+            }
+            screens_.top().window_event(std::move(event));
+        });
         screens_.top().tick(delta);
 
         glfwSwapBuffers(window_.ptr());
