@@ -52,10 +52,10 @@ int main(int /*argc*/, char** /*argv*/)
         return 0;
     }
     catch (const utils::Exception& ex) {
-        fmt::print("fatal exception: {}\nfrom: {}\n", ex.what(), ex.from());
+        fmt::print(stderr, "fatal exception: {}\nfrom: {}\n", ex.what(), ex.from());
     }
     catch (const std::exception& ex) {
-        fmt::print("fatal exception: {}\n", ex.what());
+        fmt::print(stderr, "fatal exception: {}\n", ex.what());
     }
     return 1;
 }
