@@ -18,8 +18,8 @@ Window::Window(utils::Vec2i size, std::string_view title, GLFWmonitor* monitor, 
         throw MAKE_EXCEPTION("could not load opengl");
 
     glfwSetWindowUserPointer(window_.get(), this);
-    glfwSetKeyCallback(window_.get(), [](GLFWwindow* window, int key, int scancode, int action, int mods) {
-        return reinterpret_cast<Window*>(glfwGetWindowUserPointer(window))->on_key(key, scancode, action, mods);
+    glfwSetKeyCallback(window_.get(), [](GLFWwindow* glfw_window, int key, int scancode, int action, int mods) {
+        return reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window))->on_key(key, scancode, action, mods);
     });
 }
 

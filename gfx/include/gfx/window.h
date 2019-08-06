@@ -18,7 +18,7 @@ struct Window {
     Window(Window&& other) noexcept = delete;
     Window& operator=(Window&& other) noexcept = delete;
 
-    [[nodiscard]] void poll_events(const std::function<void(WindowEvent&&)>& event_handler);
+    void poll_events(const std::function<void(WindowEvent&&)>& event_handler);
 
     [[nodiscard]] GLFWwindow* ptr();
     [[nodiscard]] GLFWwindow const* ptr() const;

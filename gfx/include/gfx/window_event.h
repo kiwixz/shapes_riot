@@ -12,7 +12,7 @@ struct WindowEvent {
         int mods;
     };
 
-    template <typename T>
+    template <typename T, std::enable_if_t<!std::is_same_v<T, WindowEvent>, int> = 0>
     explicit WindowEvent(T&& event);
 
     template <typename T>
@@ -28,7 +28,7 @@ private:
 };
 
 
-template <typename T>
+template <typename T, std::enable_if_t<!std::is_same_v<T, WindowEvent>, int>>
 WindowEvent::WindowEvent(T&& event) :
     variant_{event}
 {}
