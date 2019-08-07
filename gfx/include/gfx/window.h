@@ -6,6 +6,7 @@
 #include <functional>
 #include <memory>
 #include <string_view>
+#include <vector>
 
 namespace gfx {
 

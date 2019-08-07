@@ -23,8 +23,10 @@ void MainMenu::tick(double delta)
     draw_list.draw();
 }
 
-void MainMenu::window_event(gfx::WindowEvent&& event)
-{}
+bool MainMenu::window_event(const gfx::WindowEvent& event)
+{
+    return false;
+}
 
 void MainMenu::on_focus()
 {}

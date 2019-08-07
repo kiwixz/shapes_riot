@@ -36,13 +36,14 @@ int main(int /*argc*/, char** /*argv*/)
             last_frame = now;
 
             window.poll_events([&](gfx::WindowEvent&& event) {
-                if (auto* key_event = event.as<gfx::WindowEvent::KeyEvent>()) {
+                if (const auto* key_event = event.as<gfx::WindowEvent::KeyEvent>()) {
                     if (key_event->action == GLFW_RELEASE
                         && key_event->mods == 0
                         && key_event->key == GLFW_KEY_ESCAPE)
                         glfwSetWindowShouldClose(window.ptr(), true);
                 }
-                screens.top().window_event(std::move(event));
+
+                screens.top().window_event(event);
             });
             screens.top().tick(delta);
 
