@@ -1,7 +1,5 @@
 #pragma once
 
-#include "gfx/gl_object.h"
-#include "gfx/shader.h"
 #include "utils/span.h"
 #include "utils/vec.h"
 #include <vector>
@@ -17,22 +15,16 @@ struct DrawList {
     };
     static_assert(sizeof(ColoredVertex) == sizeof(float) * 6);
 
-    DrawList();
+    utils::Span<const ColoredVertex> vertices() const;
+    utils::Span<const Index> indexes() const;
 
-    void clear();
-    void push(utils::Span<ColoredVertex> vertices);
-    void push(utils::Span<ColoredVertex> vertices, utils::Span<Index> indexes);
-
-    void draw();
+    void push(utils::Span<const ColoredVertex> vertices);
+    void push(utils::Span<const ColoredVertex> vertices, utils::Span<const Index> indexes);
 
 private:
     std::vector<ColoredVertex> vertices_;
     std::vector<Index> indexes_;
-    Index next_index_;
-
-    ShaderProgram program_;
-    GlBuffers<2> buffers_;
-    GlVertexArrays<> vertex_array_;
+    Index next_index_ = 0;
 };
 
 }  // namespace gfx

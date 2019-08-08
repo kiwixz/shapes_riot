@@ -44,7 +44,7 @@ int main(int /*argc*/, char** /*argv*/)
                         glfwSetWindowShouldClose(window.ptr(), true);
                 }
 
-                screens.top().window_event(event, state);
+                screens.top().on_window_event(event, state);
             });
             screens.top().tick(delta, state);
 

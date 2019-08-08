@@ -20,16 +20,18 @@ void MainMenu::tick(double delta, const gfx::WindowState& state)
 
     gfx::DrawList draw_list;
     draw_list.push(vertices);
-    draw_list.draw();
+    drawer_.draw(draw_list);
 }
-
-void MainMenu::window_event(const gfx::WindowEvent& event, const gfx::WindowState& state)
-{}
 
 void MainMenu::on_focus()
 {}
 
 void MainMenu::on_unfocus()
 {}
+
+void MainMenu::on_window_event(const gfx::WindowEvent& event, const gfx::WindowState& state)
+{
+    layout_.on_window_event(event, state);
+}
 
 }  // namespace shapes_riot

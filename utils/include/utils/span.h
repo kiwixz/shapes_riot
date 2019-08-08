@@ -20,6 +20,7 @@ struct Span {
     [[nodiscard]] constexpr Element* data() const;
     [[nodiscard]] constexpr Element* end() const;
     [[nodiscard]] constexpr size_t size() const;
+    [[nodiscard]] constexpr size_t size_bytes() const;
 
 
 private:
@@ -68,6 +69,12 @@ template <typename TElement>
 constexpr size_t Span<TElement>::size() const
 {
     return size_;
+}
+
+template <typename TElement>
+constexpr size_t Span<TElement>::size_bytes() const
+{
+    return size_ * sizeof(Element);
 }
 
 }  // namespace utils
