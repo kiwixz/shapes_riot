@@ -18,7 +18,7 @@ struct [[nodiscard]] ScopeExit
     std::function<void()> release();
 
 private:
-    std::function<void()> function_{};
+    std::function<void()> function_;
 };
 
 }  // namespace utils

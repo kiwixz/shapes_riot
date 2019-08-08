@@ -12,7 +12,6 @@
 namespace gfx {
 
 struct Window {
-    Window() = default;
     Window(utils::Vec2i size, std::string_view title, GLFWmonitor* monitor = nullptr, Window* shared = nullptr);
     ~Window() = default;
     Window(const Window& other) noexcept = delete;

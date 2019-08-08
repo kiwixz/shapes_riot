@@ -8,7 +8,6 @@ template <typename TElement>
 struct Span {
     using Element = TElement;
 
-    constexpr Span() = default;
     constexpr Span(Element* data, size_t size);
 
     template <typename T>

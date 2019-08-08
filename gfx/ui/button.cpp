@@ -3,6 +3,9 @@
 
 namespace gfx::ui {
 
+Button::Button()
+{}
+
 DrawList Button::draw(double delta)
 {
     static constexpr utils::Vec4f color = {0.0f, 0.0f, 0.0f, 0.9f};

@@ -16,6 +16,7 @@ private:
     std::array<uint64_t, 4> state_;
 };
 
+
 struct RandF {
     RandF();
 
