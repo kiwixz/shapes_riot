@@ -8,8 +8,8 @@ struct MainMenu : Screen {
     MainMenu() = default;
     explicit MainMenu(ScreenStack& screens);
 
-    void tick(double delta) override;
-    bool window_event(const gfx::WindowEvent& event) override;
+    void tick(double delta, const gfx::WindowState& state) override;
+    void window_event(const gfx::WindowEvent& event, const gfx::WindowState& state) override;
 
     void on_focus() override;
     void on_unfocus() override;

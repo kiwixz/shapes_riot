@@ -1,14 +1,15 @@
 #pragma once
 
 #include "gfx/window_event.h"
+#include "gfx/window_state.h"
 
 namespace shapes_riot {
 
 struct Screen {
     virtual ~Screen() = default;
 
-    virtual void tick(double delta) = 0;
-    virtual bool window_event(const gfx::WindowEvent& event) = 0;
+    virtual void tick(double delta, const gfx::WindowState& state) = 0;
+    virtual void window_event(const gfx::WindowEvent& event, const gfx::WindowState& state) = 0;
 
     virtual void on_focus() = 0;
     virtual void on_unfocus() = 0;

@@ -23,6 +23,11 @@ Window::Window(utils::Vec2i size, std::string_view title, GLFWmonitor* monitor, 
     });
 }
 
+WindowState Window::state() const
+{
+    return WindowState{window_.get()};
+}
+
 void Window::poll_events(const std::function<void(WindowEvent&&)>& event_handler)
 {
     glfwPollEvents();

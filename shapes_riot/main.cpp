@@ -35,6 +35,7 @@ int main(int /*argc*/, char** /*argv*/)
             double delta = std::chrono::duration<double>(now - last_frame).count();
             last_frame = now;
 
+            gfx::WindowState state = window.state();
             window.poll_events([&](gfx::WindowEvent&& event) {
                 if (const auto* key_event = event.as<gfx::WindowEvent::KeyEvent>()) {
                     if (key_event->action == GLFW_RELEASE
@@ -43,9 +44,9 @@ int main(int /*argc*/, char** /*argv*/)
                         glfwSetWindowShouldClose(window.ptr(), true);
                 }
 
-                screens.top().window_event(event);
+                screens.top().window_event(event, state);
             });
-            screens.top().tick(delta);
+            screens.top().tick(delta, state);
 
             glfwSwapBuffers(window.ptr());
         }

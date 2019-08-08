@@ -8,7 +8,7 @@ MainMenu::MainMenu(ScreenStack& screens) :
     screens_{&screens}
 {}
 
-void MainMenu::tick(double delta)
+void MainMenu::tick(double delta, const gfx::WindowState& state)
 {
     glClearColor(0.4f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -23,10 +23,8 @@ void MainMenu::tick(double delta)
     draw_list.draw();
 }
 
-bool MainMenu::window_event(const gfx::WindowEvent& event)
-{
-    return false;
-}
+void MainMenu::window_event(const gfx::WindowEvent& event, const gfx::WindowState& state)
+{}
 
 void MainMenu::on_focus()
 {}

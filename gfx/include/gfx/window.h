@@ -2,6 +2,7 @@
 
 #include "gfx/glfw_handle.h"
 #include "gfx/window_event.h"
+#include "gfx/window_state.h"
 #include "utils/vec.h"
 #include <functional>
 #include <memory>
@@ -18,6 +19,8 @@ struct Window {
     Window& operator=(const Window& other) noexcept = delete;
     Window(Window&& other) noexcept = delete;
     Window& operator=(Window&& other) noexcept = delete;
+
+    WindowState state() const;
 
     void poll_events(const std::function<void(WindowEvent&&)>& event_handler);
 
