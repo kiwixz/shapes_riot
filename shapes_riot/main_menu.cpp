@@ -1,12 +1,15 @@
 #include "main_menu.h"
 #include "gfx/draw_list.h"
+#include "gfx/ui/button.h"
 #include <glad/glad.h>
 
 namespace shapes_riot {
 
 MainMenu::MainMenu(ScreenStack& screens) :
     screens_{&screens}
-{}
+{
+    layout_.add_widget(std::make_unique<gfx::ui::Button>());
+}
 
 void MainMenu::tick(double delta, const gfx::WindowState& state)
 {
@@ -18,9 +21,12 @@ void MainMenu::tick(double delta, const gfx::WindowState& state)
     vertices.push_back({{0.0f, 0.5f}, {0.0f, 1.0f, 0.0f, 1.0f}});
     vertices.push_back({{0.5f, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}});
 
+    gfx::DrawList layout_draw_list = layout_.draw(delta);
+    layout_draw_list.transform({}, {0.16, 0.32});
+
     gfx::DrawList draw_list;
     draw_list.push(vertices);
-    draw_list.push(layout_.draw(delta));
+    draw_list.push(layout_draw_list);
     drawer_.draw(draw_list);
 }
 

@@ -32,8 +32,9 @@ void DrawList::push(utils::Span<const ColoredVertex> vertices, utils::Span<const
     std::copy(vertices.begin(), vertices.end(), std::back_inserter(vertices_));
 
     indexes_.reserve(indexes_.size() + index.size());
-    for (const auto& idx : index) {
-        indexes_.push_back(next_index_ + idx);
+    Index offset = next_index_;
+    for (Index idx : index) {
+        indexes_.push_back(offset + idx);
         next_index_ = std::max(next_index_, idx + 1);
     }
 }

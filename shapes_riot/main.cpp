@@ -23,6 +23,8 @@ int main(int /*argc*/, char** /*argv*/)
 
         gfx::Window window{{1600, 900}, "Shapes Riot"};
         glfwSwapInterval(1);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_BLEND);
 
         ScreenStack screens;
         screens.emplace<MainMenu>();
