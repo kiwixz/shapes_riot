@@ -38,4 +38,17 @@ void DrawList::push(utils::Span<const ColoredVertex> vertices, utils::Span<const
     }
 }
 
+void DrawList::push(const DrawList& draw_list)
+{
+    push(draw_list.vertices(), draw_list.indexes());
+}
+
+void DrawList::transform(utils::Vec2d translation, utils::Vec2d scale)
+{
+    for (ColoredVertex& vertex : vertices_) {
+        vertex.pos.x = vertex.pos.x * scale.x + translation.x;
+        vertex.pos.y = vertex.pos.y * scale.y + translation.y;
+    }
+}
+
 }  // namespace gfx

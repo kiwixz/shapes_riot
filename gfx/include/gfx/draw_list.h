@@ -20,6 +20,8 @@ struct DrawList {
 
     void push(utils::Span<const ColoredVertex> vertices);
     void push(utils::Span<const ColoredVertex> vertices, utils::Span<const Index> indexes);
+    void push(const DrawList& draw_list);
+    void transform(utils::Vec2d translation, utils::Vec2d scale);
 
 private:
     std::vector<ColoredVertex> vertices_;
