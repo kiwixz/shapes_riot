@@ -17,12 +17,12 @@ struct Vertex {
 static_assert(sizeof(Vertex) == sizeof(float) * 8);  // ensures there is no padding
 
 
-constexpr Vertex::Vertex(utils::Vec2f pos, utils::Vec4f rgb) :
-    pos{pos}, rgb{rgb}
+constexpr Vertex::Vertex(utils::Vec2f pos_, utils::Vec4f rgb_) :
+    pos{pos_}, rgb{rgb_}
 {}
 
-constexpr Vertex::Vertex(utils::Vec2f pos, utils::Vec4f rgb, utils::Vec2f uv) :
-    pos{pos}, rgb{rgb}, uv{uv}
+constexpr Vertex::Vertex(utils::Vec2f pos_, utils::Vec4f rgb_, utils::Vec2f uv_) :
+    pos{pos_}, rgb{rgb_}, uv{uv_}
 {}
 
 }  // namespace gfx
