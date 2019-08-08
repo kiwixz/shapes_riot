@@ -13,12 +13,14 @@ file(GLOB_RECURSE test_src "*.test.cpp")
 test_target_cpp("${target}" "${test_src}")
 
 
+find_package("Freetype" CONFIG REQUIRED)
 find_package("glad" CONFIG REQUIRED)
 find_package("glfw3" CONFIG REQUIRED)
 
 target_link_libraries("${target}"
     "utils"
 
+    "freetype"
     "glad::glad"
     "glfw"
 )

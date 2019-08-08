@@ -6,6 +6,7 @@ set(CMAKE_CXX_COMPILER "clang++" CACHE FILEPATH "")
 install_vcpkg("2019.07"
     LIBS
         # gfx
+        "freetype"
         "glad"
         "glfw3"
 
