@@ -46,8 +46,8 @@ void DrawList::push(const DrawList& draw_list)
 void DrawList::transform(utils::Vec2d translation, utils::Vec2d scale)
 {
     for (ColoredVertex& vertex : vertices_) {
-        vertex.pos.x = vertex.pos.x * scale.x + translation.x;
-        vertex.pos.y = vertex.pos.y * scale.y + translation.y;
+        vertex.pos.x = static_cast<float>(vertex.pos.x * scale.x + translation.x);
+        vertex.pos.y = static_cast<float>(vertex.pos.y * scale.y + translation.y);
     }
 }
 

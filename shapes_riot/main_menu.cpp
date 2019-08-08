@@ -20,6 +20,7 @@ void MainMenu::tick(double delta, const gfx::WindowState& state)
 
     gfx::DrawList draw_list;
     draw_list.push(vertices);
+    draw_list.push(layout_.draw(delta));
     drawer_.draw(draw_list);
 }
 
