@@ -4,7 +4,7 @@ include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
 set(target "shapes_riot")
 
 file(GLOB_RECURSE src "*.cpp")
-list(REMOVE_ITEM src "main.cpp")
+list(REMOVE_ITEM src "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp")
 list(FILTER src EXCLUDE REGEX ".test.cpp$")
 
 add_library("${target}_base" "${src}")
