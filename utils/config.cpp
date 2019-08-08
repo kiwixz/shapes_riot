@@ -26,7 +26,7 @@ const std::string& Config::get_raw(const std::string& key) const
 void Config::remove(const std::string& key)
 {
     if (options_.erase(key) == 0)
-        throw utils::Exception{"key '{}' missing", key};
+        throw MAKE_EXCEPTION("key '{}' missing", key);
 }
 
 void Config::clear()
@@ -96,7 +96,7 @@ void Config::parse_file(const std::filesystem::path& path, bool allow_unknown)
 {
     std::ifstream ifs{path, std::ios::ate};
     if (!ifs)
-        throw utils::Exception{"could not open config file '{}'", path.generic_string()};
+        throw MAKE_EXCEPTION("could not open config file '{}'", path.generic_string());
     std::streamoff size = ifs.tellg();
     std::string content(size, '\0');
     ifs.seekg(0, std::ios::beg);

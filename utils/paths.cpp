@@ -33,10 +33,10 @@ std::filesystem::path get_kiwixz_home(std::string_view app_name)
         while (getpwuid_r(getuid(), &pw, buffer.data(), buffer.size(), &result) == ERANGE)
             buffer.resize(buffer.size() * 2);
         if (!result)
-            throw utils::Exception{"could not get HOME nor passwd of user"};
+            throw MAKE_EXCEPTION("could not get HOME nor passwd of user");
         base = result->pw_dir;  // pointee is in buffer
         if (!base)
-            throw utils::Exception{"user has no home"};
+            throw MAKE_EXCEPTION("user has no home");
     }
     std::filesystem::path path = std::filesystem::path{base} / ".kiwixz" / app_name;
 #endif

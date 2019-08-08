@@ -52,11 +52,11 @@ T Config::get(const std::string& key) const
             return true;
         else if (value == "false" || value == "0")
             return false;
-        throw utils::Exception{"key '{}': expected boolean value, got '{}'", key, value};
+        throw MAKE_EXCEPTION("key '{}': expected boolean value, got '{}'", key, value);
     }
     else if constexpr (std::is_arithmetic_v<T>) {
         if (value.length() == 0)
-            throw utils::Exception{"key '{}': expected numeric value, got empty string", key};
+            throw MAKE_EXCEPTION("key '{}': expected numeric value, got empty string", key);
 
         char* end;
         T result;
@@ -70,8 +70,8 @@ T Config::get(const std::string& key) const
             result = static_cast<T>(std::strtold(value.c_str(), &end));
 
         if (end != value.c_str() + value.length())
-            throw utils::Exception{"key '{}': expected {} value, got '{}'",
-                                   key, std::is_integral_v<T> ? "integer" : "floating-point", value};
+            throw MAKE_EXCEPTION("key '{}': expected {} value, got '{}'",
+                                 key, std::is_integral_v<T> ? "integer" : "floating-point", value);
         return result;
     }
     else
