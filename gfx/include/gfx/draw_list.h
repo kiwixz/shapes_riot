@@ -15,8 +15,8 @@ struct DrawList {
     };
     static_assert(sizeof(ColoredVertex) == sizeof(float) * 6);
 
-    utils::Span<const ColoredVertex> vertices() const;
-    utils::Span<const Index> indexes() const;
+    [[nodiscard]] utils::Span<const ColoredVertex> vertices() const;
+    [[nodiscard]] utils::Span<const Index> indexes() const;
 
     void push(utils::Span<const ColoredVertex> vertices);
     void push(utils::Span<const ColoredVertex> vertices, utils::Span<const Index> indexes);

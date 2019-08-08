@@ -28,14 +28,6 @@ WindowState Window::state() const
     return WindowState{window_.get()};
 }
 
-void Window::poll_events(const std::function<void(WindowEvent&&)>& event_handler)
-{
-    glfwPollEvents();
-    for (WindowEvent& event : event_queue_)
-        event_handler(std::move(event));
-    event_queue_.clear();
-}
-
 GLFWwindow* Window::ptr()
 {
     return window_.get();
@@ -44,6 +36,14 @@ GLFWwindow* Window::ptr()
 GLFWwindow const* Window::ptr() const
 {
     return window_.get();
+}
+
+void Window::poll_events(const std::function<void(WindowEvent&&)>& event_handler)
+{
+    glfwPollEvents();
+    for (WindowEvent& event : event_queue_)
+        event_handler(std::move(event));
+    event_queue_.clear();
 }
 
 void Window::on_key(int key, int scancode, int action, int mods)
