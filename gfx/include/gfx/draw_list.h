@@ -1,32 +1,41 @@
 #pragma once
 
+#include "gfx/texture.h"
+#include "gfx/vertex.h"
 #include "utils/span.h"
-#include "utils/vec.h"
 #include <vector>
 
 namespace gfx {
 
+struct SubDrawList {
+    [[nodiscard]] utils::Span<const Vertex> vertices() const;
+    [[nodiscard]] utils::Span<const Vertex::Index> indexes() const;
+
+    void push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {});
+    void push(const SubDrawList& draw_list);
+    void transform(utils::Vec2d translation, utils::Vec2d scale);
+
+private:
+    std::vector<Vertex> vertices_;
+    std::vector<Vertex::Index> indexes_;
+    Vertex::Index next_index_ = 0;
+};
+
+
 struct DrawList {
-    using Index = unsigned;
+    using Iterator = std::unordered_map<const Texture*, SubDrawList>::const_iterator;
 
-    struct ColoredVertex {
-        utils::Vec2f pos;
-        utils::Vec4f color;
-    };
-    static_assert(sizeof(ColoredVertex) == sizeof(float) * 6);
+    Iterator begin() const;
+    Iterator end() const;
 
-    [[nodiscard]] utils::Span<const ColoredVertex> vertices() const;
-    [[nodiscard]] utils::Span<const Index> indexes() const;
-
-    void push(utils::Span<const ColoredVertex> vertices);
-    void push(utils::Span<const ColoredVertex> vertices, utils::Span<const Index> indexes);
+    void push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {});
+    void push(const Texture& texture, utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {});
     void push(const DrawList& draw_list);
     void transform(utils::Vec2d translation, utils::Vec2d scale);
 
 private:
-    std::vector<ColoredVertex> vertices_;
-    std::vector<Index> indexes_;
-    Index next_index_ = 0;
+    std::unordered_map<const Texture*, SubDrawList> sub_lists_;
 };
+
 
 }  // namespace gfx

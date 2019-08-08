@@ -4,24 +4,30 @@
 
 namespace gfx {
 
-Drawer::Drawer()
+Drawer::Drawer() :
+    blank_{1, 1}
 {
     constexpr std::string_view vertex_source = R"(
             #version 450
             layout(location=0) in vec2 pos;
-            layout(location=1) in vec4 color;
-            layout(location=0) out vec4 color_v;
+            layout(location=1) in vec4 rgb;
+            layout(location=2) in vec2 uv;
+            layout(location=0) out vec4 rgb_;
+            layout(location=1) out vec2 uv_;
             void main() {
                 gl_Position = vec4(pos, 0.0, 1.0);
-                color_v = color;
+                rgb_ = rgb;
+                uv_ = uv;
             }
         )";
     constexpr std::string_view fragment_source = R"(
             #version 450
-            layout(location=0) in vec4 color_v;
+            uniform sampler2D tex;
+            layout(location=0) in vec4 rgb_;
+            layout(location=1) in vec2 uv_;
             out vec4 color;
             void main() {
-                color = color_v;
+                color = rgb_ * texture(tex, uv_);
             }
         )";
     program_.attach({GL_VERTEX_SHADER, vertex_source});
@@ -31,33 +37,33 @@ Drawer::Drawer()
     glCreateVertexArrays(vertex_array_.size, vertex_array_.ptr());
     glCreateBuffers(buffers_.size, buffers_.ptr());
 
-    int pos_attrib = 0;
-    glEnableVertexArrayAttrib(vertex_array_[0], pos_attrib);
-    glVertexArrayVertexBuffer(vertex_array_[0], 0, buffers_[0],
-                              offsetof(DrawList::ColoredVertex, pos), sizeof(DrawList::ColoredVertex));
-    glVertexArrayAttribFormat(vertex_array_[0], pos_attrib,
-                              sizeof(DrawList::ColoredVertex::pos) / sizeof(float), GL_FLOAT, GL_FALSE, 0);
-    glVertexArrayAttribBinding(vertex_array_[0], pos_attrib, 0);
+    auto vao_attrib = [&](unsigned attrib, size_t offset, int size) {
+        glEnableVertexArrayAttrib(vertex_array_[0], attrib);
+        glVertexArrayVertexBuffer(vertex_array_[0], attrib, buffers_[0], offset, sizeof(Vertex));
+        glVertexArrayAttribFormat(vertex_array_[0], attrib, size / sizeof(float), GL_FLOAT, GL_FALSE, 0);
+        glVertexArrayAttribBinding(vertex_array_[0], attrib, attrib);
+    };
 
-    int color_attrib = 1;
-    glEnableVertexArrayAttrib(vertex_array_[0], color_attrib);
-    glVertexArrayVertexBuffer(vertex_array_[0], 1, buffers_[0],
-                              offsetof(DrawList::ColoredVertex, color), sizeof(DrawList::ColoredVertex));
-    glVertexArrayAttribFormat(vertex_array_[0], color_attrib,
-                              sizeof(DrawList::ColoredVertex::color) / sizeof(float), GL_FLOAT, GL_FALSE, 0);
-    glVertexArrayAttribBinding(vertex_array_[0], color_attrib, 1);
+    vao_attrib(0, offsetof(Vertex, pos), sizeof(Vertex::pos));
+    vao_attrib(1, offsetof(Vertex, rgb), sizeof(Vertex::rgb));
+    vao_attrib(2, offsetof(Vertex, uv), sizeof(Vertex::uv));
 
     glVertexArrayElementBuffer(vertex_array_[0], buffers_[1]);
+
+    static constexpr uint32_t blank_pixel = 0xffffffff;
+    blank_.upload(&blank_pixel);
 }
 
 void Drawer::draw(const DrawList& draw_list)
 {
+    utils::ScopeExit program_binding = program_.bind();
     glBindVertexArray(vertex_array_[0]);
-    {
-        utils::ScopeExit program_binding = program_.bind();
-        glNamedBufferData(buffers_[0], draw_list.vertices().size_bytes(), draw_list.vertices().data(), GL_STREAM_DRAW);
-        glNamedBufferData(buffers_[1], draw_list.indexes().size_bytes(), draw_list.indexes().data(), GL_STREAM_DRAW);
-        glDrawElements(GL_TRIANGLES, static_cast<int>(draw_list.indexes().size()), GL_UNSIGNED_INT, nullptr);
+    for (const auto& it : draw_list) {
+        const SubDrawList& sub_list = it.second;
+        utils::ScopeExit texture_binding = (it.first ? *it.first : blank_).bind();
+        glNamedBufferData(buffers_[0], sub_list.vertices().size_bytes(), sub_list.vertices().data(), GL_STREAM_DRAW);
+        glNamedBufferData(buffers_[1], sub_list.indexes().size_bytes(), sub_list.indexes().data(), GL_STREAM_DRAW);
+        glDrawElements(GL_TRIANGLES, static_cast<int>(sub_list.indexes().size()), GL_UNSIGNED_INT, nullptr);
     }
     glBindVertexArray(0);
 }

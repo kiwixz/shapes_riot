@@ -38,7 +38,7 @@ GLFWwindow const* Window::ptr() const
     return window_.get();
 }
 
-void Window::poll_events(const std::function<void(WindowEvent&&)>& event_handler)
+void Window::poll_events(const std::function<void(WindowEvent&& event)>& event_handler)
 {
     glfwPollEvents();
     for (WindowEvent& event : event_queue_)

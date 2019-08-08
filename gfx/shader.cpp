@@ -18,7 +18,7 @@ Shader::Shader(GLenum type, std::string_view source)
         glGetShaderiv(shader_.id(), GL_INFO_LOG_LENGTH, &length);
         std::vector<char> info(length);
         glGetShaderInfoLog(shader_.id(), length, &length, info.data());
-        throw utils::Exception{"could not compile shader: {}", info.data()};
+        throw MAKE_EXCEPTION("could not compile shader: {}", info.data());
     }
 }
 
@@ -38,15 +38,10 @@ void ShaderProgram::link()
     glLinkProgram(program_.id());
 }
 
-utils::ScopeExit ShaderProgram::bind()
+utils::ScopeExit ShaderProgram::bind() const
 {
     glUseProgram(program_.id());
-    return utils::ScopeExit{&ShaderProgram::unbind};
-}
-
-void ShaderProgram::unbind()
-{
-    glUseProgram(0);
+    return utils::ScopeExit{std::bind(glUseProgram, 0)};
 }
 
 }  // namespace gfx

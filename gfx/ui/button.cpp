@@ -9,11 +9,11 @@ Button::Button()
 DrawList Button::draw(double delta)
 {
     static constexpr utils::Vec4f color = {0.0f, 0.0f, 0.0f, 0.9f};
-    static constexpr std::array<gfx::DrawList::ColoredVertex, 4> vertices = {{{{-1.0f, -1.0f}, color},
-                                                                              {{-1.0f, 1.0f}, color},
-                                                                              {{1.0f, 1.0f}, color},
-                                                                              {{1.0f, -1.0f}, color}}};
-    static constexpr std::array<gfx::DrawList::Index, 6> indexes = {{0, 1, 3, 1, 3, 2}};
+    static constexpr std::array<gfx::Vertex, 4> vertices = {{{{-1.0f, -1.0f}, color},
+                                                             {{-1.0f, 1.0f}, color},
+                                                             {{1.0f, 1.0f}, color},
+                                                             {{1.0f, -1.0f}, color}}};
+    static constexpr std::array<gfx::Vertex::Index, 6> indexes = {{0, 1, 3, 1, 3, 2}};
 
     DrawList draw_list;
     draw_list.push(vertices, indexes);

@@ -24,15 +24,13 @@ struct ShaderProgram {
 public:
     ShaderProgram();
 
-    void attach(Shader const& shader);
+    void attach(const Shader& shader);
     void link();
 
-    [[nodiscard]] utils::ScopeExit bind();
+    [[nodiscard]] utils::ScopeExit bind() const;
 
 private:
     GlProgram program_;
-
-    static void unbind();
 };
 
 }  // namespace gfx

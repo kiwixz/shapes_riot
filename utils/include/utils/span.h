@@ -8,6 +8,7 @@ template <typename TElement>
 struct Span {
     using Element = TElement;
 
+    constexpr Span() = default;
     constexpr Span(Element* data, size_t size);
 
     template <typename T>
@@ -23,8 +24,8 @@ struct Span {
 
 
 private:
-    Element* data_;
-    size_t size_;
+    Element* data_ = nullptr;
+    size_t size_ = 0;
 };
 
 

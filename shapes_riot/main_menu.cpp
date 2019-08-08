@@ -16,7 +16,7 @@ void MainMenu::tick(double delta, const gfx::WindowState& state)
     glClearColor(0.4f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    std::vector<gfx::DrawList::ColoredVertex> vertices;
+    std::vector<gfx::Vertex> vertices;
     vertices.push_back({{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}});
     vertices.push_back({{0.0f, 0.5f}, {0.0f, 1.0f, 0.0f, 1.0f}});
     vertices.push_back({{0.5f, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}});

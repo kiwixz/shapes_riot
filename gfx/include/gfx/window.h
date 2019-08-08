@@ -23,7 +23,7 @@ struct Window {
     [[nodiscard]] GLFWwindow* ptr();
     [[nodiscard]] GLFWwindow const* ptr() const;
 
-    void poll_events(const std::function<void(WindowEvent&&)>& event_handler);
+    void poll_events(const std::function<void(WindowEvent&& event)>& event_handler);
 
 private:
     GlfwHandle glfw_handle_;

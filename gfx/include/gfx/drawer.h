@@ -15,6 +15,7 @@ private:
     ShaderProgram program_;
     GlBuffers<2> buffers_;
     GlVertexArrays<> vertex_array_;
+    Texture blank_;
 };
 
 }  // namespace gfx
