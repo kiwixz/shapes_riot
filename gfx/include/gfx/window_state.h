@@ -11,7 +11,7 @@ struct WindowState {
     bool iconified;
     utils::Vec2i window_size;
     utils::Vec2i framebuffer_size;
-    utils::Vec2d mouse_pos;
+    utils::Vec2f mouse_pos;
 };
 
 }  // namespace gfx

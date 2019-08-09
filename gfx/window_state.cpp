@@ -10,8 +10,8 @@ WindowState::WindowState(GLFWwindow* window)
 
     utils::Vec2d mouse_pos_screen;
     glfwGetCursorPos(window, &mouse_pos_screen.x, &mouse_pos_screen.y);
-    mouse_pos = {mouse_pos_screen.x / window_size.x * 2 - 1,
-                 -mouse_pos_screen.y / window_size.y * 2 - 1};
+    mouse_pos = utils::Vec2d{mouse_pos_screen.x / window_size.x * 2.0 - 1.0,
+                             -(mouse_pos_screen.y / window_size.y * 2.0 - 1.0)};
 }
 
 }  // namespace gfx

@@ -10,7 +10,7 @@ struct Button : Widget {
     DrawList draw(double delta) override;
 
     void on_key(const WindowEvent::KeyEvent& event) override;
-    void on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec2d pos) override;
+    void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec2f pos) override;
 
 private:
     std::string label_;

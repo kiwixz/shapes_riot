@@ -18,7 +18,7 @@ DrawList Button::draw(double delta)
 
     DrawList draw_list;
     draw_list.push(vertices, indexes);
-    draw_list.transform(margin_tranform());
+    draw_list.transform(margin_transform());
     return draw_list;
 }
 
@@ -29,7 +29,7 @@ void Button::on_key(const WindowEvent::KeyEvent& event)
         on_click_();
 }
 
-void Button::on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec2d pos)
+void Button::on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec2f pos)
 {
     if (event.action == GLFW_RELEASE && event.mods == 0 && event.button == GLFW_MOUSE_BUTTON_LEFT)
         on_click_();

@@ -20,6 +20,9 @@ using Transform2u = Transform2<unsigned>;
 
 
 template <typename T>
+constexpr Transform2<T> operator-(const Transform2<T>& lhs);
+
+template <typename T>
 constexpr Transform2<T>& operator*=(Transform2<T>& lhs, const Transform2<T>& rhs);
 
 template <typename T>
@@ -33,9 +36,15 @@ constexpr Vec2<T> operator*(const Vec2<T>& lhs, const Transform2<T>& rhs);
 
 
 template <typename T>
+constexpr Transform2<T> operator-(const Transform2<T>& lhs)
+{
+    return {-lhs.translation / lhs.scale, utils::Vec2<T>{1, 1} / lhs.scale};
+}
+
+template <typename T>
 constexpr Transform2<T>& operator*=(Transform2<T>& lhs, const Transform2<T>& rhs)
 {
-    lhs.translation += rhs.translation;
+    lhs.translation = lhs.translation * rhs.scale + rhs.translation;
     lhs.scale *= rhs.scale;
     return lhs;
 }

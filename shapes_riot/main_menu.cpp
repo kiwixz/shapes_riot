@@ -8,8 +8,16 @@ namespace shapes_riot {
 MainMenu::MainMenu(ScreenStack& screens) :
     screens_{&screens}
 {
-    layout_.set_margin(0.6f, 0.85f, 0.6f, 0.85f);
-    layout_.add_widget(std::make_unique<gfx::ui::Button>("hello", std::bind(printf, "hello\n")));
+    layout_.set_margin(0.7f, 0.85f, 0.7f, 0.85f);
+
+    auto add_button = [&](std::string label, std::function<void()> on_click) {
+        auto button = std::make_unique<gfx::ui::Button>(std::move(label), std::move(on_click));
+        button->set_margin(0.05f, 0.0f, 0.05f, 0.0f);
+        layout_.add_widget(std::move(button));
+    };
+
+    add_button("hello", std::bind(printf, "hello\n"));
+    add_button("world", std::bind(printf, "world\n"));
 }
 
 void MainMenu::tick(double delta, const gfx::WindowState& state)

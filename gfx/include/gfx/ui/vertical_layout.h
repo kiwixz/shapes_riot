@@ -10,19 +10,18 @@ struct VerticalLayout : Widget {
     DrawList draw(double delta) override;
 
     void on_key(const WindowEvent::KeyEvent& event) override;
-    void on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec2d pos) override;
+    void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec2f pos) override;
 
     void add_widget(std::unique_ptr<Widget>&& widget);
 
 private:
     struct Child {
         std::unique_ptr<Widget> widget;
-        float position;
-        float size;
+        utils::Transform2f transform;
     };
 
     std::vector<Child> children_;
-    Child* focus_ = nullptr;
+    Widget* focus_ = nullptr;
 };
 
 }  // namespace gfx::ui

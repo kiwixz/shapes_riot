@@ -2,9 +2,17 @@
 
 namespace gfx::ui {
 
-const utils::Transform2f& Widget::margin_tranform() const
+const utils::Transform2f& Widget::margin_transform() const
 {
     return margin_tranform_;
+}
+
+void Widget::on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec2f pos)
+{
+    utils::Vec2f rel_pos = pos * -margin_transform();
+    if (rel_pos.x >= -1.0f && rel_pos.x <= 1.0f
+        && rel_pos.y >= -1.0f && rel_pos.y <= 1.0f)
+        on_mouse_button_(event, rel_pos);
 }
 
 void Widget::on_window_event(const WindowEvent& event, const WindowState& state)
