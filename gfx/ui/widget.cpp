@@ -26,7 +26,7 @@ void Widget::on_window_event(const WindowEvent& event, const WindowState& state)
 void Widget::set_margin(float top, float right, float bottom, float left)
 {
     margin_tranform_ = {utils::Vec2f{left - right, bottom - top} / 2.0f,
-                        -utils::Vec2f{left + right, bottom + top} / 2.0f + 1.0f};
+                        1.0f - utils::Vec2f{left + right, bottom + top} / 2.0f};
 }
 
 }  // namespace gfx::ui

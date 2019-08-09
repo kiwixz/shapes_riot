@@ -9,7 +9,7 @@ struct Transform2 {
     using Element = TElement;
 
     utils::Vec2<Element> translation{};
-    utils::Vec2<Element> scale{1, 1};
+    utils::Vec2<Element> scale{utils::Vec2i{1, 1}};
 };
 
 
@@ -38,7 +38,7 @@ constexpr Vec2<T> operator*(const Vec2<T>& lhs, const Transform2<T>& rhs);
 template <typename T>
 constexpr Transform2<T> operator-(const Transform2<T>& lhs)
 {
-    return {-lhs.translation / lhs.scale, utils::Vec2<T>{1, 1} / lhs.scale};
+    return {-lhs.translation / lhs.scale, static_cast<T>(1) / lhs.scale};
 }
 
 template <typename T>

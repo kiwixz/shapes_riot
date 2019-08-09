@@ -1,11 +1,18 @@
 #pragma once
 
 #include <cmath>
+#include <type_traits>
 
 namespace utils::vec_detail {
 
+struct VecBase {};  // simplify sfinae
+
+template <typename T>
+constexpr bool is_vec = std::is_base_of_v<VecBase, T>;
+
+
 template <template <typename> typename TVec, typename TElement, int Tsize>
-struct VecMeta {
+struct VecMeta : VecBase {
     using Vec = TVec<TElement>;
     using Element = TElement;
     static constexpr int size = Tsize;
@@ -19,50 +26,6 @@ struct VecMeta {
     {
         return ptr()[idx];
     }
-
-    constexpr Vec operator-() const
-    {
-        Vec vec;
-        for (int i = 0; i < size; ++i)
-            vec[i] = -self()[i];
-        return vec;
-    }
-
-#define DEF_OP(op, type, operand)          \
-    constexpr Vec& operator op(type other) \
-    {                                      \
-        for (int i = 0; i < size; ++i)     \
-            self()[i] op operand;          \
-        return self();                     \
-    }
-
-    DEF_OP(+=, const Vec&, other[i])
-    DEF_OP(-=, const Vec&, other[i])
-    DEF_OP(*=, const Vec&, other[i])
-    DEF_OP(/=, const Vec&, other[i])
-    DEF_OP(+=, Element, other)
-    DEF_OP(-=, Element, other)
-    DEF_OP(*=, Element, other)
-    DEF_OP(/=, Element, other)
-#undef DEF_OP
-
-#define DEF_OP(op, type)                        \
-    constexpr Vec operator op(type other) const \
-    {                                           \
-        Vec vec = self();                       \
-        vec op## = other;                       \
-        return vec;                             \
-    }
-
-    DEF_OP(+, const Vec&)
-    DEF_OP(-, const Vec&)
-    DEF_OP(*, const Vec&)
-    DEF_OP(/, const Vec&)
-    DEF_OP(+, Element)
-    DEF_OP(-, Element)
-    DEF_OP(*, Element)
-    DEF_OP(/, Element)
-#undef DEF_OP
 
     [[nodiscard]] constexpr Element* ptr()
     {
@@ -105,5 +68,73 @@ private:
         return *reinterpret_cast<const Vec*>(this);
     }
 };
+
+
+template <template <typename> typename TVec, typename TElement,
+          std::enable_if_t<is_vec<TVec<TElement>>, int> = 0>
+constexpr TVec<TElement> operator-(const TVec<TElement>& lhs)
+{
+    TVec<TElement> vec;
+    for (int i = 0; i < TVec<TElement>::size; ++i)
+        vec[i] = -lhs[i];
+    return vec;
+}
+
+#define DEF_OP(op, type, operand)                                        \
+    template <template <typename> typename TVec, typename TElement,      \
+              std::enable_if_t<is_vec<TVec<TElement>>, int> = 0>         \
+    constexpr TVec<TElement>& operator op(TVec<TElement>& lhs, type rhs) \
+    {                                                                    \
+        for (int i = 0; i < TVec<TElement>::size; ++i)                   \
+            lhs[i] op operand;                                           \
+        return lhs;                                                      \
+    }
+
+DEF_OP(+=, const TVec<TElement>&, rhs[i])
+DEF_OP(-=, const TVec<TElement>&, rhs[i])
+DEF_OP(*=, const TVec<TElement>&, rhs[i])
+DEF_OP(/=, const TVec<TElement>&, rhs[i])
+DEF_OP(+=, TElement, rhs)
+DEF_OP(-=, TElement, rhs)
+DEF_OP(*=, TElement, rhs)
+DEF_OP(/=, TElement, rhs)
+#undef DEF_OP
+
+#define DEF_OP(op, type)                                                      \
+    template <template <typename> typename TVec, typename TElement,           \
+              std::enable_if_t<is_vec<TVec<TElement>>, int> = 0>              \
+    constexpr TVec<TElement> operator op(const TVec<TElement>& lhs, type rhs) \
+    {                                                                         \
+        TVec<TElement> vec = lhs;                                             \
+        vec op## = rhs;                                                       \
+        return vec;                                                           \
+    }
+
+DEF_OP(+, const TVec<TElement>&)
+DEF_OP(-, const TVec<TElement>&)
+DEF_OP(*, const TVec<TElement>&)
+DEF_OP(/, const TVec<TElement>&)
+DEF_OP(+, TElement)
+DEF_OP(-, TElement)
+DEF_OP(*, TElement)
+DEF_OP(/, TElement)
+#undef DEF_OP
+
+#define DEF_OP(op)                                                                \
+    template <template <typename> typename TVec, typename TElement,               \
+              std::enable_if_t<is_vec<TVec<TElement>>, int> = 0>                  \
+    constexpr TVec<TElement> operator op(TElement lhs, const TVec<TElement>& rhs) \
+    {                                                                             \
+        TVec<TElement> vec;                                                       \
+        for (int i = 0; i < TVec<TElement>::size; ++i)                            \
+            vec[i] = lhs op rhs[i];                                               \
+        return vec;                                                               \
+    }
+
+DEF_OP(+)
+DEF_OP(-)
+DEF_OP(*)
+DEF_OP(/)
+#undef DEF_OP
 
 }  // namespace utils::vec_detail

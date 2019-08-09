@@ -5,8 +5,9 @@
 namespace utils {
 
 template <typename TElement>
-struct Vec2 : public vec_detail::VecMeta<Vec2, TElement, 2> {
+struct Vec2 : vec_detail::VecMeta<Vec2, TElement, 2> {
     using Element = TElement;
+    static constexpr int size = 2;
 
     Element x{};
     Element y{};
@@ -38,8 +39,9 @@ struct Vec2 : public vec_detail::VecMeta<Vec2, TElement, 2> {
 };
 
 template <typename TElement>
-struct Vec3 : public vec_detail::VecMeta<Vec2, TElement, 2> {
+struct Vec3 : vec_detail::VecMeta<Vec2, TElement, 3> {
     using Element = TElement;
+    static constexpr int size = 3;
 
     Element x{};
     Element y{};
@@ -73,8 +75,9 @@ struct Vec3 : public vec_detail::VecMeta<Vec2, TElement, 2> {
 };
 
 template <typename TElement>
-struct Vec4 : public vec_detail::VecMeta<Vec4, TElement, 2> {
+struct Vec4 : vec_detail::VecMeta<Vec4, TElement, 4> {
     using Element = TElement;
+    static constexpr int size = 4;
 
     Element x{};
     Element y{};
