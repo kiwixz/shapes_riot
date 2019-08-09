@@ -1,224 +1,123 @@
 #pragma once
 
+#include "utils/vec_detail.h"
+
 namespace utils {
-namespace detail_vec {
 
-template <template <typename> typename Vec, typename T, int Size>
-class VecBase {
-public:
-    using Type = T;
-    static constexpr int size = Size;
+template <typename TElement>
+struct Vec2 : public vec_detail::VecMeta<Vec2, TElement, 2> {
+    using Element = TElement;
 
+    Element x{};
+    Element y{};
 
-    T* to_c()
-    {
-        static_assert(sizeof(Vec<T>) == sizeof(T) * Size);
-        return reinterpret_cast<T*>(this);
-    }
-    const T* to_c() const
-    {
-        static_assert(sizeof(Vec<T>) == sizeof(T) * Size);
-        return reinterpret_cast<const T*>(this);
-    }
+    constexpr Vec2() = default;
+    constexpr Vec2(const Vec2<Element>&) = default;
+    constexpr Vec2<Element>& operator=(const Vec2<Element>&) = default;
+    constexpr Vec2(Vec2<Element>&&) = default;
+    constexpr Vec2<Element>& operator=(Vec2<Element>&&) = default;
 
-    T& operator[](size_t idx)
-    {
-        return to_c()[idx];
-    }
-    T operator[](size_t idx) const
-    {
-        return to_c()[idx];
-    }
-
-
-    Vec<T> operator-() const
-    {
-        Vec<T> vec;
-        for (int i = 0; i < Size; ++i) {
-            vec[i] = -self()[i];
-        }
-        return vec;
-    }
-
-#define DEF_OP(op, type, operand)        \
-    Vec<T>& operator op(type other)      \
-    {                                    \
-        for (int i = 0; i < Size; ++i) { \
-            self()[i] op operand;        \
-        }                                \
-        return self();                   \
-    }
-
-    DEF_OP(+=, const Vec<T>&, other[i]);
-    DEF_OP(-=, const Vec<T>&, other[i]);
-    DEF_OP(*=, const Vec<T>&, other[i]);
-    DEF_OP(/=, const Vec<T>&, other[i]);
-    DEF_OP(+=, T, other);
-    DEF_OP(-=, T, other);
-    DEF_OP(*=, T, other);
-    DEF_OP(/=, T, other);
-
-#undef DEF_OP
-#define DEF_OP(op, type)                 \
-    Vec<T> operator op(type other) const \
-    {                                    \
-        Vec<T> vec = self();             \
-        vec op## = other;                \
-        return vec;                      \
-    }
-
-    DEF_OP(+, const Vec<T>&);
-    DEF_OP(-, const Vec<T>&);
-    DEF_OP(*, const Vec<T>&);
-    DEF_OP(/, const Vec<T>&);
-    DEF_OP(+, T);
-    DEF_OP(-, T);
-    DEF_OP(*, T);
-    DEF_OP(/, T);
-
-#undef DEF_OP
-
-
-    T dot(const Vec<T>& other) const
-    {
-        T r{};
-        for (int i = 0; i < Size; ++i) {
-            r += self()[i] * other[i];
-        }
-        return r;
-    }
-
-    T length() const
-    {
-        return std::sqrt(dot(self()));
-    }
-
-    Vec<T>& normalize()
-    {
-        return self() /= length();
-    }
-
-
-private:
-    constexpr Vec<T>& self()
-    {
-        return *reinterpret_cast<Vec<T>*>(this);
-    }
-
-    constexpr const Vec<T>& self() const
-    {
-        return *reinterpret_cast<const Vec<T>*>(this);
-    }
-};
-
-}  // namespace detail_vec
-
-
-template <typename T>
-class Vec2 : public detail_vec::VecBase<Vec2, T, 2> {
-public:
-    T x{};
-    T y{};
-
-    Vec2() = default;
-    Vec2(const Vec2<T>&) = default;
-    Vec2<T>& operator=(const Vec2<T>&) = default;
-    Vec2(Vec2<T>&&) = default;
-    Vec2<T>& operator=(Vec2<T>&&) = default;
-
-    Vec2(T x, T y) :
-        x{x}, y{y}
+    constexpr Vec2(Element _x, Element _y) :
+        x{_x}, y{_y}
     {}
 
-    template <typename U>
-    explicit Vec2(const Vec2<U>& other) :
-        x{static_cast<T>(other.x)}, y{static_cast<T>(other.y)}
-    {}
-
-    template <typename U>
-    Vec2<T>& operator=(const Vec2<U>& other)
+    template <typename T>
+    constexpr explicit Vec2(const Vec2<T>& other)
     {
-        x = static_cast<T>(other.x);
-        y = static_cast<T>(other.y);
+        *this = other;
+    }
+
+    template <typename T>
+    constexpr Vec2<Element>& operator=(const Vec2<T>& other)
+    {
+        x = static_cast<Element>(other.x);
+        y = static_cast<Element>(other.y);
         return *this;
     }
 };
 
-template <typename T>
-class Vec3 : public detail_vec::VecBase<Vec3, T, 3> {
-public:
-    T x{};
-    T y{};
-    T z{};
+template <typename TElement>
+struct Vec3 : public vec_detail::VecMeta<Vec2, TElement, 2> {
+    using Element = TElement;
 
-    Vec3() = default;
-    Vec3(const Vec3<T>&) = default;
-    Vec3<T>& operator=(const Vec3<T>&) = default;
-    Vec3(Vec3<T>&&) = default;
-    Vec3<T>& operator=(Vec3<T>&&) = default;
+    Element x{};
+    Element y{};
+    Element z{};
 
-    Vec3(T x, T y, T z) :
-        x{x}, y{y}, z{z}
+    constexpr Vec3() = default;
+    constexpr Vec3(const Vec3<Element>&) = default;
+    constexpr Vec3<Element>& operator=(const Vec3<Element>&) = default;
+    constexpr Vec3(Vec3<Element>&&) = default;
+    constexpr Vec3<Element>& operator=(Vec3<Element>&&) = default;
+
+    constexpr Vec3(Element _x, Element _y, Element _z) :
+        x{_x}, y{_y}, z{_z}
     {}
 
-    template <typename U>
-    explicit Vec3(const Vec3<U>& other) :
-        x{static_cast<T>(other.x)}, y{static_cast<T>(other.y)}, z{static_cast<T>(other.z)}
-    {}
-
-    template <typename U>
-    Vec3<T>& operator=(const Vec3<U>& other)
+    template <typename T>
+    constexpr explicit Vec3(const Vec3<T>& other)
     {
-        x = static_cast<T>(other.x);
-        y = static_cast<T>(other.y);
-        z = static_cast<T>(other.z);
+        *this = other;
+    }
+
+    template <typename T>
+    constexpr Vec3<Element>& operator=(const Vec3<T>& other)
+    {
+        x = static_cast<Element>(other.x);
+        y = static_cast<Element>(other.y);
+        z = static_cast<Element>(other.z);
         return *this;
     }
 };
 
-template <typename T>
-class Vec4 : public detail_vec::VecBase<Vec4, T, 4> {
-public:
-    T x{};
-    T y{};
-    T z{};
-    T w{};
+template <typename TElement>
+struct Vec4 : public vec_detail::VecMeta<Vec4, TElement, 2> {
+    using Element = TElement;
 
-    Vec4() = default;
-    Vec4(const Vec4<T>&) = default;
-    Vec4<T>& operator=(const Vec4<T>&) = default;
-    Vec4(Vec4<T>&&) = default;
-    Vec4<T>& operator=(Vec4<T>&&) = default;
+    Element x{};
+    Element y{};
+    Element z{};
+    Element w{};
 
-    Vec4(T x, T y, T z, T w) :
-        x{x}, y{y}, z{z}, w{w}
+    constexpr Vec4() = default;
+    constexpr Vec4(const Vec4<Element>&) = default;
+    constexpr Vec4<Element>& operator=(const Vec4<Element>&) = default;
+    constexpr Vec4(Vec4<Element>&&) = default;
+    constexpr Vec4<Element>& operator=(Vec4<Element>&&) = default;
+
+    constexpr Vec4(Element _x, Element _y, Element _z, Element _w) :
+        x{_x}, y{_y}, z{_z}, w{_w}
     {}
 
-    template <typename U>
-    explicit Vec4(const Vec4<U>& other) :
-        x{static_cast<T>(other.x)}, y{static_cast<T>(other.y)}, z{static_cast<T>(other.z)}, w{static_cast<T>(other.w)}
-    {}
-
-    template <typename U>
-    Vec4<T>& operator=(const Vec4<U>& other)
+    template <typename T>
+    constexpr explicit Vec4(const Vec4<T>& other)
     {
-        x = static_cast<T>(other.x);
-        y = static_cast<T>(other.y);
-        z = static_cast<T>(other.z);
-        w = static_cast<T>(other.w);
+        *this = other;
+    }
+
+    template <typename T>
+    constexpr Vec4<Element>& operator=(const Vec4<T>& other)
+    {
+        x = static_cast<Element>(other.x);
+        y = static_cast<Element>(other.y);
+        z = static_cast<Element>(other.z);
+        w = static_cast<Element>(other.w);
         return *this;
     }
 };
 
 
+using Vec2d = Vec2<double>;
 using Vec2f = Vec2<float>;
 using Vec2i = Vec2<int>;
 using Vec2u = Vec2<unsigned>;
 
+using Vec3d = Vec3<double>;
 using Vec3f = Vec3<float>;
 using Vec3i = Vec3<int>;
 using Vec3u = Vec3<unsigned>;
 
+using Vec4d = Vec4<double>;
 using Vec4f = Vec4<float>;
 using Vec4i = Vec4<int>;
 using Vec4u = Vec4<unsigned>;
