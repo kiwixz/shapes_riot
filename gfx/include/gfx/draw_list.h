@@ -3,6 +3,7 @@
 #include "gfx/texture.h"
 #include "gfx/vertex.h"
 #include "utils/span.h"
+#include "utils/transform.h"
 #include <vector>
 
 namespace gfx {
@@ -13,7 +14,7 @@ struct SubDrawList {
 
     void push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {});
     void push(const SubDrawList& draw_list);
-    void transform(utils::Vec2d translation, utils::Vec2d scale);
+    void transform(const utils::Transform2f& transform);
 
 private:
     std::vector<Vertex> vertices_;
@@ -31,7 +32,7 @@ struct DrawList {
     void push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {});
     void push(const Texture& texture, utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {});
     void push(const DrawList& draw_list);
-    void transform(utils::Vec2d translation, utils::Vec2d scale);
+    void transform(const utils::Transform2f& transform);
 
 private:
     std::unordered_map<const Texture*, SubDrawList> sub_lists_;

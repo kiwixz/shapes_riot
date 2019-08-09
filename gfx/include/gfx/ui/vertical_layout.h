@@ -17,8 +17,8 @@ struct VerticalLayout : Widget {
 private:
     struct Child {
         std::unique_ptr<Widget> widget;
-        double position;
-        double size;
+        float position;
+        float size;
     };
 
     std::vector<Child> children_;

@@ -41,10 +41,10 @@ void SubDrawList::push(const SubDrawList& draw_list)
     push(draw_list.vertices(), draw_list.indexes());
 }
 
-void SubDrawList::transform(utils::Vec2d translation, utils::Vec2d scale)
+void SubDrawList::transform(const utils::Transform2f& transform)
 {
     for (Vertex& vertex : vertices_)
-        vertex.pos = utils::Vec2d{vertex.pos} * scale + translation;
+        vertex.pos *= transform;
 }
 
 
@@ -74,10 +74,10 @@ void DrawList::push(const DrawList& draw_list)
         sub_lists_[pair.first].push(pair.second);
 }
 
-void DrawList::transform(utils::Vec2d translation, utils::Vec2d scale)
+void DrawList::transform(const utils::Transform2f& transform)
 {
     for (std::pair<const Texture* const, SubDrawList>& pair : sub_lists_)
-        pair.second.transform(translation, scale);
+        pair.second.transform(transform);
 }
 
 }  // namespace gfx

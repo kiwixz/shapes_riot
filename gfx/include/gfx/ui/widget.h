@@ -3,10 +3,13 @@
 #include "gfx/draw_list.h"
 #include "gfx/window_event.h"
 #include "gfx/window_state.h"
+#include "utils/vec.h"
 
 namespace gfx::ui {
 
 struct Widget {
+    utils::Vec4d margin;  // top right bottom left
+
     virtual ~Widget() = default;
 
     virtual DrawList draw(double delta) = 0;

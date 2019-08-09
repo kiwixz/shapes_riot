@@ -22,7 +22,7 @@ void MainMenu::tick(double delta, const gfx::WindowState& state)
     vertices.push_back({{0.5f, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}});
 
     gfx::DrawList layout_draw_list = layout_.draw(delta);
-    layout_draw_list.transform({}, {0.16, 0.32});
+    layout_draw_list.transform({{}, {0.16, 0.32}});
 
     gfx::DrawList draw_list;
     draw_list.push(vertices);
