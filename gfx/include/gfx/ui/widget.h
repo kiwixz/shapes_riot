@@ -8,8 +8,6 @@
 namespace gfx::ui {
 
 struct Widget {
-    utils::Vec4d margin;  // top right bottom left
-
     virtual ~Widget() = default;
 
     virtual DrawList draw(double delta) = 0;
@@ -17,7 +15,14 @@ struct Widget {
     virtual void on_key(const WindowEvent::KeyEvent& event) = 0;
     virtual void on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec2d pos) = 0;
 
+    const utils::Transform2f& margin_tranform() const;
+
     void on_window_event(const WindowEvent& event, const WindowState& state);
+
+    void set_margin(float top, float right, float bottom, float left);
+
+private:
+    utils::Transform2f margin_tranform_{};
 };
 
 }  // namespace gfx::ui

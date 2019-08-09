@@ -18,6 +18,7 @@ DrawList Button::draw(double delta)
 
     DrawList draw_list;
     draw_list.push(vertices, indexes);
+    draw_list.transform(margin_tranform());
     return draw_list;
 }
 

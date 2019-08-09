@@ -8,6 +8,7 @@ namespace shapes_riot {
 MainMenu::MainMenu(ScreenStack& screens) :
     screens_{&screens}
 {
+    layout_.set_margin(0.6f, 0.85f, 0.6f, 0.85f);
     layout_.add_widget(std::make_unique<gfx::ui::Button>("hello", std::bind(printf, "hello\n")));
 }
 
@@ -21,12 +22,9 @@ void MainMenu::tick(double delta, const gfx::WindowState& state)
     vertices.push_back({{0.0f, 0.5f}, {0.0f, 1.0f, 0.0f, 1.0f}});
     vertices.push_back({{0.5f, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}});
 
-    gfx::DrawList layout_draw_list = layout_.draw(delta);
-    layout_draw_list.transform({{}, {0.16, 0.32}});
-
     gfx::DrawList draw_list;
     draw_list.push(vertices);
-    draw_list.push(layout_draw_list);
+    draw_list.push(layout_.draw(delta));
     drawer_.draw(draw_list);
 }
 

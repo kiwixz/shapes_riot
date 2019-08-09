@@ -7,7 +7,7 @@ DrawList VerticalLayout::draw(double delta)
     DrawList draw_list;
     for (const Child& child : children_) {
         DrawList child_draw_list = child.widget->draw(delta);
-        child_draw_list.transform({{0.0f, child.position}, {1.0f, child.size}});
+        child_draw_list.transform(utils::Transform2f{{0.0f, child.position}, {1.0f, child.size}} * margin_tranform());
         draw_list.push(child_draw_list);
     }
     return draw_list;

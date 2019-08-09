@@ -9,7 +9,7 @@ struct Transform2 {
     using Element = TElement;
 
     utils::Vec2<Element> translation{};
-    utils::Vec2<Element> scale{};
+    utils::Vec2<Element> scale{1, 1};
 };
 
 
@@ -20,24 +20,48 @@ using Transform2u = Transform2<unsigned>;
 
 
 template <typename T>
-constexpr T& operator*=(T& vec, const Transform2<T>& transform);
+constexpr Transform2<T>& operator*=(Transform2<T>& lhs, const Transform2<T>& rhs);
 
 template <typename T>
-constexpr T operator*(const T& vec, const Transform2<T>& transform);
+constexpr Transform2<T> operator*(const Transform2<T>& lhs, const Transform2<T>& rhs);
+
+template <typename T>
+constexpr Vec2<T>& operator*=(Vec2<T>& lhs, const Transform2<T>& rhs);
+
+template <typename T>
+constexpr Vec2<T> operator*(const Vec2<T>& lhs, const Transform2<T>& rhs);
 
 
 template <typename T>
-constexpr utils::Vec2<T>& operator*=(utils::Vec2<T>& vec, const Transform2<T>& transform)
+constexpr Transform2<T>& operator*=(Transform2<T>& lhs, const Transform2<T>& rhs)
 {
-    vec *= transform.scale;
-    vec += transform.translation;
-    return vec;
+    lhs.translation += rhs.translation;
+    lhs.scale *= rhs.scale;
+    return lhs;
 }
 
 template <typename T>
-constexpr utils::Vec2<T> operator*(const utils::Vec2<T>& vec, const Transform2<T>& transform)
+constexpr Transform2<T> operator*(const Transform2<T>& lhs, const Transform2<T>& rhs)
 {
-    return vec * transform.scale + transform.translation;
+    Transform2<T> r = lhs;
+    r *= rhs;
+    return r;
+}
+
+template <typename T>
+constexpr Vec2<T>& operator*=(Vec2<T>& lhs, const Transform2<T>& rhs)
+{
+    lhs *= rhs.scale;
+    lhs += rhs.translation;
+    return lhs;
+}
+
+template <typename T>
+constexpr Vec2<T> operator*(const Vec2<T>& lhs, const Transform2<T>& rhs)
+{
+    Vec2<T> r = lhs;
+    r *= rhs;
+    return r;
 }
 
 }  // namespace utils
