@@ -5,6 +5,11 @@
 namespace gfx {
 
 struct WindowEvent {
+    struct FramebufferResize {
+        int width;
+        int height;
+    };
+
     struct KeyEvent {
         int key;
         int scancode;
@@ -22,7 +27,7 @@ struct WindowEvent {
     [[nodiscard]] const T* as() const;
 
 private:
-    using Variant = std::variant<KeyEvent>;
+    using Variant = std::variant<FramebufferResize, KeyEvent>;
 
     Variant variant_;
 };

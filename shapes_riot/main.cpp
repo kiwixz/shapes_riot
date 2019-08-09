@@ -46,6 +46,9 @@ int main(int /*argc*/, char** /*argv*/)
                         glfwSetWindowShouldClose(window.ptr(), true);
                 }
 
+                if (const auto* framebuffer_resize = event.as<gfx::WindowEvent::FramebufferResize>())
+                    glViewport(0, 0, framebuffer_resize->width, framebuffer_resize->height);
+
                 screens.top().on_window_event(event, state);
             });
             screens.top().tick(delta, state);

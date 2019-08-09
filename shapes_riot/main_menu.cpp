@@ -8,7 +8,7 @@ namespace shapes_riot {
 MainMenu::MainMenu(ScreenStack& screens) :
     screens_{&screens}
 {
-    layout_.add_widget(std::make_unique<gfx::ui::Button>());
+    layout_.add_widget(std::make_unique<gfx::ui::Button>("hello", std::bind(printf, "hello\n")));
 }
 
 void MainMenu::tick(double delta, const gfx::WindowState& state)
