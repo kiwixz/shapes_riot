@@ -17,6 +17,12 @@ struct WindowEvent {
         int mods;
     };
 
+    struct MouseButtonEvent {
+        int button;
+        int action;
+        int mods;
+    };
+
     template <typename T>
     explicit WindowEvent(T event);
 
@@ -27,7 +33,9 @@ struct WindowEvent {
     [[nodiscard]] const T* as() const;
 
 private:
-    using Variant = std::variant<FramebufferResize, KeyEvent>;
+    using Variant = std::variant<FramebufferResize,
+                                 KeyEvent,
+                                 MouseButtonEvent>;
 
     Variant variant_;
 };

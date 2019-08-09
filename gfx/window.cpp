@@ -26,6 +26,10 @@ Window::Window(utils::Vec2i size, std::string_view title, GLFWmonitor* monitor, 
         Window& window = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
         window.event_queue_.emplace_back(WindowEvent::KeyEvent{key, scancode, action, mods});
     });
+    glfwSetMouseButtonCallback(window_.get(), [](GLFWwindow* glfw_window, int button, int action, int mods) {
+        Window& window = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
+        window.event_queue_.emplace_back(WindowEvent::MouseButtonEvent{button, action, mods});
+    });
 }
 
 WindowState Window::state() const

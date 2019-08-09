@@ -22,9 +22,16 @@ DrawList Button::draw(double delta)
 }
 
 void Button::on_key(const WindowEvent::KeyEvent& event)
-{}
+{
+    if (event.action == GLFW_RELEASE && event.mods == 0
+        && (event.key == GLFW_KEY_ENTER || event.key == GLFW_KEY_SPACE))
+        on_click_();
+}
 
-void Button::on_mouse_button(const WindowEvent::KeyEvent& event, utils::Vec2d pos)
-{}
+void Button::on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec2d pos)
+{
+    if (event.action == GLFW_RELEASE && event.mods == 0 && event.button == GLFW_MOUSE_BUTTON_LEFT)
+        on_click_();
+}
 
 }  // namespace gfx::ui
