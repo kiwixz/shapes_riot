@@ -36,14 +36,14 @@ struct VecMeta {
         return self();                     \
     }
 
-    DEF_OP(+=, const Vec&, other[i]);
-    DEF_OP(-=, const Vec&, other[i]);
-    DEF_OP(*=, const Vec&, other[i]);
-    DEF_OP(/=, const Vec&, other[i]);
-    DEF_OP(+=, Element, other);
-    DEF_OP(-=, Element, other);
-    DEF_OP(*=, Element, other);
-    DEF_OP(/=, Element, other);
+    DEF_OP(+=, const Vec&, other[i])
+    DEF_OP(-=, const Vec&, other[i])
+    DEF_OP(*=, const Vec&, other[i])
+    DEF_OP(/=, const Vec&, other[i])
+    DEF_OP(+=, Element, other)
+    DEF_OP(-=, Element, other)
+    DEF_OP(*=, Element, other)
+    DEF_OP(/=, Element, other)
 #undef DEF_OP
 
 #define DEF_OP(op, type)                        \
@@ -54,14 +54,14 @@ struct VecMeta {
         return vec;                             \
     }
 
-    DEF_OP(+, const Vec&);
-    DEF_OP(-, const Vec&);
-    DEF_OP(*, const Vec&);
-    DEF_OP(/, const Vec&);
-    DEF_OP(+, Element);
-    DEF_OP(-, Element);
-    DEF_OP(*, Element);
-    DEF_OP(/, Element);
+    DEF_OP(+, const Vec&)
+    DEF_OP(-, const Vec&)
+    DEF_OP(*, const Vec&)
+    DEF_OP(/, const Vec&)
+    DEF_OP(+, Element)
+    DEF_OP(-, Element)
+    DEF_OP(*, Element)
+    DEF_OP(/, Element)
 #undef DEF_OP
 
     constexpr Element* ptr()
