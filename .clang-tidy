@@ -6,6 +6,7 @@ Checks: "*  ,\
   -fuchsia-*  ,\
   \
   -bugprone-integer-division  ,\
+  -bugprone-macro-parentheses  ,\
   -bugprone-use-after-move  ,\
   \
   -clang-diagnostic-unused-parameter  ,\
@@ -41,6 +42,8 @@ Checks: "*  ,\
   -llvm-namespace-comment  ,\
   \
   -misc-unused-parameters  ,\
+  \
+  -modernize-avoid-bind  ,\
   \
   -readability-braces-around-statements  ,\
   -readability-else-after-return  ,\

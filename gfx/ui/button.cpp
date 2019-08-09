@@ -4,7 +4,7 @@
 namespace gfx::ui {
 
 Button::Button(std::string label, std::function<void()> on_click) :
-    label_{label}, on_click_{on_click}
+    label_{std::move(label)}, on_click_{std::move(on_click)}
 {}
 
 DrawList Button::draw(double delta)

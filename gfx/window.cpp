@@ -19,16 +19,16 @@ Window::Window(utils::Vec2i size, std::string_view title, GLFWmonitor* monitor, 
 
     glfwSetWindowUserPointer(window_.get(), this);
     glfwSetFramebufferSizeCallback(window_.get(), [](GLFWwindow* glfw_window, int width, int height) {
-        Window& window = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
-        window.event_queue_.emplace_back(WindowEvent::FramebufferResize{width, height});
+        Window& self = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
+        self.event_queue_.emplace_back(WindowEvent::FramebufferResize{width, height});
     });
     glfwSetKeyCallback(window_.get(), [](GLFWwindow* glfw_window, int key, int scancode, int action, int mods) {
-        Window& window = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
-        window.event_queue_.emplace_back(WindowEvent::KeyEvent{key, scancode, action, mods});
+        Window& self = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
+        self.event_queue_.emplace_back(WindowEvent::KeyEvent{key, scancode, action, mods});
     });
     glfwSetMouseButtonCallback(window_.get(), [](GLFWwindow* glfw_window, int button, int action, int mods) {
-        Window& window = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
-        window.event_queue_.emplace_back(WindowEvent::MouseButtonEvent{button, action, mods});
+        Window& self = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
+        self.event_queue_.emplace_back(WindowEvent::MouseButtonEvent{button, action, mods});
     });
 }
 
