@@ -20,7 +20,7 @@ MainMenu::MainMenu(ScreenStack& screens) :
     add_button("world", std::bind(printf, "world\n"));
 }
 
-void MainMenu::tick(double delta, const gfx::WindowState& state)
+void MainMenu::tick(double delta, const gfx::WindowState& /*state*/)
 {
     glClearColor(0.4f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
