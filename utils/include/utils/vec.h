@@ -19,24 +19,15 @@ struct Vec2 : vec_detail::VecMeta<Vec2, TElement, 2> {
     constexpr Vec2(Vec2<Element>&&) noexcept = default;
     constexpr Vec2<Element>& operator=(Vec2<Element>&&) noexcept = default;
 
-    constexpr Vec2(Element _x, Element _y) :
-        x{_x}, y{_y}
-    {}
+    constexpr Vec2(Element x, Element y);
 
     template <typename T>
-    constexpr explicit Vec2(const Vec2<T>& other)
-    {
-        *this = other;
-    }
+    constexpr explicit Vec2(const Vec2<T>& other);
 
     template <typename T>
-    constexpr Vec2<Element>& operator=(const Vec2<T>& other)
-    {
-        x = static_cast<Element>(other.x);
-        y = static_cast<Element>(other.y);
-        return *this;
-    }
+    constexpr Vec2<Element>& operator=(const Vec2<T>& other);
 };
+
 
 template <typename TElement>
 struct Vec3 : vec_detail::VecMeta<Vec2, TElement, 3> {
@@ -54,25 +45,15 @@ struct Vec3 : vec_detail::VecMeta<Vec2, TElement, 3> {
     constexpr Vec3(Vec3<Element>&&) noexcept = default;
     constexpr Vec3<Element>& operator=(Vec3<Element>&&) noexcept = default;
 
-    constexpr Vec3(Element _x, Element _y, Element _z) :
-        x{_x}, y{_y}, z{_z}
-    {}
+    constexpr Vec3(Element _x, Element _y, Element _z);
 
     template <typename T>
-    constexpr explicit Vec3(const Vec3<T>& other)
-    {
-        *this = other;
-    }
+    constexpr explicit Vec3(const Vec3<T>& other);
 
     template <typename T>
-    constexpr Vec3<Element>& operator=(const Vec3<T>& other)
-    {
-        x = static_cast<Element>(other.x);
-        y = static_cast<Element>(other.y);
-        z = static_cast<Element>(other.z);
-        return *this;
-    }
+    constexpr Vec3<Element>& operator=(const Vec3<T>& other);
 };
+
 
 template <typename TElement>
 struct Vec4 : vec_detail::VecMeta<Vec4, TElement, 4> {
@@ -91,25 +72,13 @@ struct Vec4 : vec_detail::VecMeta<Vec4, TElement, 4> {
     constexpr Vec4(Vec4<Element>&&) noexcept = default;
     constexpr Vec4<Element>& operator=(Vec4<Element>&&) noexcept = default;
 
-    constexpr Vec4(Element _x, Element _y, Element _z, Element _w) :
-        x{_x}, y{_y}, z{_z}, w{_w}
-    {}
+    constexpr Vec4(Element _x, Element _y, Element _z, Element _w);
 
     template <typename T>
-    constexpr explicit Vec4(const Vec4<T>& other)
-    {
-        *this = other;
-    }
+    constexpr explicit Vec4(const Vec4<T>& other);
 
     template <typename T>
-    constexpr Vec4<Element>& operator=(const Vec4<T>& other)
-    {
-        x = static_cast<Element>(other.x);
-        y = static_cast<Element>(other.y);
-        z = static_cast<Element>(other.z);
-        w = static_cast<Element>(other.w);
-        return *this;
-    }
+    constexpr Vec4<Element>& operator=(const Vec4<T>& other);
 };
 
 
@@ -127,5 +96,74 @@ using Vec4d = Vec4<double>;
 using Vec4f = Vec4<float>;
 using Vec4i = Vec4<int>;
 using Vec4u = Vec4<unsigned>;
+
+
+template <typename TElement>
+constexpr Vec2<TElement>::Vec2(Element _x, Element _y) :
+    x{_x}, y{_y}
+{}
+
+template <typename TElement>
+template <typename T>
+constexpr Vec2<TElement>::Vec2(const Vec2<T>& other)
+{
+    *this = other;
+}
+
+template <typename TElement>
+template <typename T>
+constexpr Vec2<TElement>& Vec2<TElement>::operator=(const Vec2<T>& other)
+{
+    x = static_cast<Element>(other.x);
+    y = static_cast<Element>(other.y);
+    return *this;
+}
+
+
+template <typename TElement>
+constexpr Vec3<TElement>::Vec3(Element _x, Element _y, Element _z) :
+    x{_x}, y{_y}, z{_z}
+{}
+
+template <typename TElement>
+template <typename T>
+constexpr Vec3<TElement>::Vec3(const Vec3<T>& other)
+{
+    *this = other;
+}
+
+template <typename TElement>
+template <typename T>
+constexpr Vec3<TElement>& Vec3<TElement>::operator=(const Vec3<T>& other)
+{
+    x = static_cast<Element>(other.x);
+    y = static_cast<Element>(other.y);
+    z = static_cast<Element>(other.z);
+    return *this;
+}
+
+
+template <typename TElement>
+constexpr Vec4<TElement>::Vec4(Element _x, Element _y, Element _z, Element _w) :
+    x{_x}, y{_y}, z{_z}, w{_w}
+{}
+
+template <typename TElement>
+template <typename T>
+constexpr Vec4<TElement>::Vec4(const Vec4<T>& other)
+{
+    *this = other;
+}
+
+template <typename TElement>
+template <typename T>
+constexpr Vec4<TElement>& Vec4<TElement>::operator=(const Vec4<T>& other)
+{
+    x = static_cast<Element>(other.x);
+    y = static_cast<Element>(other.y);
+    z = static_cast<Element>(other.z);
+    w = static_cast<Element>(other.w);
+    return *this;
+}
 
 }  // namespace utils
