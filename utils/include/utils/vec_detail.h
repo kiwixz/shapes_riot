@@ -17,68 +17,25 @@ struct VecMeta : VecBase {
     using Element = TElement;
     static constexpr int size = Tsize;
 
-    constexpr Element& operator[](size_t idx)
-    {
-        return ptr()[idx];
-    }
+    constexpr Element& operator[](size_t idx);
+    constexpr Element operator[](size_t idx) const;
 
-    constexpr Element operator[](size_t idx) const
-    {
-        return ptr()[idx];
-    }
+    [[nodiscard]] constexpr Element dot(const Vec& other) const;
+    [[nodiscard]] constexpr Element length() const;
+    [[nodiscard]] constexpr Element* ptr();
+    [[nodiscard]] constexpr const Element* ptr() const;
 
-    [[nodiscard]] constexpr Element* ptr()
-    {
-        static_assert(sizeof(Vec) == size * sizeof(Element));
-        return reinterpret_cast<Element*>(this);
-    }
-
-    [[nodiscard]] constexpr const Element* ptr() const
-    {
-        static_assert(sizeof(Vec) == size * sizeof(Element));
-        return reinterpret_cast<const Element*>(this);
-    }
-
-    [[nodiscard]] constexpr Element dot(const Vec& other) const
-    {
-        Element r{};
-        for (int i = 0; i < size; ++i)
-            r += self()[i] * other[i];
-        return r;
-    }
-
-    [[nodiscard]] constexpr Element length() const
-    {
-        return std::sqrt(dot(self()));
-    }
-
-    constexpr Vec& normalize()
-    {
-        return self() /= length();
-    }
+    constexpr Vec& normalize();
 
 private:
-    [[nodiscard]] constexpr Vec& self()
-    {
-        return *reinterpret_cast<Vec*>(this);
-    }
-
-    [[nodiscard]] constexpr const Vec& self() const
-    {
-        return *reinterpret_cast<const Vec*>(this);
-    }
+    [[nodiscard]] constexpr Vec& self();
+    [[nodiscard]] constexpr const Vec& self() const;
 };
 
 
 template <template <typename> typename TVec, typename TElement,
           std::enable_if_t<is_vec<TVec<TElement>>, int> = 0>
-constexpr TVec<TElement> operator-(const TVec<TElement>& lhs)
-{
-    TVec<TElement> vec;
-    for (int i = 0; i < TVec<TElement>::size; ++i)
-        vec[i] = -lhs[i];
-    return vec;
-}
+constexpr TVec<TElement> operator-(const TVec<TElement>& lhs);
 
 #define DEF_OP(op, type, operand)                                        \
     template <template <typename> typename TVec, typename TElement,      \
@@ -136,5 +93,76 @@ DEF_OP(-)
 DEF_OP(*)
 DEF_OP(/)
 #undef DEF_OP
+
+
+template <template <typename> typename TVec, typename TElement,
+          std::enable_if_t<is_vec<TVec<TElement>>, int>>
+constexpr TVec<TElement> operator-(const TVec<TElement>& lhs)
+{
+    TVec<TElement> vec;
+    for (int i = 0; i < TVec<TElement>::size; ++i)
+        vec[i] = -lhs[i];
+    return vec;
+}
+
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr TElement& VecMeta<TVec, TElement, Tsize>::operator[](size_t idx)
+{
+    return ptr()[idx];
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr TElement VecMeta<TVec, TElement, Tsize>::operator[](size_t idx) const
+{
+    return ptr()[idx];
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr TElement* VecMeta<TVec, TElement, Tsize>::ptr()
+{
+    static_assert(sizeof(Vec) == size * sizeof(Element));
+    return reinterpret_cast<Element*>(this);
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr const TElement* VecMeta<TVec, TElement, Tsize>::ptr() const
+{
+    static_assert(sizeof(Vec) == size * sizeof(Element));
+    return reinterpret_cast<const Element*>(this);
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr TElement VecMeta<TVec, TElement, Tsize>::dot(const Vec& other) const
+{
+    Element r{};
+    for (int i = 0; i < size; ++i)
+        r += self()[i] * other[i];
+    return r;
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr TElement VecMeta<TVec, TElement, Tsize>::length() const
+{
+    return std::sqrt(dot(self()));
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr TVec<TElement>& VecMeta<TVec, TElement, Tsize>::normalize()
+{
+    return self() /= length();
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr TVec<TElement>& VecMeta<TVec, TElement, Tsize>::self()
+{
+    return *reinterpret_cast<Vec*>(this);
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr const TVec<TElement>& VecMeta<TVec, TElement, Tsize>::self() const
+{
+    return *reinterpret_cast<const Vec*>(this);
+}
 
 }  // namespace utils::vec_detail
