@@ -12,10 +12,11 @@ struct Vec2 : public vec_detail::VecMeta<Vec2, TElement, 2> {
     Element y{};
 
     constexpr Vec2() = default;
+    ~Vec2() = default;
     constexpr Vec2(const Vec2<Element>&) = default;
     constexpr Vec2<Element>& operator=(const Vec2<Element>&) = default;
-    constexpr Vec2(Vec2<Element>&&) = default;
-    constexpr Vec2<Element>& operator=(Vec2<Element>&&) = default;
+    constexpr Vec2(Vec2<Element>&&) noexcept = default;
+    constexpr Vec2<Element>& operator=(Vec2<Element>&&) noexcept = default;
 
     constexpr Vec2(Element _x, Element _y) :
         x{_x}, y{_y}
@@ -45,10 +46,11 @@ struct Vec3 : public vec_detail::VecMeta<Vec2, TElement, 2> {
     Element z{};
 
     constexpr Vec3() = default;
+    ~Vec3() = default;
     constexpr Vec3(const Vec3<Element>&) = default;
     constexpr Vec3<Element>& operator=(const Vec3<Element>&) = default;
-    constexpr Vec3(Vec3<Element>&&) = default;
-    constexpr Vec3<Element>& operator=(Vec3<Element>&&) = default;
+    constexpr Vec3(Vec3<Element>&&) noexcept = default;
+    constexpr Vec3<Element>& operator=(Vec3<Element>&&) noexcept = default;
 
     constexpr Vec3(Element _x, Element _y, Element _z) :
         x{_x}, y{_y}, z{_z}
@@ -80,10 +82,11 @@ struct Vec4 : public vec_detail::VecMeta<Vec4, TElement, 2> {
     Element w{};
 
     constexpr Vec4() = default;
+    ~Vec4() = default;
     constexpr Vec4(const Vec4<Element>&) = default;
     constexpr Vec4<Element>& operator=(const Vec4<Element>&) = default;
-    constexpr Vec4(Vec4<Element>&&) = default;
-    constexpr Vec4<Element>& operator=(Vec4<Element>&&) = default;
+    constexpr Vec4(Vec4<Element>&&) noexcept = default;
+    constexpr Vec4<Element>& operator=(Vec4<Element>&&) noexcept = default;
 
     constexpr Vec4(Element _x, Element _y, Element _z, Element _w) :
         x{_x}, y{_y}, z{_z}, w{_w}

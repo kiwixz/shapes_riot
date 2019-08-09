@@ -64,19 +64,19 @@ struct VecMeta {
     DEF_OP(/, Element)
 #undef DEF_OP
 
-    constexpr Element* ptr()
+    [[nodiscard]] constexpr Element* ptr()
     {
         static_assert(sizeof(Vec) == size * sizeof(Element));
         return reinterpret_cast<Element*>(this);
     }
 
-    constexpr const Element* ptr() const
+    [[nodiscard]] constexpr const Element* ptr() const
     {
         static_assert(sizeof(Vec) == size * sizeof(Element));
         return reinterpret_cast<const Element*>(this);
     }
 
-    constexpr Element dot(const Vec& other) const
+    [[nodiscard]] constexpr Element dot(const Vec& other) const
     {
         Element r{};
         for (int i = 0; i < size; ++i)
@@ -84,7 +84,7 @@ struct VecMeta {
         return r;
     }
 
-    constexpr Element length() const
+    [[nodiscard]] constexpr Element length() const
     {
         return std::sqrt(dot(self()));
     }
@@ -95,12 +95,12 @@ struct VecMeta {
     }
 
 private:
-    constexpr Vec& self()
+    [[nodiscard]] constexpr Vec& self()
     {
         return *reinterpret_cast<Vec*>(this);
     }
 
-    constexpr const Vec& self() const
+    [[nodiscard]] constexpr const Vec& self() const
     {
         return *reinterpret_cast<const Vec*>(this);
     }
