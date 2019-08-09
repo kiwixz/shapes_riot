@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cmath>
+
 namespace utils::vec_detail {
 
 template <template <typename> typename TVec, typename TElement, int Tsize>

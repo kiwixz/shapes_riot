@@ -43,10 +43,8 @@ void SubDrawList::push(const SubDrawList& draw_list)
 
 void SubDrawList::transform(utils::Vec2d translation, utils::Vec2d scale)
 {
-    for (Vertex& vertex : vertices_) {
-        vertex.pos.x = static_cast<float>(vertex.pos.x * scale.x + translation.x);
-        vertex.pos.y = static_cast<float>(vertex.pos.y * scale.y + translation.y);
-    }
+    for (Vertex& vertex : vertices_)
+        vertex.pos = utils::Vec2d{vertex.pos} * scale + translation;
 }
 
 
