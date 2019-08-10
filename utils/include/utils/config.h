@@ -11,7 +11,15 @@ namespace utils {
 
 struct Config {
     [[nodiscard]] bool contains(const std::string& key) const;
+    [[nodiscard]] std::string dump(std::string_view prefix) const;
     [[nodiscard]] const std::string& get_raw(const std::string& key) const;
+    void show_help(std::string_view app_name, std::string_view pos_args = "") const;
+
+    template <typename T>
+    [[nodiscard]] T get(const std::string& key) const;
+
+    template <typename T>
+    void get_to(const std::string& key, T& value) const;
 
     void remove(const std::string& key);
     void clear();
@@ -24,14 +32,6 @@ struct Config {
     void parse_global_config(std::string_view app_name, bool allow_unknown = false);
     void parse_file(const std::filesystem::path& path, bool allow_unknown = false);
     void parse_file_content(std::string_view content, bool allow_unknown = false);
-    [[nodiscard]] std::string dump(std::string_view prefix) const;
-    void show_help(std::string_view app_name, std::string_view pos_args = "") const;
-
-    template <typename T>
-    [[nodiscard]] T get(const std::string& key) const;
-
-    template <typename T>
-    void get(const std::string& key, T& value) const;
 
     template <typename T>
     void set(std::string key, T&& value);
@@ -79,7 +79,7 @@ T Config::get(const std::string& key) const
 }
 
 template <typename T>
-void Config::get(const std::string& key, T& value) const
+void Config::get_to(const std::string& key, T& value) const
 {
     value = get<T>(key);
 }

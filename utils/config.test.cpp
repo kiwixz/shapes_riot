@@ -77,7 +77,7 @@ TEST_SUITE("config")
         conf.set("str", "hello");
         CHECK(conf.get<S>("str").s == "hello");
         S s{""};
-        conf.get("str", s);
+        conf.get_to("str", s);
         CHECK(s.s == conf.get_raw("str"));
     }
 

@@ -18,9 +18,27 @@ bool Config::contains(const std::string& key) const
     return options_.count(key) > 0;
 }
 
+std::string Config::dump(std::string_view prefix) const
+{
+    std::vector<std::pair<std::string, std::string>> options(options_.begin(), options_.end());
+    std::sort(options.begin(), options.end());
+    std::string output;
+    for (const std::pair<std::string, std::string>& option : options)
+        output += fmt::format("{}{}={}\n", prefix, option.first, option.second);
+    return output;
+}
+
 const std::string& Config::get_raw(const std::string& key) const
 {
     return options_.at(key);
+}
+
+void Config::show_help(std::string_view app_name, std::string_view pos_args) const
+{
+    fmt::print("Usage: {} [--help] [+config_file] [-option[=value]...]", app_name);
+    if (!pos_args.empty())
+        fmt::print(" [--] {}", pos_args);
+    fmt::print("\nCurrent config:\n{}", dump("\t"));
 }
 
 void Config::remove(const std::string& key)
@@ -178,24 +196,6 @@ void Config::parse_file_content(std::string_view content, bool allow_unknown)
 
         set_parsed_option(prefix + std::move(key), std::move(value), allow_unknown);
     }
-}
-
-std::string Config::dump(std::string_view prefix) const
-{
-    std::vector<std::pair<std::string, std::string>> options(options_.begin(), options_.end());
-    std::sort(options.begin(), options.end());
-    std::string output;
-    for (const std::pair<std::string, std::string>& option : options)
-        output += fmt::format("{}{}={}\n", prefix, option.first, option.second);
-    return output;
-}
-
-void Config::show_help(std::string_view app_name, std::string_view pos_args) const
-{
-    fmt::print("Usage: {} [--help] [+config_file] [-option[=value]...]", app_name);
-    if (!pos_args.empty())
-        fmt::print(" [--] {}", pos_args);
-    fmt::print("\nCurrent config:\n{}", dump("\t"));
 }
 
 void Config::set_parsed_option(std::string key, std::string value, bool allow_unknown)
