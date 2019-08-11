@@ -8,9 +8,13 @@
 namespace gfx {
 
 struct Texture {
+    Texture() = default;
     Texture(utils::Vec2i size, GLenum format = GL_RGB8);
 
+    utils::Vec2i size() const;
     [[nodiscard]] utils::ScopeExit bind() const;
+
+    void resize(utils::Vec2i, GLenum format = GL_RGB8);
 
     template <typename T>
     void upload(const T* pixels, GLenum format = GL_BGR, GLenum type = GL_UNSIGNED_BYTE);
