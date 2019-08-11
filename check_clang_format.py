@@ -43,9 +43,12 @@ if __name__ == "__main__":
         results = []
         count = 0
         for path in git_files:
-            if path.endswith(".cpp") or path.endswith(".h"):
-                results.append(executor.submit(check, path, count + 1))
-                count += 1
+            if not (path.endswith(".cpp") or path.endswith(".h")):
+                continue
+            if path.startswith("cmake/"):
+                continue
+            results.append(executor.submit(check, path, count + 1))
+            count += 1
 
         nr_checks = count
         count = 0
