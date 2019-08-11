@@ -9,7 +9,7 @@ TEST_SUITE("resource_manager")
     TEST_CASE("simple")
     {
         ResourceManager manager;
-        CHECK_THROWS(manager.get<int>("a"));
+        CHECK_THROWS((void)manager.get<int>("a"));
         ResourceHandle<int> handle = manager.get<int>("a", [] { return std::make_shared<int>(4); });
         CHECK(*handle == 4);
         manager.get_to("a", handle, [] { return std::make_shared<int>(6); });
@@ -24,7 +24,7 @@ TEST_SUITE("resource_manager")
             manager.get_to("a", handle);
             CHECK(*handle == 8);
         }
-        CHECK_THROWS(manager.get<int>("b"));
+        CHECK_THROWS((void)manager.get<int>("b"));
     }
 }
 
