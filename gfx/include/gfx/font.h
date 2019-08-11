@@ -15,13 +15,16 @@ struct Glyph {
 
 
 struct Font {
-    Font(utils::Span<const std::byte> file);
+    using GlyphCode = uint32_t;
+
+    Font(GlyphCode first_glyph, int nr_glyph,
+         utils::Span<const std::byte> file, float size_px);
 
     [[nodiscard]] utils::ScopeExit bind() const;
 
 private:
     Texture texture_;
-    std::unordered_map<uint32_t, Glyph> glyphs_;
+    std::unordered_map<GlyphCode, Glyph> glyphs_;
 };
 
 }  // namespace gfx

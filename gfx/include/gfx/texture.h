@@ -17,7 +17,11 @@ struct Texture {
     void resize(utils::Vec2i, GLenum format = GL_RGB8);
 
     template <typename T>
-    void upload(const T* pixels, GLenum format = GL_BGR, GLenum type = GL_UNSIGNED_BYTE);
+    void update(const T* pixels, utils::Vec2i offset, utils::Vec2i size,
+                GLenum format = GL_BGR, GLenum type = GL_UNSIGNED_BYTE);
+
+    template <typename T>
+    void update(const T* pixels, GLenum format = GL_BGR, GLenum type = GL_UNSIGNED_BYTE);
 
 private:
     utils::Vec2i size_;
@@ -26,7 +30,13 @@ private:
 
 
 template <typename T>
-void Texture::upload(const T* pixels, GLenum format, GLenum type)
+void Texture::update(const T* pixels, utils::Vec2i offset, utils::Vec2i size, GLenum format, GLenum type)
+{
+    glTextureSubImage2D(texture_[0], 0, offset.x, offset.y, size.x, size.y, format, type, pixels);
+}
+
+template <typename T>
+void Texture::update(const T* pixels, GLenum format, GLenum type)
 {
     glTextureSubImage2D(texture_[0], 0, 0, 0, size_.x, size_.y, format, type, pixels);
 }

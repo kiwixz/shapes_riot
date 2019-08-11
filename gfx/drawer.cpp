@@ -41,7 +41,7 @@ Drawer::Drawer(utils::ResourceManager& resource_manager)
     resource_manager.get_to("gfx_drawer_blank", blank_, [] {
         auto texture = std::make_shared<Texture>(utils::Vec2i{1, 1});
         static constexpr uint32_t blank_pixel = 0xffffffff;
-        texture->upload(&blank_pixel);
+        texture->update(&blank_pixel);
         return texture;
     });
 
