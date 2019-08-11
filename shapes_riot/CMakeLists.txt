@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
+include("${CMAKE_SOURCE_DIR}/cmake/file_embed.cmake")
 include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
 
 set(target "shapes_riot")
@@ -23,3 +24,5 @@ target_link_libraries("${target}_base"
 
     "fmt::fmt"
 )
+
+file_embed("${target}_base" "shapes_riot" "source_sans_pro" "${CMAKE_CURRENT_BINARY_DIR}/SourceSansPro-Regular.otf")

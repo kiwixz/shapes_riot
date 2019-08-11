@@ -4,7 +4,7 @@ namespace gfx {
 
 Texture::Texture(utils::Vec2i size, GLenum format)
 {
-    resize(size);
+    resize(size, format);
 }
 
 utils::Vec2i Texture::size() const

@@ -14,7 +14,7 @@ install_vcpkg("2019.07"
         "fmt"
 )
 
-project("shapes_riot" CXX)
+project("shapes_riot" C CXX ASM_NASM)
 
 option(BUILD_TESTS "Build tests" ON)
 

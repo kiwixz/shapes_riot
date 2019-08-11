@@ -1,5 +1,7 @@
 #include "main_menu.h"
+#include "embed/source_sans_pro.h"
 #include "gfx/draw_list.h"
+#include "gfx/font.h"
 #include "gfx/ui/button.h"
 #include <glad/glad.h>
 
@@ -34,6 +36,8 @@ void MainMenu::tick(double delta, const gfx::WindowState& /*state*/)
     draw_list.push(vertices);
     draw_list.push(layout_.draw(delta));
     drawer_.draw(draw_list);
+
+    static gfx::Font font{0, 128, embed::source_sans_pro(), 12};
 }
 
 void MainMenu::on_focus()

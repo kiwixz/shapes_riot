@@ -5,7 +5,7 @@
 namespace gfx {
 
 Font::Font(GlyphCode first_glyph, int nr_glyph,
-           utils::Span<const std::byte> file, float size_px)
+           utils::Span<const std::byte> file, int size_px)
 {
     FT_Library freetype;
     if (FT_Error error = FT_Init_FreeType(&freetype))
@@ -13,7 +13,8 @@ Font::Font(GlyphCode first_glyph, int nr_glyph,
 
     FT_Face face;
     if (FT_Error error = FT_New_Memory_Face(freetype,
-                                            reinterpret_cast<const FT_Byte*>(file.data()), file.size(),
+                                            reinterpret_cast<const FT_Byte*>(file.data()),
+                                            static_cast<FT_Long>(file.size()),
                                             0, &face))
         throw MAKE_EXCEPTION("could not load font face: error {:#x}", error);
 
@@ -24,6 +25,8 @@ Font::Font(GlyphCode first_glyph, int nr_glyph,
     for (GlyphCode code = first_glyph; code < code_end; ++code) {
         if (FT_Error error = FT_Load_Glyph(face, FT_Get_Char_Index(face, code), FT_LOAD_RENDER))
             throw MAKE_EXCEPTION("could not load set face size: error {:#x}", error);
+
+        fmt::print("{}\n", face->glyph->bitmap.pitch);
     }
 }
 

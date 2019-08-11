@@ -18,7 +18,7 @@ struct Font {
     using GlyphCode = uint32_t;
 
     Font(GlyphCode first_glyph, int nr_glyph,
-         utils::Span<const std::byte> file, float size_px);
+         utils::Span<const std::byte> file, int size_px);
 
     [[nodiscard]] utils::ScopeExit bind() const;
 
