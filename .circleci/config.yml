@@ -14,7 +14,8 @@ jobs:
           name: Install system dependencies
           command: |
             pacman --color=always --needed --noconfirm -Sy  \
-                libxcursor libxi libxinerama libxrandr  `# glfw`
+                libxcursor libxi libxinerama libxrandr  `# glfw`  \
+                yasm
 
       - restore_cache:
           name: Restore vcpkg cache
