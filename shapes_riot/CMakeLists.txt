@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
+include("${CMAKE_SOURCE_DIR}/cmake/download.cmake")
 include("${CMAKE_SOURCE_DIR}/cmake/file_embed.cmake")
 include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
 
@@ -16,13 +17,17 @@ file(GLOB_RECURSE test_src "*.test.cpp")
 test_target_cpp("${target}_base" "${test_src}")
 
 
+download_github("source_sans_pro" "adobe-fonts/source-sans-pro" "release")
+file_embed("shapes_riot" "source_sans_pro" "${source_sans_pro_DIR}/OTF/SourceSansPro-Regular.otf")
+add_dependencies("${source_sans_pro_EMBED}" "source_sans_pro")
+
 find_package("fmt" CONFIG REQUIRED)
 
 target_link_libraries("${target}_base"
+    "${source_sans_pro_EMBED}"
+
     "gfx"
     "utils"
 
     "fmt::fmt"
 )
-
-file_embed("${target}_base" "shapes_riot" "source_sans_pro" "${CMAKE_CURRENT_BINARY_DIR}/SourceSansPro-Regular.otf")
