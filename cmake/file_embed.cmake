@@ -7,8 +7,8 @@ function (file_embed target prefix name file)
 
     set(embed_target "${prefix}_embed_${name}")
 
-    configure_file("${CMAKE_SOURCE_DIR}/cmake/file_embed.asm" "${CMAKE_BINARY_DIR}/${embed_target}/source.asm" @ONLY)
-    add_library("${embed_target}" STATIC "${CMAKE_BINARY_DIR}/${embed_target}/source.asm")
+    configure_file("${CMAKE_SOURCE_DIR}/cmake/file_embed.asm" "${CMAKE_CURRENT_BINARY_DIR}/${embed_target}/source.asm" @ONLY)
+    add_library("${embed_target}" STATIC "${CMAKE_CURRENT_BINARY_DIR}/${embed_target}/source.asm")
     set_target_properties("${embed_target}" PROPERTIES LINKER_LANGUAGE C)
     target_compile_options("${embed_target}" PRIVATE "-DNAME=${name}" "-DFILE='${file}'")
 
@@ -16,8 +16,8 @@ function (file_embed target prefix name file)
         target_compile_options("${embed_target}" PRIVATE "-Xvc")
     endif ()
 
-    configure_file("${CMAKE_SOURCE_DIR}/cmake/file_embed.h" "${CMAKE_BINARY_DIR}/${embed_target}/include/embed/${name}.h" @ONLY)
-    target_include_directories("${embed_target}" BEFORE INTERFACE "${CMAKE_BINARY_DIR}/${embed_target}/include")
+    configure_file("${CMAKE_SOURCE_DIR}/cmake/file_embed.h" "${CMAKE_CURRENT_BINARY_DIR}/${embed_target}/include/embed/${name}.h" @ONLY)
+    target_include_directories("${embed_target}" BEFORE INTERFACE "${CMAKE_CURRENT_BINARY_DIR}/${embed_target}/include")
 
     target_link_libraries("${target}" "${embed_target}")
 endfunction ()
