@@ -14,7 +14,7 @@ struct Texture {
     [[nodiscard]] utils::Vec2i size() const;
     [[nodiscard]] utils::ScopeExit bind() const;
 
-    void resize(utils::Vec2i, GLenum format = GL_RGB8);
+    void resize(utils::Vec2i size, GLenum format = GL_RGB8);
 
     template <typename T>
     void update(const T* pixels, utils::Vec2i offset, utils::Vec2i size,
