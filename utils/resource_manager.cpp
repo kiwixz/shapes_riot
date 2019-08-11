@@ -1,8 +1,8 @@
-#include "utils/resources_manager.h"
+#include "utils/resource_manager.h"
 
 namespace utils {
 
-void ResourcesManager::cleanup()
+void ResourceManager::cleanup()
 {
     for (auto it = store_.begin(); it != store_.end();)
         if (it->second.expired())

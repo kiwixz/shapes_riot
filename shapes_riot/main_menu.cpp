@@ -5,8 +5,8 @@
 
 namespace shapes_riot {
 
-MainMenu::MainMenu(ScreenStack& screens) :
-    screens_{&screens}
+MainMenu::MainMenu(ScreenStack& screens, utils::ResourceManager& resource_manager) :
+    screens_{&screens}, drawer_{resource_manager}
 {
     layout_.set_margin(0.7f, 0.85f, 0.7f, 0.85f);
 

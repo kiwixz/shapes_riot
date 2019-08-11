@@ -4,10 +4,11 @@
 
 namespace gfx {
 
-Drawer::Drawer() :
+Drawer::Drawer(utils::ResourceManager& resource_manager) :
     blank_{1, 1}
 {
-    constexpr std::string_view vertex_source = R"(
+    resource_manager.get_to("gfx_drawer_program", program_, [] {
+        constexpr std::string_view vertex_source = R"(
             #version 450
             layout(location=0) in vec2 pos;
             layout(location=1) in vec4 rgb;
@@ -20,7 +21,7 @@ Drawer::Drawer() :
                 uv_ = uv;
             }
         )";
-    constexpr std::string_view fragment_source = R"(
+        constexpr std::string_view fragment_source = R"(
             #version 450
             uniform sampler2D tex;
             layout(location=0) in vec4 rgb_;
@@ -30,9 +31,13 @@ Drawer::Drawer() :
                 color = rgb_ * texture(tex, uv_);
             }
         )";
-    program_.attach({GL_VERTEX_SHADER, vertex_source});
-    program_.attach({GL_FRAGMENT_SHADER, fragment_source});
-    program_.link();
+
+        auto program = std::make_shared<ShaderProgram>();
+        program->attach({GL_VERTEX_SHADER, vertex_source});
+        program->attach({GL_FRAGMENT_SHADER, fragment_source});
+        program->link();
+        return program;
+    });
 
     glCreateVertexArrays(vertex_array_.size, vertex_array_.ptr());
     glCreateBuffers(buffers_.size, buffers_.ptr());
@@ -56,7 +61,7 @@ Drawer::Drawer() :
 
 void Drawer::draw(const DrawList& draw_list)
 {
-    utils::ScopeExit program_binding = program_.bind();
+    utils::ScopeExit program_binding = program_->bind();
     glBindVertexArray(vertex_array_[0]);
     for (const auto& it : draw_list) {
         const SubDrawList& sub_list = it.second;

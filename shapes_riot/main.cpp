@@ -2,6 +2,7 @@
 #include "main_menu.h"
 #include "screen_stack.h"
 #include "utils/exception.h"
+#include "utils/resource_manager.h"
 #include <fmt/printf.h>
 #include <chrono>
 
@@ -26,8 +27,9 @@ int main(int /*argc*/, char** /*argv*/)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
 
+        utils::ResourceManager resource_manager;
         ScreenStack screens;
-        screens.emplace<MainMenu>();
+        screens.emplace<MainMenu>(resource_manager);
 
         using Clock = std::chrono::high_resolution_clock;
         Clock::time_point last_frame = Clock::now();

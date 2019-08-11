@@ -1,15 +1,17 @@
 #pragma once
 
 #include "utils/exception.h"
-#include "utils/resources_handle.h"
 #include <memory>
 #include <string>
 #include <unordered_map>
 
 namespace utils {
 
+template <typename T>
+using ResourceHandle = std::shared_ptr<const T>;
 
-struct ResourcesManager {
+
+struct ResourceManager {
     template <typename T>
     [[nodiscard]] ResourceHandle<T> get(const std::string& id) const;
 
@@ -30,7 +32,7 @@ private:
 
 
 template <typename T>
-ResourceHandle<T> ResourcesManager::get(const std::string& id) const
+ResourceHandle<T> ResourceManager::get(const std::string& id) const
 {
     std::shared_ptr<const void> resource = store_.at(id).lock();
     if (!resource)
@@ -39,7 +41,7 @@ ResourceHandle<T> ResourcesManager::get(const std::string& id) const
 }
 
 template <typename T, typename F>
-ResourceHandle<T> ResourcesManager::get(const std::string& id, const F& make)
+ResourceHandle<T> ResourceManager::get(const std::string& id, const F& make)
 {
     std::pair ret = store_.try_emplace(id);
     auto it = ret.first;
@@ -56,13 +58,13 @@ ResourceHandle<T> ResourcesManager::get(const std::string& id, const F& make)
 }
 
 template <typename T>
-void ResourcesManager::get_to(const std::string& id, ResourceHandle<T>& handle) const
+void ResourceManager::get_to(const std::string& id, ResourceHandle<T>& handle) const
 {
     handle = get<T>(id);
 }
 
 template <typename T, typename F>
-void ResourcesManager::get_to(const std::string& id, ResourceHandle<T>& handle, const F& make)
+void ResourceManager::get_to(const std::string& id, ResourceHandle<T>& handle, const F& make)
 {
     handle = get<T>(id, make);
 }
