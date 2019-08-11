@@ -30,9 +30,9 @@ Font::Font(GlyphCode first_glyph, int nr_glyph,
     }
 }
 
-utils::ScopeExit Font::bind() const
+const Texture& Font::texture() const
 {
-    return texture_.bind();
+    return texture_;
 }
 
 }  // namespace gfx

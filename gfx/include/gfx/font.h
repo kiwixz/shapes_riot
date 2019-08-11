@@ -20,7 +20,7 @@ struct Font {
     Font(GlyphCode first_glyph, int nr_glyph,
          utils::Span<const std::byte> file, int size_px);
 
-    [[nodiscard]] utils::ScopeExit bind() const;
+    [[nodiscard]] const Texture& texture() const;
 
 private:
     Texture texture_;
