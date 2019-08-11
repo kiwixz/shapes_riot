@@ -11,7 +11,7 @@ struct Texture {
     Texture() = default;
     Texture(utils::Vec2i size, GLenum format = GL_RGB8);
 
-    utils::Vec2i size() const;
+    [[nodiscard]] utils::Vec2i size() const;
     [[nodiscard]] utils::ScopeExit bind() const;
 
     void resize(utils::Vec2i, GLenum format = GL_RGB8);
