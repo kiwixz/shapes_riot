@@ -58,7 +58,7 @@ jobs:
           name: Test release
           environment:
             CXXFLAGS: -fdiagnostics-color=always
-            LDFLAGS: -fdiagnostics-color=always -fuse-ld=lld
+            LDFLAGS: -fdiagnostics-color=always -fuse-ld=lld -Wl,-z,notext
           command: |
             mkdir -p "build/release"
             cd "build/release"
