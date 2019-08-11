@@ -46,7 +46,7 @@ jobs:
           name: Test debug
           environment:
             CXXFLAGS: -fdiagnostics-color=always
-            LDFLAGS: -fdiagnostics-color=always -fuse-ld=lld
+            LDFLAGS: -fdiagnostics-color=always -fuse-ld=lld -Wl,-z,notext
             ASAN_OPTIONS: check_initialization_order=1
             UBSAN_OPTIONS: print_stacktrace=1
           command: |
