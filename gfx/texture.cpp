@@ -2,11 +2,11 @@
 
 namespace gfx {
 
-Texture::Texture(int width, int height, GLenum format) :
-    width_{width}, height_{height}
+Texture::Texture(utils::Vec2i size, GLenum format) :
+    size_{size}
 {
     glCreateTextures(GL_TEXTURE_2D, 1, texture_.ptr());
-    glTextureStorage2D(texture_[0], 1, format, width_, height_);
+    glTextureStorage2D(texture_[0], 1, format, size_.x, size_.y);
 }
 
 utils::ScopeExit Texture::bind() const

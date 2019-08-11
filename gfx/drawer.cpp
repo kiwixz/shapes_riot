@@ -4,8 +4,7 @@
 
 namespace gfx {
 
-Drawer::Drawer(utils::ResourceManager& resource_manager) :
-    blank_{1, 1}
+Drawer::Drawer(utils::ResourceManager& resource_manager)
 {
     resource_manager.get_to("gfx_drawer_program", program_, [] {
         constexpr std::string_view vertex_source = R"(
@@ -39,6 +38,13 @@ Drawer::Drawer(utils::ResourceManager& resource_manager) :
         return program;
     });
 
+    resource_manager.get_to("gfx_drawer_blank", blank_, [] {
+        auto texture = std::make_shared<Texture>(utils::Vec2i{1, 1});
+        static constexpr uint32_t blank_pixel = 0xffffffff;
+        texture->upload(&blank_pixel);
+        return texture;
+    });
+
     glCreateVertexArrays(vertex_array_.size, vertex_array_.ptr());
     glCreateBuffers(buffers_.size, buffers_.ptr());
 
@@ -54,9 +60,6 @@ Drawer::Drawer(utils::ResourceManager& resource_manager) :
     vao_attrib(2, offsetof(Vertex, uv), sizeof(Vertex::uv));
 
     glVertexArrayElementBuffer(vertex_array_[0], buffers_[1]);
-
-    static constexpr uint32_t blank_pixel = 0xffffffff;
-    blank_.upload(&blank_pixel);
 }
 
 void Drawer::draw(const DrawList& draw_list)
@@ -65,7 +68,7 @@ void Drawer::draw(const DrawList& draw_list)
     glBindVertexArray(vertex_array_[0]);
     for (const auto& it : draw_list) {
         const SubDrawList& sub_list = it.second;
-        utils::ScopeExit texture_binding = (it.first ? *it.first : blank_).bind();
+        utils::ScopeExit texture_binding = (it.first ? *it.first : *blank_).bind();
         glNamedBufferData(buffers_[0], sub_list.vertices().size_bytes(), sub_list.vertices().data(), GL_STREAM_DRAW);
         glNamedBufferData(buffers_[1], sub_list.indexes().size_bytes(), sub_list.indexes().data(), GL_STREAM_DRAW);
         glDrawElements(GL_TRIANGLES, static_cast<int>(sub_list.indexes().size()), GL_UNSIGNED_INT, nullptr);

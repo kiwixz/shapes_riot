@@ -3,6 +3,7 @@
 #include "gfx/draw_list.h"
 #include "gfx/gl_object.h"
 #include "gfx/shader.h"
+#include "gfx/texture.h"
 #include "utils/resource_manager.h"
 
 namespace gfx {
@@ -16,7 +17,7 @@ private:
     utils::ResourceHandle<ShaderProgram> program_;
     GlBuffers<2> buffers_;
     GlVertexArrays<> vertex_array_;
-    Texture blank_;
+    utils::ResourceHandle<Texture> blank_;
 };
 
 }  // namespace gfx
