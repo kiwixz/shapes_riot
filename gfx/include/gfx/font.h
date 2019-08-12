@@ -17,7 +17,7 @@ struct Glyph {
 struct Font {
     using GlyphCode = uint32_t;
 
-    Font(GlyphCode first_glyph, int nr_glyph,
+    Font(GlyphCode first_glyph, int nr_glyphs,
          utils::Span<const std::byte> file, int size_px);
 
     [[nodiscard]] const Texture& texture() const;
