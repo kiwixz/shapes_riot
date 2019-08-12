@@ -12,6 +12,7 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
     FT_Library freetype;
     if (FT_Error error = FT_Init_FreeType(&freetype))
         throw MAKE_EXCEPTION("could not initialize freetype: error {:#x}", error);
+    utils::ScopeExit freetype_dtor{std::bind(&FT_Done_FreeType, freetype)};
 
     FT_Face face;
     if (FT_Error error = FT_New_Memory_Face(freetype,
@@ -19,35 +20,35 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
                                             static_cast<FT_Long>(file.size()),
                                             0, &face))
         throw MAKE_EXCEPTION("could not load font face: error {:#x}", error);
+    utils::ScopeExit face_dtor{std::bind(&FT_Done_Face, face)};
 
     if (FT_Error error = FT_Set_Pixel_Sizes(face, 0, size_px))
         throw MAKE_EXCEPTION("could not load set face size: error {:#x}", error);
 
-    utils::Vec2i glyph_size{static_cast<int>(std::ceil((face->bbox.xMax - face->bbox.xMin) * size_px / face->units_per_EM)),
-                            static_cast<int>(std::ceil((face->bbox.yMax - face->bbox.yMin) * size_px / face->units_per_EM))};
+    static constexpr int texture_size = 64;
+    texture_.resize({texture_size, texture_size}, GL_RGBA8);
 
-    static constexpr int texture_width = 256;
-    int nr_glyphs_per_row = static_cast<int>(texture_width / glyph_size.x);
-    int min_texture_height = utils::div_ceil(nr_glyphs, nr_glyphs_per_row) * glyph_size.y;
-    utils::Vec2i texture_size{texture_width, utils::ceil2(min_texture_height)};
-    texture_.resize(texture_size, GL_RGBA8);
-
+    utils::Vec2i next_offset{1, 1};
+    int next_line_y = 0;
     for (int i = 0; i < nr_glyphs; ++i) {
         GlyphCode code = first_glyph + i;
         if (FT_Error error = FT_Load_Glyph(face, FT_Get_Char_Index(face, code), FT_LOAD_RENDER))
             throw MAKE_EXCEPTION("could not load set face size: error {:#x}", error);
 
-        FT_Bitmap& bitmap = face->glyph->bitmap;
+        utils::Vec2i glyph_size{utils::Vec2u{face->glyph->bitmap.width, face->glyph->bitmap.rows}};
 
-        std::vector<uint32_t> pixels(glyph_size.x * glyph_size.y, 0xffff00ff);
-        utils::Vec2i offset{0, 0};
-        for (int y = 0; y < bitmap.rows; ++y)
-            for (int x = 0; x < bitmap.width; ++x)
-                pixels[(offset.y + y) * glyph_size.x + (offset.x + x)] = 0x00ffffff | (bitmap.buffer[y * bitmap.pitch + x] << 24);
+        std::vector<uint32_t> pixels(glyph_size.x * glyph_size.y);
+        for (int y = 0; y < glyph_size.y; ++y)
+            for (int x = 0; x < glyph_size.x; ++x)
+                pixels[y * glyph_size.x + x] = (face->glyph->bitmap.buffer[y * face->glyph->bitmap.pitch + x] << 24)
+                                               | 0x00ffffff;
 
-        texture_.update(pixels.data(),
-                        utils::Vec2i{i % nr_glyphs_per_row, i / nr_glyphs_per_row} * glyph_size,
-                        glyph_size, GL_BGRA);
+        utils::Vec2i offset = next_offset;
+        if (offset.x + glyph_size.x >= texture_size)  // go to next line
+            offset = {0, next_line_y};
+        texture_.update(pixels.data(), offset, glyph_size, GL_BGRA);
+        next_line_y = std::max(next_line_y, offset.y + glyph_size.y + 1);
+        next_offset = {offset.x + glyph_size.x + 1, offset.y};
     }
 }
 
