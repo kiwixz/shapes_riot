@@ -1,5 +1,5 @@
 function (install_vcpkg vcpkg_ref)
-    cmake_parse_arguments("ARG" "" "" "LIBS" ${ARGN})
+    cmake_parse_arguments(ARG "" "" "LIBS" ${ARGN})
     if (UNPARSED_ARGUMENTS)
         message(FATAL_ERROR "unparsed arguments")
     endif ()

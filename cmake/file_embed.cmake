@@ -1,4 +1,9 @@
 function (file_embed prefix name file)
+    cmake_parse_arguments(ARG "" "" "DEPENDS" ${ARGN})
+    if (UNPARSED_ARGUMENTS)
+        message(FATAL_ERROR "unparsed arguments")
+    endif ()
+
     get_property(languages GLOBAL PROPERTY ENABLED_LANGUAGES)
     if (NOT "ASM_NASM" IN_LIST languages
         OR NOT "C" IN_LIST languages)  # also required by ASM_NASM to determine word size
@@ -9,11 +14,15 @@ function (file_embed prefix name file)
 
     configure_file("${CMAKE_SOURCE_DIR}/cmake/file_embed.asm" "${CMAKE_CURRENT_BINARY_DIR}/${target}/source.asm" @ONLY)
     add_library("${target}" STATIC "${CMAKE_CURRENT_BINARY_DIR}/${target}/source.asm")
+
     set_target_properties("${target}" PROPERTIES LINKER_LANGUAGE C)
     target_compile_options("${target}" PRIVATE "-DNAME=${name}" "-DFILE='${file}'")
-
     if (WIN32)
         target_compile_options("${target}" PRIVATE "-Xvc")
+    endif ()
+
+    if (ARG_DEPENDS)
+        add_dependencies("${target}" ${ARG_DEPENDS})
     endif ()
 
     configure_file("${CMAKE_SOURCE_DIR}/cmake/file_embed.h" "${CMAKE_CURRENT_BINARY_DIR}/${target}/include/embed/${name}.h" @ONLY)
