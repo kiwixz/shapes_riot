@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 include("${CMAKE_SOURCE_DIR}/cmake/install_vcpkg.cmake")
 
+option(BUILD_TESTS "Build tests" ON)
+option(USE_VCPKG "Use vcpkg toolchain to install and find libs" ON)
+
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING "")
 set(CMAKE_CXX_COMPILER "clang++" CACHE FILEPATH "")
 install_vcpkg("2019.07"
@@ -15,8 +18,6 @@ install_vcpkg("2019.07"
 )
 
 project("shapes_riot" C CXX ASM_NASM)
-
-option(BUILD_TESTS "Build tests" ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -45,14 +46,16 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     link_libraries("onecore.lib")
 endif ()
 
-enable_testing()
-find_package("Python3" COMPONENTS "Interpreter")
-add_test(NAME "check_clang_format"
-    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/check_clang_format.py"
-)
-add_test(NAME "check_clang_tidy"
-    COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/check_clang_tidy.py" "${CMAKE_BINARY_DIR}"
-)
+if (BUILD_TESTS)
+    enable_testing()
+    find_package("Python3" COMPONENTS "Interpreter")
+    add_test(NAME "check_clang_format"
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/check_clang_format.py"
+    )
+    add_test(NAME "check_clang_tidy"
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/check_clang_tidy.py" "${CMAKE_BINARY_DIR}"
+    )
+endif ()
 
 
 add_subdirectory("gfx")
