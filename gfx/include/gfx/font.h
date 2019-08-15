@@ -11,6 +11,8 @@ namespace gfx {
 struct Glyph {
     utils::Vec2f offset;
     utils::Vec2f size;
+    utils::Vec2f bearing;
+    float advance;
 };
 
 
