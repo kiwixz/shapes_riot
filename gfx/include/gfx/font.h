@@ -1,18 +1,21 @@
 #pragma once
 
+#include "gfx/draw_list.h"
 #include "gfx/texture.h"
-#include "utils/scope_exit.h"
 #include "utils/span.h"
 #include "utils/vec.h"
 #include <cstddef>
+#include <unordered_map>
 
 namespace gfx {
 
 struct Glyph {
-    utils::Vec2f offset;
-    utils::Vec2f size;
-    utils::Vec2f bearing;
-    float advance;
+    utils::Vec2f uv_offset;
+    utils::Vec2f uv_size;
+
+    utils::Vec2i size;
+    utils::Vec2i bearing;
+    int advance;
 };
 
 
