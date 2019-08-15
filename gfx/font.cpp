@@ -25,7 +25,7 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
     if (FT_Error error = FT_Set_Pixel_Sizes(face, 0, size_px))
         throw MAKE_EXCEPTION("could not load set face size: error {:#x}", error);
 
-    static constexpr int texture_size = 64;
+    static constexpr int texture_size = 512;
     texture_.resize({texture_size, texture_size}, GL_RGBA8);
 
     utils::Vec2i next_offset{1, 1};

@@ -31,9 +31,9 @@ void MainMenu::tick(double delta, const gfx::WindowState& /*state*/)
                                                              {{0.0f, 0.5f}, {0.0f, 1.0f, 0.0f, 1.0f}},
                                                              {{0.5f, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}}}};
 
-    static gfx::Font font{'a', 'z' - 'a' + 1, embed::source_sans_pro(), 12};
+    static gfx::Font font{'a', 'z' - 'a' + 1, embed::source_sans_pro(), 96};
     static constexpr std::array<gfx::Vertex, 4> font_vertices = {{{{-0.9f, -0.9f}, {0.0f, 1.0f}},
-                                                                  {{-0.9f, 0.9f}, {0.0f, 0.0f}},
+                                                                  {{-0.9f, 0.9f}, {0.8f, 0.8f, 1.0f, 1.0f}, {0.0f, 0.0f}},
                                                                   {{0.9f, 0.9f}, {1.0f, 0.0f}},
                                                                   {{0.9f, -0.9f}, {1.0f, 1.0f}}}};
     static constexpr std::array<gfx::Vertex::Index, 6> font_indexes = {{0, 1, 3, 1, 3, 2}};
