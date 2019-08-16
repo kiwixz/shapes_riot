@@ -44,7 +44,7 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
 
         bitmap.glyph.size = utils::Vec2u{face->glyph->bitmap.width, face->glyph->bitmap.rows};
         bitmap.glyph.bearing = {face->glyph->bitmap_left, face->glyph->bitmap_top};
-        bitmap.glyph.advance = face->glyph->advance.x / 64;  // get font units (FT_LOAD_LINEAR_DESIGN is not working)
+        bitmap.glyph.advance = static_cast<int>(face->glyph->advance.x / 64);  // get font units (FT_LOAD_LINEAR_DESIGN is not working)
 
         bitmap.pixels.resize(bitmap.glyph.size.x * bitmap.glyph.size.y);
         for (int y = 0; y < bitmap.glyph.size.y; ++y)
@@ -73,7 +73,8 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
         glyph.uv_offset = offset;  // will be ajusted later
 
         // copy bitmap into texture
-        if (texture_pixels.size() / texture_width < offset.y + glyph.size.y)  // texture too small
+        int texture_height = static_cast<int>(texture_pixels.size() / texture_width);
+        if (texture_height < offset.y + glyph.size.y)  // texture too small
             texture_pixels.resize(utils::ceil2(offset.y + glyph.size.y) * texture_width);
         for (int y = 0; y < glyph.size.y; ++y) {
             const uint32_t* bitmap_row = bitmap.pixels.data() + y * glyph.size.x;
@@ -84,7 +85,7 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
         next_offset = {offset.x + glyph.size.x + 1, offset.y};
     }
 
-    utils::Vec2i texture_size{texture_width, static_cast<int>(texture_pixels.size()) / texture_width};
+    utils::Vec2i texture_size{texture_width, static_cast<int>(texture_pixels.size() / texture_width)};
 
     for (std::pair<const GlyphCode, Glyph>& pair : glyphs_) {
         Glyph& glyph = pair.second;
@@ -114,7 +115,7 @@ DrawList Font::draw_text(std::string_view text, utils::Vec2f pen, float height) 
         pen.x += glyph.advance / static_cast<float>(size_px_) * height;
     }
     return draw_list;
-}  // namespace gfx
+}
 
 const Texture& Font::texture() const
 {
