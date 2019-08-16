@@ -41,18 +41,15 @@ int main(int /*argc*/, char** /*argv*/)
 
             gfx::WindowState state = window.state();
             window.poll_events([&](gfx::WindowEvent&& event) {
-                if (const auto* key_event = event.as<gfx::WindowEvent::KeyEvent>()) {
-                    if (key_event->action == GLFW_RELEASE
-                        && key_event->mods == 0
-                        && key_event->key == GLFW_KEY_ESCAPE)
-                        glfwSetWindowShouldClose(window.ptr(), true);
-                }
-
                 if (const auto* framebuffer_resize = event.as<gfx::WindowEvent::FramebufferResize>())
                     glViewport(0, 0, framebuffer_resize->width, framebuffer_resize->height);
 
+                if (screens.empty())
+                    return;
                 screens.top().on_window_event(event, state);
             });
+            if (screens.empty())
+                break;
             screens.top().tick(delta, state);
 
             glfwSwapBuffers(window.ptr());

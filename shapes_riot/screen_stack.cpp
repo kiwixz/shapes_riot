@@ -1,6 +1,12 @@
 #include "screen_stack.h"
+#include "screen_stack.h"
 
 namespace shapes_riot {
+
+bool ScreenStack::empty() const
+{
+    return screens_.empty();
+}
 
 Screen& ScreenStack::top() const
 {

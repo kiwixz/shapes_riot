@@ -1,13 +1,13 @@
 #include "main_menu.h"
+#include "game_screen.h"
 #include "gfx/draw_list.h"
-#include "gfx/font.h"
 #include "gfx/ui/button.h"
 #include <glad/glad.h>
 
 namespace shapes_riot {
 
 MainMenu::MainMenu(ScreenStack& screens, utils::ResourceManager& resource_manager) :
-    screens_{&screens}, drawer_{resource_manager}
+    drawer_{resource_manager}
 {
     layout_.set_margin(0.7f, 0.85f, 0.7f, 0.85f);
 
@@ -17,8 +17,10 @@ MainMenu::MainMenu(ScreenStack& screens, utils::ResourceManager& resource_manage
         layout_.add_widget(std::move(button));
     };
 
-    add_button("BRAVO", std::bind(printf, "hello\n"));
-    add_button("world", std::bind(printf, "world\n"));
+    add_button("Play", [screens_ = &screens, resource_manager_ = &resource_manager] {
+        screens_->emplace<GameScreen>(*resource_manager_);
+    });
+    add_button("Quit", [screens_ = &screens] { screens_->pop(); });
 }
 
 void MainMenu::tick(double delta, const gfx::WindowState& /*state*/)
