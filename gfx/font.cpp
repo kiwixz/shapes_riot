@@ -101,21 +101,31 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
     texture_.update(texture_pixels.data(), GL_BGRA);
 }
 
-DrawList Font::draw_text(std::string_view text, utils::Vec2f pen, float height) const
+DrawList Font::draw_text(std::string_view text, utils::Vec2f center, utils::Vec2f size) const
+{
+    for (char c : text) {
+        const Glyph& glyph = glyphs_.at(static_cast<unsigned char>(c));
+        center.x -= glyph.advance * size.x / 2;
+    }
+    center.y -= size.y / 2;
+    return draw_text_linear(text, center, size);
+}
+
+DrawList Font::draw_text_linear(std::string_view text, utils::Vec2f& pen, utils::Vec2f size) const
 {
     DrawList draw_list;
     for (char c : text) {
         const Glyph& glyph = glyphs_.at(static_cast<unsigned char>(c));
         if (glyph.size != utils::Vec2f{}) {
-            utils::Vec2f bottom_left = pen + utils::Vec2f{glyph.bearing.x, glyph.bearing.y - glyph.size.y} * height;
-            utils::Vec2f size = glyph.size * height;
+            utils::Vec2f bottom_left = pen + utils::Vec2f{glyph.bearing.x, glyph.bearing.y - glyph.size.y} * size;
+            utils::Vec2f quad_size = glyph.size * size;
             draw_list.push_quad({bottom_left, {glyph.uv_offset.x, glyph.uv_offset.y + glyph.uv_size.y}},
-                                {{bottom_left.x, bottom_left.y + size.y}, glyph.uv_offset},
-                                {bottom_left + size, {glyph.uv_offset.x + glyph.uv_size.x, glyph.uv_offset.y}},
-                                {{bottom_left.x + size.x, bottom_left.y}, glyph.uv_offset + glyph.uv_size},
+                                {{bottom_left.x, bottom_left.y + quad_size.y}, glyph.uv_offset},
+                                {bottom_left + quad_size, {glyph.uv_offset.x + glyph.uv_size.x, glyph.uv_offset.y}},
+                                {{bottom_left.x + quad_size.x, bottom_left.y}, glyph.uv_offset + glyph.uv_size},
                                 &texture_);
         }
-        pen.x += glyph.advance * height;
+        pen.x += glyph.advance * size.x;
     }
     return draw_list;
 }

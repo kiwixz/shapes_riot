@@ -20,7 +20,7 @@ DrawList Button::draw(double /*delta*/)
                         {{-1.0f, 1.0f}, color},
                         {{1.0f, 1.0f}, color},
                         {{1.0f, -1.0f}, color});
-    draw_list += font_->draw_text(label_, {-0.5f, -0.25f}, 0.5f);
+    draw_list += font_->draw_text(label_, {}, {0.25f, 0.5f});
     draw_list.transform(margin_transform());
     return draw_list;
 }
