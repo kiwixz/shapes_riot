@@ -1,5 +1,4 @@
 #include "screen_stack.h"
-#include "screen_stack.h"
 
 namespace shapes_riot {
 
