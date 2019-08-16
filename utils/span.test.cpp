@@ -23,6 +23,8 @@ TEST_SUITE("span")
     {
         std::vector<int> container = {1, 2, 3};
         Span<const int> span = container;
+        const std::vector<int>& c = container;
+        span = c;
         CHECK(*span.begin() == 1);
         CHECK(span.data() == container.data());
         CHECK(span[2] == 3);
