@@ -25,8 +25,9 @@ void SubDrawList::push(utils::Span<const Vertex> vertices, utils::Span<const Ver
         indexes_.reserve(indexes_.size() + indexes.size());
         Vertex::Index offset = next_index_;
         for (Vertex::Index idx : indexes) {
-            indexes_.push_back(offset + idx);
-            next_index_ = std::max(next_index_, offset + idx + 1);
+            idx += offset;
+            indexes_.push_back(idx);
+            next_index_ = std::max(next_index_, idx + 1);
         }
     }
     else {
