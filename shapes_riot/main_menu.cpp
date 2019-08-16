@@ -17,7 +17,7 @@ MainMenu::MainMenu(ScreenStack& screens, utils::ResourceManager& resource_manage
         layout_.add_widget(std::move(button));
     };
 
-    add_button("hello", std::bind(printf, "hello\n"));
+    add_button("BRAVO", std::bind(printf, "hello\n"));
     add_button("world", std::bind(printf, "world\n"));
 }
 

@@ -7,7 +7,7 @@ Button::Button(utils::ResourceManager& resource_manager, std::string label, std:
     label_{std::move(label)}, on_click_{std::move(on_click)}
 {
     resource_manager.get_to("gfx_button_font", font_, [] {
-        return std::make_shared<Font>(' ', '~' - ' ' + 1, embed::source_sans_pro(), 192);
+        return std::make_shared<Font>(' ', '~' - ' ' + 1, embed::source_sans_pro(), 96);
     });
 }
 
