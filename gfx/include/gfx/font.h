@@ -14,9 +14,9 @@ struct Glyph {
     utils::Vec2f uv_offset;
     utils::Vec2f uv_size;
 
-    utils::Vec2i size;
-    utils::Vec2i bearing;
-    int advance;
+    utils::Vec2f size;
+    utils::Vec2f bearing;
+    float advance;
 };
 
 
@@ -30,8 +30,6 @@ struct Font {
     [[nodiscard]] const Texture& texture() const;
 
 private:
-    int size_px_;
-
     Texture texture_;
     std::unordered_map<GlyphCode, Glyph> glyphs_;
 };

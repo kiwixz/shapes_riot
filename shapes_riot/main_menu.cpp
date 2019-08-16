@@ -27,21 +27,26 @@ void MainMenu::tick(double delta, const gfx::WindowState& /*state*/)
     glClearColor(0.4f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    static gfx::Font font{' ', '~' - ' ' + 1, embed::source_sans_pro(), 96};
+    static gfx::Font font{' ', '~' - ' ' + 1, embed::source_sans_pro(), 384};
 
     gfx::DrawList draw_list;
     draw_list.push_triangle({{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}},
                             {{0.0f, 0.5f}, {0.0f, 1.0f, 0.0f, 1.0f}},
                             {{0.5f, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}});
     draw_list.push(layout_.draw(delta));
-#if 0
+#if 1
     draw_list.push_quad({{-0.9f, -0.9f}, {0.0f, 1.0f}},
                         {{-0.9f, 0.9f}, {0.8f, 0.8f, 1.0f, 1.0f}, {0.0f, 0.0f}},
                         {{0.9f, 0.9f}, {1.0f, 0.0f}},
                         {{0.9f, -0.9f}, {1.0f, 1.0f}},
                         &font.texture());
 #endif
-    draw_list.push(font.draw_text("Hello world!", {}, 0.2f));
+
+    drawer_.draw(draw_list);
+    draw_list = {};
+
+    draw_list.push(font.draw_text("Hello world!", {-0.5f, 0.0f}, 0.2f));
+    draw_list.push(font.draw_text("abcdefghijk", {-0.5f, -0.5f}, 0.2f));
     drawer_.draw(draw_list);
 }
 
