@@ -95,6 +95,18 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
     texture_.update(texture_pixels.data(), GL_BGRA);
 }
 
+DrawList Font::draw_text(std::string_view text, utils::Vec2f pen, float height) const
+{
+    DrawList draw_list;
+
+    for (char c : text) {
+        const Glyph& glyph = glyphs_.at(static_cast<unsigned char>(c));
+        
+    }
+
+    return draw_list;
+}
+
 const Texture& Font::texture() const
 {
     return texture_;

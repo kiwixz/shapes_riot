@@ -27,21 +27,21 @@ void MainMenu::tick(double delta, const gfx::WindowState& /*state*/)
     glClearColor(0.4f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    static constexpr std::array<gfx::Vertex, 3> vertices = {{{{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}},
-                                                             {{0.0f, 0.5f}, {0.0f, 1.0f, 0.0f, 1.0f}},
-                                                             {{0.5f, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}}}};
-
     static gfx::Font font{' ', '~' - ' ' + 1, embed::source_sans_pro(), 96};
-    static constexpr std::array<gfx::Vertex, 4> font_vertices = {{{{-0.9f, -0.9f}, {0.0f, 1.0f}},
-                                                                  {{-0.9f, 0.9f}, {0.8f, 0.8f, 1.0f, 1.0f}, {0.0f, 0.0f}},
-                                                                  {{0.9f, 0.9f}, {1.0f, 0.0f}},
-                                                                  {{0.9f, -0.9f}, {1.0f, 1.0f}}}};
-    static constexpr std::array<gfx::Vertex::Index, 6> font_indexes = {{0, 1, 3, 1, 3, 2}};
 
     gfx::DrawList draw_list;
-    draw_list.push(vertices);
+    draw_list.push_triangle({{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}},
+                            {{0.0f, 0.5f}, {0.0f, 1.0f, 0.0f, 1.0f}},
+                            {{0.5f, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}});
     draw_list.push(layout_.draw(delta));
-    draw_list.push(font.texture(), font_vertices, font_indexes);
+#if 0
+    draw_list.push_quad({{-0.9f, -0.9f}, {0.0f, 1.0f}},
+                        {{-0.9f, 0.9f}, {0.8f, 0.8f, 1.0f, 1.0f}, {0.0f, 0.0f}},
+                        {{0.9f, 0.9f}, {1.0f, 0.0f}},
+                        {{0.9f, -0.9f}, {1.0f, 1.0f}},
+                        &font.texture());
+#endif
+    draw_list.push(font.draw_text("Hello world!", {}, 0.2f));
     drawer_.draw(draw_list);
 }
 

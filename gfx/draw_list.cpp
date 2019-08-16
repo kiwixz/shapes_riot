@@ -1,6 +1,7 @@
 #include "gfx/draw_list.h"
 #include <glad/glad.h>
 #include <algorithm>
+#include <array>
 #include <string_view>
 
 namespace gfx {
@@ -58,14 +59,20 @@ DrawList::Iterator DrawList::end() const
     return sub_lists_.end();
 }
 
-void DrawList::push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes)
+void DrawList::push_triangle(const Vertex& a, const Vertex& b, const Vertex& c, const Texture* texture)
 {
-    sub_lists_[nullptr].push(vertices, indexes);
+    push(std::array<Vertex, 3>{a, b, c}, {}, texture);
 }
 
-void DrawList::push(const Texture& texture, utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes)
+void DrawList::push_quad(const Vertex& a, const Vertex& b, const Vertex& c, const Vertex& d, const Texture* texture)
 {
-    sub_lists_[&texture].push(vertices, indexes);
+    static constexpr std::array<Vertex::Index, 6> indexes = {{0, 1, 3, 1, 3, 2}};
+    push(std::array<Vertex, 4>{a, b, c, d}, indexes, texture);
+}
+
+void DrawList::push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes, const Texture* texture)
+{
+    sub_lists_[texture].push(vertices, indexes);
 }
 
 void DrawList::push(const DrawList& draw_list)

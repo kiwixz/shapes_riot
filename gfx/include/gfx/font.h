@@ -5,6 +5,7 @@
 #include "utils/span.h"
 #include "utils/vec.h"
 #include <cstddef>
+#include <string_view>
 #include <unordered_map>
 
 namespace gfx {
@@ -25,6 +26,7 @@ struct Font {
     Font(GlyphCode first_glyph, int nr_glyphs,
          utils::Span<const std::byte> file, int size_px);
 
+    [[nodiscard]] DrawList draw_text(std::string_view text, utils::Vec2f pen, float height) const;
     [[nodiscard]] const Texture& texture() const;
 
 private:

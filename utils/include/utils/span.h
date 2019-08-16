@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <type_traits>
 
 namespace utils {
 
@@ -11,8 +12,14 @@ struct Span {
     constexpr Span() = default;
     constexpr Span(Element* data, size_t size);
 
-    template <typename T>
+    template <typename T, std::enable_if_t<!std::is_same_v<T, Span<Element>> && !std::is_const_v<Element>, int> = 0>
     constexpr Span(T& container);
+
+    template <typename T, std::enable_if_t<!std::is_same_v<T, Span<Element>> && std::is_const_v<Element>, int> = 0>
+    constexpr Span(const T& container);
+
+    template <typename T, std::enable_if_t<!std::is_same_v<T, Span<Element>>, int> = 0>
+    constexpr Span(T&& container);
 
     [[nodiscard]] constexpr Element& operator[](size_t idx) const;
 
@@ -30,8 +37,20 @@ private:
 
 
 template <typename TElement>
-template <typename T>
+template <typename T, std::enable_if_t<!std::is_same_v<T, Span<TElement>> && !std::is_const_v<TElement>, int>>
 constexpr Span<TElement>::Span(T& container) :
+    Span{container.data(), container.size()}
+{}
+
+template <typename TElement>
+template <typename T, std::enable_if_t<!std::is_same_v<T, Span<TElement>> && std::is_const_v<TElement>, int>>
+constexpr Span<TElement>::Span(const T& container) :
+    Span{container.data(), container.size()}
+{}
+
+template <typename TElement>
+template <typename T, std::enable_if_t<!std::is_same_v<T, Span<TElement>>, int>>
+constexpr Span<TElement>::Span(T&& container) :
     Span{container.data(), container.size()}
 {}
 

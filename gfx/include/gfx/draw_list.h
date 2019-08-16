@@ -29,8 +29,12 @@ struct DrawList {
     Iterator begin() const;
     Iterator end() const;
 
-    void push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {});
-    void push(const Texture& texture, utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {});
+    void push_triangle(const Vertex& a, const Vertex& b, const Vertex& c,
+                       const Texture* texture = nullptr);
+    void push_quad(const Vertex& a, const Vertex& b, const Vertex& c, const Vertex& d,
+                   const Texture* texture = nullptr);
+    void push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {},
+              const Texture* texture = nullptr);
     void push(const DrawList& draw_list);
     void transform(const utils::Transform2f& transform);
 
