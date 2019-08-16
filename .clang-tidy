@@ -15,6 +15,7 @@ Checks: "*  ,\
   \
   -cppcoreguidelines-avoid-magic-numbers  ,\
   -cppcoreguidelines-macro-usage  ,\
+  -cppcoreguidelines-narrowing-conversions  ,\
   -cppcoreguidelines-pro-bounds-constant-array-index  ,\
   -cppcoreguidelines-pro-bounds-pointer-arithmetic  ,\
   -cppcoreguidelines-pro-type-const-cast  ,\
