@@ -35,6 +35,14 @@ private:
 
 template <template <typename> typename TVec, typename TElement,
           std::enable_if_t<is_vec<TVec<TElement>>, int> = 0>
+constexpr bool operator==(const TVec<TElement>& lhs, const TVec<TElement>& rhs);
+
+template <template <typename> typename TVec, typename TElement,
+          std::enable_if_t<is_vec<TVec<TElement>>, int> = 0>
+constexpr bool operator!=(const TVec<TElement>& lhs, const TVec<TElement>& rhs);
+
+template <template <typename> typename TVec, typename TElement,
+          std::enable_if_t<is_vec<TVec<TElement>>, int> = 0>
 constexpr TVec<TElement> operator-(const TVec<TElement>& lhs);
 
 #define DEF_OP(op, type, operand)                                        \
@@ -94,6 +102,23 @@ DEF_OP(*)
 DEF_OP(/)
 #undef DEF_OP
 
+
+template <template <typename> typename TVec, typename TElement,
+          std::enable_if_t<is_vec<TVec<TElement>>, int>>
+constexpr bool operator==(const TVec<TElement>& lhs, const TVec<TElement>& rhs)
+{
+    for (int i = 0; i < TVec<TElement>::size; ++i)
+        if (lhs[i] != rhs[i])
+            return false;
+    return true;
+}
+
+template <template <typename> typename TVec, typename TElement,
+          std::enable_if_t<is_vec<TVec<TElement>>, int>>
+constexpr bool operator!=(const TVec<TElement>& lhs, const TVec<TElement>& rhs)
+{
+    return !(lhs == rhs);
+}
 
 template <template <typename> typename TVec, typename TElement,
           std::enable_if_t<is_vec<TVec<TElement>>, int>>
