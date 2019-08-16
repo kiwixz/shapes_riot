@@ -112,7 +112,7 @@ DrawList Font::draw_text(std::string_view text, utils::Vec2f pen, float height) 
                                 {{bottom_left.x + size.x, bottom_left.y}, glyph.uv_offset + glyph.uv_size},
                                 &texture_);
         }
-        pen.x += glyph.advance / static_cast<float>(size_px_) * height;
+        pen.x += static_cast<float>(glyph.advance) / size_px_ * height;
     }
     return draw_list;
 }
