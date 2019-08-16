@@ -30,6 +30,8 @@ struct Font {
     [[nodiscard]] const Texture& texture() const;
 
 private:
+    int size_px_;
+
     Texture texture_;
     std::unordered_map<GlyphCode, Glyph> glyphs_;
 };

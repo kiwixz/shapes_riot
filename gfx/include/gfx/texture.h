@@ -11,6 +11,13 @@ struct Texture {
     Texture() = default;
     Texture(utils::Vec2i size, GLenum format = GL_RGB8);
 
+    // TODO fix draw_list to not keep pointers on texture
+    ~Texture() = default;
+    Texture(const Texture&) = delete;
+    Texture& operator=(const Texture&) = delete;
+    Texture(Texture&&) = delete;
+    Texture& operator=(Texture&&) = delete;
+
     [[nodiscard]] utils::Vec2i size() const;
     [[nodiscard]] utils::ScopeExit bind() const;
 

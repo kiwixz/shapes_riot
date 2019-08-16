@@ -9,7 +9,8 @@
 namespace gfx {
 
 Font::Font(GlyphCode first_glyph, int nr_glyphs,
-           utils::Span<const std::byte> file, int size_px)
+           utils::Span<const std::byte> file, int size_px) :
+    size_px_{size_px}
 {
     // load font
     FT_Library freetype;
@@ -25,7 +26,7 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
         throw MAKE_EXCEPTION("could not load font face: error {:#x}", error);
     utils::ScopeExit face_dtor{std::bind(&FT_Done_Face, face)};
 
-    if (FT_Error error = FT_Set_Pixel_Sizes(face, 0, size_px))
+    if (FT_Error error = FT_Set_Pixel_Sizes(face, 0, size_px_))
         throw MAKE_EXCEPTION("could not load set face size: error {:#x}", error);
 
     // render glyphs
@@ -43,7 +44,7 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
 
         bitmap.glyph.size = utils::Vec2u{face->glyph->bitmap.width, face->glyph->bitmap.rows};
         bitmap.glyph.bearing = {face->glyph->bitmap_left, face->glyph->bitmap_top};
-        bitmap.glyph.advance = face->glyph->advance.x;
+        bitmap.glyph.advance = face->glyph->advance.x / 64;  // get font units (FT_LOAD_LINEAR_DESIGN is not working)
 
         bitmap.pixels.resize(bitmap.glyph.size.x * bitmap.glyph.size.y);
         for (int y = 0; y < bitmap.glyph.size.y; ++y)
@@ -69,7 +70,7 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
         if (offset.x + glyph.size.x >= texture_width)  // go to next line
             offset = {0, next_line_y};
 
-        glyph.uv_offset = offset;  // to be divided by texture size later
+        glyph.uv_offset = offset;  // will be ajusted later
 
         // copy bitmap into texture
         if (texture_pixels.size() / texture_width < offset.y + glyph.size.y)  // texture too small
@@ -98,14 +99,22 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
 DrawList Font::draw_text(std::string_view text, utils::Vec2f pen, float height) const
 {
     DrawList draw_list;
-
     for (char c : text) {
         const Glyph& glyph = glyphs_.at(static_cast<unsigned char>(c));
-        
+        if (glyph.size != utils::Vec2i{}) {
+            float aspect_ratio = static_cast<float>(glyph.size.x) / glyph.size.y;
+            utils::Vec2f bottom_left = pen + utils::Vec2f{glyph.bearing} / static_cast<float>(size_px_) * height;
+            utils::Vec2f size{height * aspect_ratio, height};
+            draw_list.push_quad({bottom_left, {glyph.uv_offset.x, glyph.uv_offset.y + glyph.uv_size.y}},
+                                {{bottom_left.x, bottom_left.y + size.y}, glyph.uv_offset},
+                                {bottom_left + size, {glyph.uv_offset.x + glyph.uv_size.x, glyph.uv_offset.y}},
+                                {{bottom_left.x + size.x, bottom_left.y}, glyph.uv_offset + glyph.uv_size},
+                                &texture_);
+        }
+        pen.x += glyph.advance / static_cast<float>(size_px_) * height;
     }
-
     return draw_list;
-}
+}  // namespace gfx
 
 const Texture& Font::texture() const
 {
