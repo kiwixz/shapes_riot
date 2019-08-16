@@ -10,17 +10,15 @@ Button::Button(std::string label, std::function<void()> on_click) :
 DrawList Button::draw(double /*delta*/)
 {
     static constexpr utils::Vec4f color = {0.0f, 0.0f, 0.0f, 0.9f};
-    static constexpr std::array<gfx::Vertex, 4> vertices = {{{{-1.0f, -1.0f}, color},
-                                                             {{-1.0f, 1.0f}, color},
-                                                             {{1.0f, 1.0f}, color},
-                                                             {{1.0f, -1.0f}, color}}};
-    static constexpr std::array<gfx::Vertex::Index, 6> indexes = {{0, 1, 3, 1, 3, 2}};
 
     DrawList draw_list;
-    draw_list.push(vertices, indexes);
+    draw_list.push_quad({{-1.0f, -1.0f}, color},
+                        {{-1.0f, 1.0f}, color},
+                        {{1.0f, 1.0f}, color},
+                        {{1.0f, -1.0f}, color});
     draw_list.transform(margin_transform());
     return draw_list;
-}
+}  // namespace gfx::ui
 
 void Button::on_key(const WindowEvent::KeyEvent& event)
 {
