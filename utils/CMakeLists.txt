@@ -3,14 +3,28 @@ include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
 
 set(target "utils")
 
-file(GLOB_RECURSE src "*.cpp")
-list(FILTER src EXCLUDE REGEX ".test.cpp$")
-
-add_library("${target}" "${src}")
+add_library("${target}"
+    config.cpp
+    exception.cpp
+    paths.cpp
+    rand.cpp
+    resource_manager.cpp
+    scope_exit.cpp
+    thread_pool.cpp
+)
 target_include_directories("${target}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-file(GLOB_RECURSE test_src "*.test.cpp")
-test_target_cpp("${target}" "${test_src}")
+test_target_cpp("${target}"
+    bind_front.test.cpp
+    config.test.cpp
+    math.test.cpp
+    resource_manager.test.cpp
+    scope_exit.test.cpp
+    shared_handle.test.cpp
+    span.test.cpp
+    thread_pool.test.cpp
+    vec.test.cpp
+)
 
 
 find_package("fmt" CONFIG REQUIRED)

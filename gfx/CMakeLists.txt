@@ -5,14 +5,24 @@ include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
 
 set(target "gfx")
 
-file(GLOB_RECURSE src "*.cpp")
-list(FILTER src EXCLUDE REGEX ".test.cpp$")
+add_library("${target}"
+    draw_list.cpp
+    drawer.cpp
+    font.cpp
+    glfw_handle.cpp
+    shader.cpp
+    texture.cpp
+    window_state.cpp
+    window.cpp
 
-add_library("${target}" "${src}")
+    ui/button.cpp
+    ui/vertical_layout.cpp
+    ui/widget.cpp
+)
 target_include_directories("${target}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-file(GLOB_RECURSE test_src "*.test.cpp")
-test_target_cpp("${target}" "${test_src}")
+test_target_cpp("${target}"
+)
 
 
 download_github("source_sans_pro" "adobe-fonts/source-sans-pro" "2.045R-ro/1.095R-it")
