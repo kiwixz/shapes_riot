@@ -43,4 +43,7 @@ private:
 };
 
 
+DrawList& operator+=(DrawList& lhs, const DrawList& rhs);
+
+
 }  // namespace gfx

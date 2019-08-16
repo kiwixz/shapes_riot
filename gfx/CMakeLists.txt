@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
+include("${CMAKE_SOURCE_DIR}/cmake/download.cmake")
+include("${CMAKE_SOURCE_DIR}/cmake/file_embed.cmake")
 include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
 
 set(target "gfx")
@@ -13,11 +15,17 @@ file(GLOB_RECURSE test_src "*.test.cpp")
 test_target_cpp("${target}" "${test_src}")
 
 
+download_github("source_sans_pro" "adobe-fonts/source-sans-pro" "2.045R-ro/1.095R-it")
+file_embed("${target}" "source_sans_pro" "${source_sans_pro_DIR}/OTF/SourceSansPro-Regular.otf"
+    DEPENDS "source_sans_pro")
+
 find_package("Freetype" CONFIG REQUIRED)
 find_package("glad" CONFIG REQUIRED)
 find_package("glfw3" CONFIG REQUIRED)
 
 target_link_libraries("${target}"
+    "${source_sans_pro_EMBED}"
+
     "utils"
 
     "freetype"

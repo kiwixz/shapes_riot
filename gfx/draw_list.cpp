@@ -88,4 +88,11 @@ void DrawList::transform(const utils::Transform2f& transform)
         pair.second.transform(transform);
 }
 
+
+DrawList& operator+=(DrawList& lhs, const DrawList& rhs)
+{
+    lhs.push(rhs);
+    return lhs;
+}
+
 }  // namespace gfx
