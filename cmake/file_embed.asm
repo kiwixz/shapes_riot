@@ -5,7 +5,7 @@ global @prefix@_embed_@name@_end
 global @prefix@_embed_@name@_size
 
 begin:
-    incbin FILE
+    incbin "@file@"
 end:
     db 0x00  ; null terminator
 

@@ -14,12 +14,7 @@ function (file_embed prefix name file)
 
     configure_file("${CMAKE_SOURCE_DIR}/cmake/file_embed.asm" "${CMAKE_CURRENT_BINARY_DIR}/${target}/source.asm" @ONLY)
     add_library("${target}" STATIC "${CMAKE_CURRENT_BINARY_DIR}/${target}/source.asm")
-
     set_target_properties("${target}" PROPERTIES LINKER_LANGUAGE C)
-    target_compile_options("${target}" PRIVATE "-DNAME=${name}" "-DFILE='${file}'")
-    if (WIN32)
-        target_compile_options("${target}" PRIVATE "-Xvc")
-    endif ()
 
     if (ARG_DEPENDS)
         add_dependencies("${target}" ${ARG_DEPENDS})
