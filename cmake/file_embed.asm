@@ -1,4 +1,3 @@
-bits 64
 section .rodata
 
 global @prefix@_embed_@name@_begin

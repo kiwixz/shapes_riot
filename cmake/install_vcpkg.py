@@ -42,7 +42,7 @@ def install_vcpkg_packages(libs):
                  f"--overlay-triplets={str(Path('vcpkg_config/triplets').resolve())}",
                  f"--overlay-ports={str(Path('vcpkg_config/ports').resolve())}", ]
     subprocess.check_call(vcpkg_cmd + ["remove", "--outdated", "--no-purge", "--recurse"])
-    subprocess.check_call(vcpkg_cmd + ["install", "--triplet", triplet] + libs)
+    subprocess.check_call(vcpkg_cmd + ["install", "--recurse", "--triplet", triplet] + libs)
 
 
 def cleanup_vcpkg():
