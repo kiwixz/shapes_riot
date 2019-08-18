@@ -5,7 +5,7 @@
 
 namespace @prefix@::embed
 {
-namespace details
+namespace detail
 {
 
 extern "C"
@@ -15,12 +15,12 @@ extern "C"
     extern const size_t @prefix@_embed_@name@_size;
 }
 
-}  // namespace @prefix@::embed::details
+}  // namespace @prefix@::embed::detail
 
 
 inline utils::Span<const std::byte> @name@() {
-    static utils::Span<const std::byte> span{details::@prefix@_embed_@name@_begin,
-                                             details::@prefix@_embed_@name@_size};
+    static utils::Span<const std::byte> span{detail::@prefix@_embed_@name@_begin,
+                                             detail::@prefix@_embed_@name@_size};
     return span;
 }
 
