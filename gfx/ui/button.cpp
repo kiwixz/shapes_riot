@@ -16,11 +16,11 @@ DrawList Button::draw(double /*delta*/)
     static constexpr utils::Vec4f color = {0.0f, 0.0f, 0.0f, 0.85f};
 
     DrawList draw_list;
-    draw_list.push_quad({{-1.0f, -1.0f, 0.0f}, color},
-                        {{-1.0f, 1.0f, 0.0f}, color},
-                        {{1.0f, 1.0f, 0.0f}, color},
-                        {{1.0f, -1.0f, 0.0f}, color});
-    draw_list += font_->draw_text(label_, {}, {0.25f, 0.5f});
+    draw_list.push_quad({{-2.0f, -1.0f, 0.0f}, color},
+                        {{-2.0f, 1.0f, 0.0f}, color},
+                        {{2.0f, 1.0f, 0.0f}, color},
+                        {{2.0f, -1.0f, 0.0f}, color});
+    draw_list += font_->draw_text(label_, {}, {0.5f, 0.5f});
     draw_list.transform(margin_transform().matrix());
     return draw_list;
 }

@@ -22,10 +22,12 @@ int main(int /*argc*/, char** /*argv*/)
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
-        gfx::Window window{{1600, 900}, "Shapes Riot"};
+        gfx::Window window{{1, 1}, "Shapes Riot"};
         glfwSwapInterval(1);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
+        glDepthFunc(GL_LESS);
+        glEnable(GL_DEPTH_TEST);
 
         utils::ResourceManager resource_manager;
         ScreenStack screens;
@@ -34,6 +36,8 @@ int main(int /*argc*/, char** /*argv*/)
         using Clock = std::chrono::high_resolution_clock;
         Clock::time_point last_frame = Clock::now();
 
+        glfwSetWindowSize(window.ptr(), 1600, 900);
+
         while (!glfwWindowShouldClose(window.ptr())) {
             Clock::time_point now = Clock::now();
             double delta = std::chrono::duration<double>(now - last_frame).count();
@@ -41,8 +45,14 @@ int main(int /*argc*/, char** /*argv*/)
 
             gfx::WindowState state = window.state();
             window.poll_events([&](gfx::WindowEvent&& event) {
-                if (const auto* framebuffer_resize = event.as<gfx::WindowEvent::FramebufferResize>())
-                    glViewport(0, 0, framebuffer_resize->width, framebuffer_resize->height);
+                if (const auto* framebuffer_resize = event.as<gfx::WindowEvent::FramebufferResize>()) {
+                    if (framebuffer_resize->width > framebuffer_resize->height)
+                        glViewport((framebuffer_resize->width - framebuffer_resize->height) / 2, 0,
+                                   framebuffer_resize->height, framebuffer_resize->height);
+                    else
+                        glViewport(0, (framebuffer_resize->height - framebuffer_resize->width) / 2,
+                                   framebuffer_resize->width, framebuffer_resize->width);
+                }
 
                 if (screens.empty())
                     return;
@@ -50,6 +60,7 @@ int main(int /*argc*/, char** /*argv*/)
             });
             if (screens.empty())
                 break;
+            glClear(GL_DEPTH_BUFFER_BIT);
             screens.top().tick(delta, state);
 
             glfwSwapBuffers(window.ptr());
