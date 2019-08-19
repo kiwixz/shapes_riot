@@ -1,5 +1,6 @@
 #pragma once
 
+#include "utils/vec.h"
 #include <array>
 
 namespace utils {
@@ -12,6 +13,7 @@ struct Matrix {
     static constexpr int size = dim * dim;
 
     constexpr Matrix() = default;
+    constexpr Matrix(std::array<Element, size> data);
     ~Matrix() = default;
     constexpr Matrix(const Self&) = default;
     constexpr Self& operator=(const Self&) = default;
@@ -63,6 +65,23 @@ constexpr bool operator==(const Matrix<TElement, Tdim>& lhs, const Matrix<TEleme
 template <typename TElement, int Tdim>
 constexpr bool operator!=(const Matrix<TElement, Tdim>& lhs, const Matrix<TElement, Tdim>& rhs);
 
+template <typename TElement, int Tdim>
+constexpr Matrix<TElement, Tdim>& operator*=(const Matrix<TElement, Tdim>& lhs, const Matrix<TElement, Tdim>& rhs);
+
+template <typename TElement, int Tdim>
+constexpr Matrix<TElement, Tdim> operator*(const Matrix<TElement, Tdim>& lhs, const Matrix<TElement, Tdim>& rhs);
+
+template <typename TElement, int Tdim>
+constexpr typename Vec<TElement, Tdim>::Type operator*(const Matrix<TElement, Tdim>& lhs, const typename Vec<TElement, Tdim>::Type& rhs);
+
+template <typename TElement, int Tdim>
+constexpr typename Vec<TElement, Tdim>::Type operator*(const typename Vec<TElement, Tdim>::Type& lhs, const Matrix<TElement, Tdim>& rhs);
+
+
+template <typename TElement, int Tdim>
+constexpr Matrix<TElement, Tdim>::Matrix(std::array<Element, size> data) :
+    data_{std::move(data)}
+{}
 
 template <typename TElement, int Tdim>
 template <typename T>
@@ -109,9 +128,10 @@ constexpr const TElement* Matrix<TElement, Tdim>::ptr() const
 template <typename TElement, int Tdim>
 constexpr bool operator==(const Matrix<TElement, Tdim>& lhs, const Matrix<TElement, Tdim>& rhs)
 {
-    for (int i = 0; i < Matrix<TElement, Tdim>::size; ++i)
-        if (lhs.data_[i] != rhs.data_[i])
-            return false;
+    for (int row = 0; row < Tdim; ++row)
+        for (int col = 0; col < Tdim; ++col)
+            if (lhs(row, col) != rhs(row, col))
+                return false;
     return true;
 }
 
@@ -119,6 +139,43 @@ template <typename TElement, int Tdim>
 constexpr bool operator!=(const Matrix<TElement, Tdim>& lhs, const Matrix<TElement, Tdim>& rhs)
 {
     return !(lhs == rhs);
+}
+
+template <typename TElement, int Tdim>
+constexpr Matrix<TElement, Tdim>& operator*=(Matrix<TElement, Tdim>& lhs, const Matrix<TElement, Tdim>& rhs)
+{
+    Matrix<TElement, Tdim> lhs_copy = lhs;
+    for (int row = 0; row < Tdim; ++row)
+        for (int col = 0; col < Tdim; ++col) {
+            lhs(row, col) = 0;
+            for (int i = 0; i < Tdim; ++i)
+                lhs(row, col) += lhs_copy(row, i) * rhs(i, col);
+        }
+    return lhs;
+}
+
+template <typename TElement, int Tdim>
+constexpr Matrix<TElement, Tdim> operator*(const Matrix<TElement, Tdim>& lhs, const Matrix<TElement, Tdim>& rhs)
+{
+    Matrix<TElement, Tdim> matrix = lhs;
+    matrix *= rhs;
+    return matrix;
+}
+
+template <typename TElement, int Tdim>
+constexpr typename Vec<TElement, Tdim>::Type operator*(const Matrix<TElement, Tdim>& lhs, const typename Vec<TElement, Tdim>::Type& rhs)
+{
+    typename Vec<TElement, Tdim>::Type vec;
+    for (int row = 0; row < Tdim; ++row)
+        for (int col = 0; col < Tdim; ++col)
+            vec[row] += lhs(row, col) * rhs[col];
+    return vec;
+}
+
+template <typename TElement, int Tdim>
+constexpr typename Vec<TElement, Tdim>::Type operator*(const typename Vec<TElement, Tdim>::Type& lhs, const Matrix<TElement, Tdim>& rhs)
+{
+    return rhs * lhs;
 }
 
 }  // namespace utils

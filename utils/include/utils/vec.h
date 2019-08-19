@@ -85,6 +85,22 @@ struct Vec4 : vec_detail::VecMeta<Vec4, TElement, 4> {
 };
 
 
+template <typename TElement, int Tsize>
+struct Vec {};
+template <typename TElement>
+struct Vec<TElement, 2> {
+    using Type = Vec2<TElement>;
+};
+template <typename TElement>
+struct Vec<TElement, 3> {
+    using Type = Vec3<TElement>;
+};
+template <typename TElement>
+struct Vec<TElement, 4> {
+    using Type = Vec4<TElement>;
+};
+
+
 using Vec2d = Vec2<double>;
 using Vec2f = Vec2<float>;
 using Vec2i = Vec2<int>;
