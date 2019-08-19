@@ -134,13 +134,13 @@ constexpr TVec<TElement> operator-(const TVec<TElement>& lhs)
 template <template <typename> typename TVec, typename TElement, int Tsize>
 constexpr TElement& VecMeta<TVec, TElement, Tsize>::operator[](size_t idx)
 {
-    return ptr()[idx];
+    return reinterpret_cast<Element*>(this)[idx];
 }
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
 constexpr TElement VecMeta<TVec, TElement, Tsize>::operator[](size_t idx) const
 {
-    return ptr()[idx];
+    return reinterpret_cast<const Element*>(this)[idx];
 }
 
 template <template <typename> typename TVec, typename TElement, int Tsize>

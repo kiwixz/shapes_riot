@@ -48,6 +48,7 @@ struct Vec3 : vec_detail::VecMeta<Vec2, TElement, 3> {
     constexpr Self& operator=(Self&&) noexcept = default;
 
     constexpr Vec3(Element _x, Element _y, Element _z);
+    constexpr Vec3(const Vec2<TElement>& vec, Element _z);
 
     template <typename T>
     constexpr explicit Vec3(const Vec3<T>& other);
@@ -75,7 +76,9 @@ struct Vec4 : vec_detail::VecMeta<Vec4, TElement, 4> {
     constexpr Vec4(Self&&) noexcept = default;
     constexpr Self& operator=(Self&&) noexcept = default;
 
-    constexpr Vec4(Element _x, Element _y, Element _z, Element _w);
+    constexpr Vec4(Element _x, Element _y, Element _z, Element _w = 1);
+    constexpr Vec4(const Vec2<TElement>& vec, Element _z, Element _w = 1);
+    constexpr Vec4(const Vec3<TElement>& vec, Element _w = 1);
 
     template <typename T>
     constexpr explicit Vec4(const Vec4<T>& other);
@@ -86,20 +89,23 @@ struct Vec4 : vec_detail::VecMeta<Vec4, TElement, 4> {
 
 
 template <typename TElement, int Tsize>
-struct Vec {};
+struct VecTrait {};
 template <typename TElement>
-struct Vec<TElement, 2> {
+struct VecTrait<TElement, 2> {
     using Type = Vec2<TElement>;
 };
 template <typename TElement>
-struct Vec<TElement, 3> {
+struct VecTrait<TElement, 3> {
     using Type = Vec3<TElement>;
 };
 template <typename TElement>
-struct Vec<TElement, 4> {
+struct VecTrait<TElement, 4> {
     using Type = Vec4<TElement>;
 };
 
+
+template <typename TElement, int Tsize>
+using Vec = typename VecTrait<TElement, Tsize>::Type;
 
 using Vec2d = Vec2<double>;
 using Vec2f = Vec2<float>;
@@ -145,6 +151,11 @@ constexpr Vec3<TElement>::Vec3(Element _x, Element _y, Element _z) :
 {}
 
 template <typename TElement>
+constexpr Vec3<TElement>::Vec3(const Vec2<TElement>& vec, Element _z) :
+    Vec3{vec.x, vec.y, _z}
+{}
+
+template <typename TElement>
 template <typename T>
 constexpr Vec3<TElement>::Vec3(const Vec3<T>& other)
 {
@@ -165,6 +176,16 @@ constexpr Vec3<TElement>& Vec3<TElement>::operator=(const Vec3<T>& other)
 template <typename TElement>
 constexpr Vec4<TElement>::Vec4(Element _x, Element _y, Element _z, Element _w) :
     x{_x}, y{_y}, z{_z}, w{_w}
+{}
+
+template <typename TElement>
+constexpr Vec4<TElement>::Vec4(const Vec2<TElement>& vec, Element _z, Element _w) :
+    Vec4{vec.x, vec.y, _z, _w}
+{}
+
+template <typename TElement>
+constexpr Vec4<TElement>::Vec4(const Vec3<TElement>& vec, Element _w) :
+    Vec4{vec.x, vec.y, vec.z, _w}
 {}
 
 template <typename TElement>

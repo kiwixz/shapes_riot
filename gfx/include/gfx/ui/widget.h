@@ -13,17 +13,17 @@ struct Widget {
     virtual DrawList draw(double delta) = 0;
 
     virtual void on_key(const WindowEvent::KeyEvent& event) = 0;
-    virtual void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec2f pos) = 0;
+    virtual void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) = 0;
 
-    [[nodiscard]] const utils::Transform2f& margin_transform() const;
+    [[nodiscard]] const utils::Transform3f& margin_transform() const;
 
-    void on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec2f pos);
+    void on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos);
     void on_window_event(const WindowEvent& event, const WindowState& state);
 
     void set_margin(float top, float right, float bottom, float left);
 
 private:
-    utils::Transform2f margin_tranform_{};
+    utils::Transform3f margin_tranform_{};
 };
 
 }  // namespace gfx::ui

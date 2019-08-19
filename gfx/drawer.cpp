@@ -9,13 +9,13 @@ Drawer::Drawer(utils::ResourceManager& resource_manager)
     resource_manager.get_to("gfx_drawer_program", program_, [] {
         constexpr std::string_view vertex_source = R"(
             #version 450
-            layout(location=0) in vec2 pos;
+            layout(location=0) in vec4 pos;
             layout(location=1) in vec4 rgb;
             layout(location=2) in vec2 uv;
             layout(location=0) out vec4 rgb_;
             layout(location=1) out vec2 uv_;
             void main() {
-                gl_Position = vec4(pos, 0.0, 1.0);
+                gl_Position = pos;
                 rgb_ = rgb;
                 uv_ = uv;
             }

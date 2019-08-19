@@ -119,10 +119,10 @@ DrawList Font::draw_text_linear(std::string_view text, utils::Vec2f& pen, utils:
         if (glyph.size != utils::Vec2f{}) {
             utils::Vec2f bottom_left = pen + utils::Vec2f{glyph.bearing.x, glyph.bearing.y - glyph.size.y} * size;
             utils::Vec2f quad_size = glyph.size * size;
-            draw_list.push_quad({bottom_left, {glyph.uv_offset.x, glyph.uv_offset.y + glyph.uv_size.y}},
-                                {{bottom_left.x, bottom_left.y + quad_size.y}, glyph.uv_offset},
-                                {bottom_left + quad_size, {glyph.uv_offset.x + glyph.uv_size.x, glyph.uv_offset.y}},
-                                {{bottom_left.x + quad_size.x, bottom_left.y}, glyph.uv_offset + glyph.uv_size},
+            draw_list.push_quad({{bottom_left, 0.0f}, {glyph.uv_offset.x, glyph.uv_offset.y + glyph.uv_size.y}},
+                                {{bottom_left.x, bottom_left.y + quad_size.y, 0.0f}, glyph.uv_offset},
+                                {{bottom_left + quad_size, 0.0f}, {glyph.uv_offset.x + glyph.uv_size.x, glyph.uv_offset.y}},
+                                {{bottom_left.x + quad_size.x, bottom_left.y, 0.0f}, glyph.uv_offset + glyph.uv_size},
                                 &texture_);
         }
         pen.x += glyph.advance * size.x;

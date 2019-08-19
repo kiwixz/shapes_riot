@@ -72,10 +72,7 @@ template <typename TElement, int Tdim>
 constexpr Matrix<TElement, Tdim> operator*(const Matrix<TElement, Tdim>& lhs, const Matrix<TElement, Tdim>& rhs);
 
 template <typename TElement, int Tdim>
-constexpr typename Vec<TElement, Tdim>::Type operator*(const Matrix<TElement, Tdim>& lhs, const typename Vec<TElement, Tdim>::Type& rhs);
-
-template <typename TElement, int Tdim>
-constexpr typename Vec<TElement, Tdim>::Type operator*(const typename Vec<TElement, Tdim>::Type& lhs, const Matrix<TElement, Tdim>& rhs);
+constexpr Vec<TElement, Tdim> operator*(const Matrix<TElement, Tdim>& lhs, const Vec<TElement, Tdim>& rhs);
 
 
 template <typename TElement, int Tdim>
@@ -163,19 +160,13 @@ constexpr Matrix<TElement, Tdim> operator*(const Matrix<TElement, Tdim>& lhs, co
 }
 
 template <typename TElement, int Tdim>
-constexpr typename Vec<TElement, Tdim>::Type operator*(const Matrix<TElement, Tdim>& lhs, const typename Vec<TElement, Tdim>::Type& rhs)
+constexpr Vec<TElement, Tdim> operator*(const Matrix<TElement, Tdim>& lhs, const Vec<TElement, Tdim>& rhs)
 {
-    typename Vec<TElement, Tdim>::Type vec;
+    Vec<TElement, Tdim> vec;
     for (int row = 0; row < Tdim; ++row)
         for (int col = 0; col < Tdim; ++col)
             vec[row] += lhs(row, col) * rhs[col];
     return vec;
-}
-
-template <typename TElement, int Tdim>
-constexpr typename Vec<TElement, Tdim>::Type operator*(const typename Vec<TElement, Tdim>::Type& lhs, const Matrix<TElement, Tdim>& rhs)
-{
-    return rhs * lhs;
 }
 
 }  // namespace utils

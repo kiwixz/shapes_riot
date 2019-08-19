@@ -12,7 +12,7 @@ struct Button : Widget {
     DrawList draw(double delta) override;
 
     void on_key(const WindowEvent::KeyEvent& event) override;
-    void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec2f pos) override;
+    void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) override;
 
 private:
     utils::ResourceHandle<Font> font_;

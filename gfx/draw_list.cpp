@@ -43,10 +43,10 @@ void SubDrawList::push(const SubDrawList& draw_list)
     push(draw_list.vertices(), draw_list.indexes());
 }
 
-void SubDrawList::transform(const utils::Transform2f& transform)
+void SubDrawList::transform(const utils::Matrix4f& transform)
 {
     for (Vertex& vertex : vertices_)
-        vertex.pos *= transform;
+        vertex.pos = transform * vertex.pos;
 }
 
 
@@ -82,7 +82,7 @@ void DrawList::push(const DrawList& draw_list)
         sub_lists_[pair.first].push(pair.second);
 }
 
-void DrawList::transform(const utils::Transform2f& transform)
+void DrawList::transform(const utils::Matrix4f& transform)
 {
     for (std::pair<const Texture* const, SubDrawList>& pair : sub_lists_)
         pair.second.transform(transform);

@@ -16,12 +16,12 @@ DrawList Button::draw(double /*delta*/)
     static constexpr utils::Vec4f color = {0.0f, 0.0f, 0.0f, 0.85f};
 
     DrawList draw_list;
-    draw_list.push_quad({{-1.0f, -1.0f}, color},
-                        {{-1.0f, 1.0f}, color},
-                        {{1.0f, 1.0f}, color},
-                        {{1.0f, -1.0f}, color});
+    draw_list.push_quad({{-1.0f, -1.0f, 0.0f}, color},
+                        {{-1.0f, 1.0f, 0.0f}, color},
+                        {{1.0f, 1.0f, 0.0f}, color},
+                        {{1.0f, -1.0f, 0.0f}, color});
     draw_list += font_->draw_text(label_, {}, {0.25f, 0.5f});
-    draw_list.transform(margin_transform());
+    draw_list.transform(margin_transform().matrix());
     return draw_list;
 }
 
@@ -32,7 +32,7 @@ void Button::on_key(const WindowEvent::KeyEvent& event)
         on_click_();
 }
 
-void Button::on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec2f /*pos*/)
+void Button::on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f /*pos*/)
 {
     if (event.action == GLFW_RELEASE && event.mods == 0 && event.button == GLFW_MOUSE_BUTTON_LEFT)
         on_click_();
