@@ -14,6 +14,7 @@ jobs:
           name: Install system dependencies
           command: |
             pacman --color=always --needed --noconfirm -Sy  \
+                clang cmake nasm ninja python  \
                 libxcursor libxi libxinerama libxrandr  `# glfw`
 
       - restore_cache:
@@ -45,7 +46,7 @@ jobs:
           name: Test debug
           environment:
             CXXFLAGS: -fdiagnostics-color=always
-            LDFLAGS: -fdiagnostics-color=always -fuse-ld=lld -Wl,-z,notext
+            LDFLAGS: -fdiagnostics-color=always
             ASAN_OPTIONS: check_initialization_order=1
             UBSAN_OPTIONS: print_stacktrace=1
           command: |
@@ -58,7 +59,7 @@ jobs:
           name: Test release
           environment:
             CXXFLAGS: -fdiagnostics-color=always
-            LDFLAGS: -fdiagnostics-color=always -fuse-ld=lld -Wl,-z,notext
+            LDFLAGS: -fdiagnostics-color=always
           command: |
             mkdir -p "build/release"
             cd "build/release"
