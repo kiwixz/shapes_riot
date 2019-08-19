@@ -101,7 +101,7 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
     texture_.update(texture_pixels.data(), GL_BGRA);
 }
 
-DrawList Font::draw_text(std::string_view text, utils::Vec2f center, utils::Vec2f size) const
+DrawList Font::draw_text(std::string_view text, utils::Vec3f center, utils::Vec2f size) const
 {
     for (char c : text) {
         const Glyph& glyph = glyphs_.at(static_cast<unsigned char>(c));
@@ -111,18 +111,18 @@ DrawList Font::draw_text(std::string_view text, utils::Vec2f center, utils::Vec2
     return draw_text_linear(text, center, size);
 }
 
-DrawList Font::draw_text_linear(std::string_view text, utils::Vec2f& pen, utils::Vec2f size) const
+DrawList Font::draw_text_linear(std::string_view text, utils::Vec3f& pen, utils::Vec2f size) const
 {
     DrawList draw_list;
     for (char c : text) {
         const Glyph& glyph = glyphs_.at(static_cast<unsigned char>(c));
         if (glyph.size != utils::Vec2f{}) {
-            utils::Vec2f bottom_left = pen + utils::Vec2f{glyph.bearing.x, glyph.bearing.y - glyph.size.y} * size;
-            utils::Vec2f quad_size = glyph.size * size;
-            draw_list.push_quad({{bottom_left, 0.0f}, {glyph.uv_offset.x, glyph.uv_offset.y + glyph.uv_size.y}},
-                                {{bottom_left.x, bottom_left.y + quad_size.y, 0.0f}, glyph.uv_offset},
-                                {{bottom_left + quad_size, 0.0f}, {glyph.uv_offset.x + glyph.uv_size.x, glyph.uv_offset.y}},
-                                {{bottom_left.x + quad_size.x, bottom_left.y, 0.0f}, glyph.uv_offset + glyph.uv_size},
+            utils::Vec3f bottom_left = pen + utils::Vec3f{glyph.bearing.x * size.x, (glyph.bearing.y - glyph.size.y) * size.y, 0.0f};
+            utils::Vec3f quad_size{glyph.size * size, 0.0f};
+            draw_list.push_quad({bottom_left, {glyph.uv_offset.x, glyph.uv_offset.y + glyph.uv_size.y}},
+                                {{bottom_left.x, bottom_left.y + quad_size.y, bottom_left.z}, glyph.uv_offset},
+                                {bottom_left + quad_size, {glyph.uv_offset.x + glyph.uv_size.x, glyph.uv_offset.y}},
+                                {{bottom_left.x + quad_size.x, bottom_left.y, bottom_left.z}, glyph.uv_offset + glyph.uv_size},
                                 &texture_);
         }
         pen.x += glyph.advance * size.x;
