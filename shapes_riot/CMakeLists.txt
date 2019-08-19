@@ -6,6 +6,7 @@ set(target "shapes_riot")
 add_library("${target}_base"
     game_screen.cpp
     main_menu.cpp
+    player.cpp
     screen_stack.cpp
 )
 add_executable("${target}" main.cpp)

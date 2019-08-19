@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gfx/drawer.h"
+#include "player.h"
 #include "screen_stack.h"
 #include "utils/resource_manager.h"
 
@@ -19,6 +20,7 @@ private:
     ScreenStack* screens_;
 
     gfx::Drawer drawer_;
+    Player player_;
 };
 
 }  // namespace shapes_riot

@@ -14,9 +14,7 @@ void GameScreen::tick(double /*delta*/, const gfx::WindowState& /*state*/)
     glClear(GL_COLOR_BUFFER_BIT);
 
     gfx::DrawList draw_list;
-    draw_list.push_triangle({{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}},
-                            {{0.0f, 0.5f}, {0.0f, 1.0f, 0.0f, 1.0f}},
-                            {{0.5f, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}});
+    draw_list += player_.draw();
     drawer_.draw(draw_list);
 }
 

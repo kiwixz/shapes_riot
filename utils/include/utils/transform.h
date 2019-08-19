@@ -1,8 +1,36 @@
 #pragma once
 
+#include "utils/matrix.h"
 #include "utils/vec.h"
+#include <cmath>
 
 namespace utils {
+
+template <typename T>
+constexpr utils::Matrix2<T> translation(const utils::Vec2<T>& vec);
+
+template <typename T>
+constexpr utils::Matrix2<T> rotation(T angle);
+
+
+template <typename T>
+constexpr utils::Matrix2<T> translation(const utils::Vec2<T>& vec)
+{
+    // TODO
+    return {};
+}
+
+template <typename T>
+constexpr utils::Matrix2<T> rotation(T angle)
+{
+    T cos_angle = std::cos(angle);
+    T sin_angle = std::sin(angle);
+    return {{cos_angle, -sin_angle,
+             sin_angle, cos_angle}};
+}
+
+
+// TO BE REMOVED
 
 template <typename TElement>
 struct Transform2 {
