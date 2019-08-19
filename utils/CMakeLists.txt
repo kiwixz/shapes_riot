@@ -18,6 +18,7 @@ test_target_cpp("${target}"
     bind_front.test.cpp
     config.test.cpp
     math.test.cpp
+    matrix.test.cpp
     resource_manager.test.cpp
     scope_exit.test.cpp
     shared_handle.test.cpp

@@ -6,6 +6,7 @@ namespace utils {
 
 template <typename TElement>
 struct Vec2 : vec_detail::VecMeta<Vec2, TElement, 2> {
+    using Self = Vec2<TElement>;
     using Element = TElement;
     static constexpr int size = 2;
 
@@ -14,10 +15,10 @@ struct Vec2 : vec_detail::VecMeta<Vec2, TElement, 2> {
 
     constexpr Vec2() = default;
     ~Vec2() = default;
-    constexpr Vec2(const Vec2<Element>&) = default;
-    constexpr Vec2<Element>& operator=(const Vec2<Element>&) = default;
-    constexpr Vec2(Vec2<Element>&&) noexcept = default;
-    constexpr Vec2<Element>& operator=(Vec2<Element>&&) noexcept = default;
+    constexpr Vec2(const Self&) = default;
+    constexpr Self& operator=(const Self&) = default;
+    constexpr Vec2(Self&&) noexcept = default;
+    constexpr Self& operator=(Self&&) noexcept = default;
 
     constexpr Vec2(Element x, Element y);
 
@@ -25,12 +26,13 @@ struct Vec2 : vec_detail::VecMeta<Vec2, TElement, 2> {
     constexpr explicit Vec2(const Vec2<T>& other);
 
     template <typename T>
-    constexpr Vec2<Element>& operator=(const Vec2<T>& other);
+    constexpr Self& operator=(const Vec2<T>& other);
 };
 
 
 template <typename TElement>
 struct Vec3 : vec_detail::VecMeta<Vec2, TElement, 3> {
+    using Self = Vec3<TElement>;
     using Element = TElement;
     static constexpr int size = 3;
 
@@ -40,10 +42,10 @@ struct Vec3 : vec_detail::VecMeta<Vec2, TElement, 3> {
 
     constexpr Vec3() = default;
     ~Vec3() = default;
-    constexpr Vec3(const Vec3<Element>&) = default;
-    constexpr Vec3<Element>& operator=(const Vec3<Element>&) = default;
-    constexpr Vec3(Vec3<Element>&&) noexcept = default;
-    constexpr Vec3<Element>& operator=(Vec3<Element>&&) noexcept = default;
+    constexpr Vec3(const Self&) = default;
+    constexpr Self& operator=(const Self&) = default;
+    constexpr Vec3(Self&&) noexcept = default;
+    constexpr Self& operator=(Self&&) noexcept = default;
 
     constexpr Vec3(Element _x, Element _y, Element _z);
 
@@ -51,12 +53,13 @@ struct Vec3 : vec_detail::VecMeta<Vec2, TElement, 3> {
     constexpr explicit Vec3(const Vec3<T>& other);
 
     template <typename T>
-    constexpr Vec3<Element>& operator=(const Vec3<T>& other);
+    constexpr Self& operator=(const Vec3<T>& other);
 };
 
 
 template <typename TElement>
 struct Vec4 : vec_detail::VecMeta<Vec4, TElement, 4> {
+    using Self = Vec4<TElement>;
     using Element = TElement;
     static constexpr int size = 4;
 
@@ -67,10 +70,10 @@ struct Vec4 : vec_detail::VecMeta<Vec4, TElement, 4> {
 
     constexpr Vec4() = default;
     ~Vec4() = default;
-    constexpr Vec4(const Vec4<Element>&) = default;
-    constexpr Vec4<Element>& operator=(const Vec4<Element>&) = default;
-    constexpr Vec4(Vec4<Element>&&) noexcept = default;
-    constexpr Vec4<Element>& operator=(Vec4<Element>&&) noexcept = default;
+    constexpr Vec4(const Self&) = default;
+    constexpr Self& operator=(const Self&) = default;
+    constexpr Vec4(Self&&) noexcept = default;
+    constexpr Self& operator=(Self&&) noexcept = default;
 
     constexpr Vec4(Element _x, Element _y, Element _z, Element _w);
 
@@ -78,7 +81,7 @@ struct Vec4 : vec_detail::VecMeta<Vec4, TElement, 4> {
     constexpr explicit Vec4(const Vec4<T>& other);
 
     template <typename T>
-    constexpr Vec4<Element>& operator=(const Vec4<T>& other);
+    constexpr Self& operator=(const Vec4<T>& other);
 };
 
 
