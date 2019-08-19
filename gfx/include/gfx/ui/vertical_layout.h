@@ -1,5 +1,6 @@
 #pragma once
 
+#include "gfx/transform.h"
 #include "gfx/ui/widget.h"
 #include <memory>
 #include <vector>
@@ -17,7 +18,7 @@ struct VerticalLayout : Widget {
 private:
     struct Child {
         std::unique_ptr<Widget> widget;
-        utils::Transform3f transform;
+        Transform3f transform;
     };
 
     std::vector<Child> children_;

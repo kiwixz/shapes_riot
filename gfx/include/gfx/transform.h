@@ -3,7 +3,7 @@
 #include "utils/matrix.h"
 #include "utils/vec.h"
 
-namespace utils {
+namespace gfx {
 
 template <typename TElement>
 struct Transform3 {
@@ -12,8 +12,8 @@ struct Transform3 {
     utils::Vec3<Element> translation{};
     utils::Vec3<Element> scale{utils::Vec3i{1, 1, 1}};
 
-    Transform3<TElement> inverse() const;
-    Matrix4<TElement> matrix() const;
+    [[nodiscard]] Transform3<TElement> inverse() const;
+    [[nodiscard]] utils::Matrix4<TElement> matrix() const;
 };
 
 
@@ -30,10 +30,10 @@ template <typename T>
 constexpr Transform3<T> operator*(const Transform3<T>& lhs, const Transform3<T>& rhs);
 
 template <typename T>
-constexpr Vec3<T>& operator*=(Vec3<T>& lhs, const Transform3<T>& rhs);
+constexpr utils::Vec3<T>& operator*=(utils::Vec3<T>& lhs, const Transform3<T>& rhs);
 
 template <typename T>
-constexpr Vec3<T> operator*(const Vec3<T>& lhs, const Transform3<T>& rhs);
+constexpr utils::Vec3<T> operator*(const utils::Vec3<T>& lhs, const Transform3<T>& rhs);
 
 
 template <typename TElement>
@@ -43,7 +43,7 @@ Transform3<TElement> Transform3<TElement>::inverse() const
 }
 
 template <typename TElement>
-Matrix4<TElement> Transform3<TElement>::matrix() const
+utils::Matrix4<TElement> Transform3<TElement>::matrix() const
 {
     return {{scale.x, 0, 0, translation.x,
              0, scale.y, 0, translation.y,
@@ -69,7 +69,7 @@ constexpr Transform3<T> operator*(const Transform3<T>& lhs, const Transform3<T>&
 }
 
 template <typename T>
-constexpr Vec3<T>& operator*=(Vec3<T>& lhs, const Transform3<T>& rhs)
+constexpr utils::Vec3<T>& operator*=(utils::Vec3<T>& lhs, const Transform3<T>& rhs)
 {
     lhs *= rhs.scale;
     lhs += rhs.translation;
@@ -77,11 +77,11 @@ constexpr Vec3<T>& operator*=(Vec3<T>& lhs, const Transform3<T>& rhs)
 }
 
 template <typename T>
-constexpr Vec3<T> operator*(const Vec3<T>& lhs, const Transform3<T>& rhs)
+constexpr utils::Vec3<T> operator*(const utils::Vec3<T>& lhs, const Transform3<T>& rhs)
 {
-    Vec3<T> r = lhs;
+    utils::Vec3<T> r = lhs;
     r *= rhs;
     return r;
 }
 
-}  // namespace utils
+}  // namespace gfx

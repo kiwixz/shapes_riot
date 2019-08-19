@@ -2,7 +2,7 @@
 
 namespace gfx::ui {
 
-const utils::Transform3f& Widget::margin_transform() const
+const Transform3f& Widget::margin_transform() const
 {
     return margin_tranform_;
 }

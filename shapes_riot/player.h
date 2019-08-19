@@ -7,7 +7,7 @@
 namespace shapes_riot {
 
 struct Player {
-    gfx::DrawList draw() const;
+    [[nodiscard]] gfx::DrawList draw() const;
 
     void set_angle(float angle);
 

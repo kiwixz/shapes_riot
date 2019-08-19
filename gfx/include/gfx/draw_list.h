@@ -4,7 +4,6 @@
 #include "gfx/vertex.h"
 #include "utils/matrix.h"
 #include "utils/span.h"
-#include "utils/transform.h"
 #include <vector>
 
 namespace gfx {
