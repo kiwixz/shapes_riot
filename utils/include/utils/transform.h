@@ -7,7 +7,6 @@ namespace utils {
 
 template <typename TElement>
 struct Transform3 {
-    using Self = Transform3<TElement>;
     using Element = TElement;
 
     utils::Vec3<Element> translation{};
