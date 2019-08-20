@@ -4,6 +4,7 @@
 #include "gfx/vertex.h"
 #include "utils/matrix.h"
 #include "utils/span.h"
+#include <map>
 #include <vector>
 
 namespace gfx {
@@ -24,7 +25,7 @@ private:
 
 
 struct DrawList {
-    using Iterator = std::unordered_map<const Texture*, SubDrawList>::const_iterator;
+    using Iterator = std::map<const Texture*, SubDrawList>::const_iterator;
 
     Iterator begin() const;
     Iterator end() const;
@@ -39,7 +40,7 @@ struct DrawList {
     void transform(const utils::Matrix4f& transform);
 
 private:
-    std::unordered_map<const Texture*, SubDrawList> sub_lists_;
+    std::map<const Texture*, SubDrawList> sub_lists_;
 };
 
 
