@@ -9,11 +9,17 @@ namespace shapes_riot {
 struct Player {
     [[nodiscard]] gfx::DrawList draw() const;
 
-    void set_angle(float angle);
+    utils::Vec2d position() const;
+
+    void add_acceleration(utils::Vec2d vec);
+    void set_angle(double angle);
+    void tick(double delta);
 
 private:
-    utils::Vec2f pos_;
-    float angle_;
+    utils::Vec2d pos_;
+    utils::Vec2d velocity_;
+    utils::Vec2d acceleration_;
+    double angle_;
 };
 
 }  // namespace shapes_riot
