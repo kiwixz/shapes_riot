@@ -63,7 +63,7 @@ jobs:
 
       - name: Checkout
         run: |
-          git clone "https://github.com/%GITHUB_REPOSITORY%" ".\"
+          git clone "https://github.com/%GITHUB_REPOSITORY%" "."
           git checkout "%GITHUB_SHA%"
 
       - name: Install vcpkg dependencies
