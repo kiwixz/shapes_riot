@@ -13,7 +13,7 @@ int main(int /*argc*/, char** /*argv*/)
 {
     try {
         glfwSetErrorCallback([](int error, char const* description) {
-            fmt::print(stderr, "[glfw] error {}: {}\n", error, description);
+            fmt::print(stderr, "[glfw] error {:#x}: {}\n", error, description);
         });
 
         gfx::GlfwHandle glfw_handle;
