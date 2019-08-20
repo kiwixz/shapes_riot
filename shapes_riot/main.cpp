@@ -12,6 +12,10 @@ namespace {
 int main(int /*argc*/, char** /*argv*/)
 {
     try {
+        glfwSetErrorCallback([](int error, char const* description) {
+            fmt::print(stderr, "[glfw] error {}: {}\n", error, description);
+        });
+
         gfx::GlfwHandle glfw_handle;
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
@@ -23,6 +27,16 @@ int main(int /*argc*/, char** /*argv*/)
 #endif
 
         gfx::Window window{{1, 1}, "Shapes Riot"};
+
+        glDebugMessageControl(GL_DONT_CARE, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION,
+                              0, nullptr, GL_FALSE);
+        glDebugMessageCallback([](GLenum source, GLenum type, GLuint id, GLenum severity,
+                                  GLsizei /*length*/, GLchar const* message, void const* /*userParam*/) {
+            fmt::print(stderr, "[opengl] source:{:#x} type:{:#x} id:{:#x} severity:{:#x}\n\t {}\n",
+                       source, type, id, severity, message);
+        },
+                               nullptr);
+
         glfwSwapInterval(1);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
