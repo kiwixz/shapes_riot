@@ -62,6 +62,10 @@ jobs:
   build_windows:
     runs-on: windows-latest
     steps:
+      - name: Install system dependencies
+        run: |
+          choco install nasm
+
       - name: Checkout
         run: |
           git clone "https://github.com/%GITHUB_REPOSITORY%" "./"
