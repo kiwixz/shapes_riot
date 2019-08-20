@@ -5,16 +5,17 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: kiwixz/ci-cpp:2019-08-18
-      env:
-        CMAKE_BUILD_PARALLEL_LEVEL: 8
     steps:
-      - uses: actions/checkout@v1
-
       - name: Install system dependencies
         run: |
           pacman --color=always --needed --noconfirm -Sy  \
               clang cmake nasm ninja python  \
               libxcursor libxi libxinerama libxrandr  `# glfw`
+
+      - name: Checkout
+        run: |
+          git clone "https://github.com/$GITHUB_REPOSITORY" "./"
+          git checkout "$GITHUB_SHA"
 
       - name: Install vcpkg dependencies
         run: |
