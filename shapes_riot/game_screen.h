@@ -1,5 +1,6 @@
 #pragma once
 
+#include "camera.h"
 #include "gfx/drawer.h"
 #include "player.h"
 #include "screen_stack.h"
@@ -20,6 +21,7 @@ private:
     ScreenStack* screens_;
 
     gfx::Drawer drawer_;
+    Camera camera_;
     Player player_;
 };
 

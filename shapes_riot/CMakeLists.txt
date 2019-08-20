@@ -4,6 +4,7 @@ include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
 set(target "shapes_riot")
 
 add_library("${target}_base"
+    camera.cpp
     game_screen.cpp
     main_menu.cpp
     player.cpp

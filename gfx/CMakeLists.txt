@@ -22,6 +22,7 @@ add_library("${target}"
 target_include_directories("${target}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 test_target_cpp("${target}"
+    transformation.test.cpp
 )
 
 

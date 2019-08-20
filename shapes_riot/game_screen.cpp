@@ -15,9 +15,11 @@ void GameScreen::tick(double delta, const gfx::WindowState& state)
 
     player_.set_angle(std::atan2(state.mouse_pos.y, state.mouse_pos.x));
     player_.tick(delta);
+    camera_.center_on(player_.position());
 
     gfx::DrawList draw_list;
     draw_list += player_.draw();
+    draw_list.transform(camera_.matrix());
     drawer_.draw(draw_list);
 }
 
