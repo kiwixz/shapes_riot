@@ -31,8 +31,6 @@ jobs:
 
       - name: Test debug
         env:
-          CXXFLAGS: -fdiagnostics-color=always
-          LDFLAGS: -fdiagnostics-color=always
           ASAN_OPTIONS: check_initialization_order=1
           UBSAN_OPTIONS: print_stacktrace=1
         run: |
@@ -43,9 +41,6 @@ jobs:
           ctest --output-on-failure -E "check_.*"
 
       - name: Test release
-        env:
-          CXXFLAGS: -fdiagnostics-color=always
-          LDFLAGS: -fdiagnostics-color=always
         run: |
           mkdir -p "build/release"
           cd "build/release"
