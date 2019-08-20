@@ -6,9 +6,11 @@ option(USE_VCPKG "Use vcpkg toolchain to install and find libs" ON)
 
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING "")
 set(CMAKE_C_FLAGS "" CACHE STRING "")
-set(CMAKE_CXX_COMPILER "clang++" CACHE FILEPATH "")
 set(CMAKE_CXX_FLAGS "" CACHE STRING "")
 set(CMAKE_ASM_NASM_FLAGS "" CACHE STRING "")
+if (UNIX)
+    set(CMAKE_CXX_COMPILER "clang++" CACHE FILEPATH "")
+endif ()
 
 install_vcpkg("2019.07"
     LIBS
