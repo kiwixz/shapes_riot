@@ -1,17 +1,58 @@
-name: CI
-
-on: [push]
+on: [create, pull_request, push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    
+    container:
+      image: kiwixz/ci-cpp:2019-08-18
+      env:
+        CMAKE_BUILD_PARALLEL_LEVEL: 8
     steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+      - uses: actions/checkout@v1
+
+      - name: Install system dependencies
+        run: |
+          pacman --color=always --needed --noconfirm -Sy  \
+              clang cmake nasm ninja python  \
+              libxcursor libxi libxinerama libxrandr  `# glfw`
+
+      - name: Install vcpkg dependencies
+        run: |
+          ln -s "/opt/vcpkg"
+          mkdir -p "build/vcpkg"
+          cd "build/vcpkg"
+          cmake "../.."
+
+      - name: Dump versions
+        run: |
+          pacman --color=always -Q
+          vcpkg list
+
+      - name: Test debug
+        env:
+          CXXFLAGS: -fdiagnostics-color=always
+          LDFLAGS: -fdiagnostics-color=always
+          ASAN_OPTIONS: check_initialization_order=1
+          UBSAN_OPTIONS: print_stacktrace=1
+        run: |
+          mkdir -p "build/debug"
+          cd "build/debug"
+          cmake -G Ninja -D "CMAKE_BUILD_TYPE=Debug" "../.."
+          ninja
+          ctest --output-on-failure -E "check_.*"
+
+      - name: Test release
+        env:
+          CXXFLAGS: -fdiagnostics-color=always
+          LDFLAGS: -fdiagnostics-color=always
+        run: |
+          mkdir -p "build/release"
+          cd "build/release"
+          cmake -G Ninja -D "CMAKE_BUILD_TYPE=Release" "../.."
+          ninja
+          ctest --output-on-failure -E "check_.*"
+
+      - name: Additional checks
+        run: |
+          cd "build/debug"
+          ctest --output-on-failure -R "check_.*"
