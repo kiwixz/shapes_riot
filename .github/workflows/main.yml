@@ -63,30 +63,30 @@ jobs:
 
       - name: Checkout
         run: |
-          git clone "https://github.com/%GITHUB_REPOSITORY%" "./"
+          git clone "https://github.com/%GITHUB_REPOSITORY%" ".\"
           git checkout "%GITHUB_SHA%"
 
       - name: Install vcpkg dependencies
         run: |
-          mkdir "build/vcpkg"
-          cd "build/vcpkg"
+          mkdir "build\vcpkg"
+          cd "build\vcpkg"
           call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Entreprise\VC\Auxiliary\Build\vcvars64.bat"
-          cmake "../.."
+          cmake "..\.."
 
       - name: Test debug
         run: |
-          mkdir "build/debug"
-          cd "build/debug"
+          mkdir "build\debug"
+          cd "build\debug"
           call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\Entreprise\VC\Auxiliary\Build\vcvars64.bat"
-          cmake -G Ninja -D "CMAKE_BUILD_TYPE=Debug" "../.."
+          cmake -G Ninja -D "CMAKE_BUILD_TYPE=Debug" "..\.."
           ninja
           ctest --output-on-failure -E "check_.*"
 
       - name: Test release
         run: |
-          mkdir "build/release"
-          cd "build/release"
+          mkdir "build\release"
+          cd "build\release"
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Entreprise\VC\Auxiliary\Build\vcvars64.bat"
-          cmake -G Ninja -D "CMAKE_BUILD_TYPE=Release" "../.."
+          cmake -G Ninja -D "CMAKE_BUILD_TYPE=Release" "..\.."
           ninja
           ctest --output-on-failure -E "check_.*"
