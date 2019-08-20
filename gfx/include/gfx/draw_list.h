@@ -27,8 +27,8 @@ private:
 struct DrawList {
     using Iterator = std::map<const Texture*, SubDrawList>::const_iterator;
 
-    Iterator begin() const;
-    Iterator end() const;
+    [[nodiscard]] Iterator begin() const;
+    [[nodiscard]] Iterator end() const;
 
     void push_triangle(const Vertex& a, const Vertex& b, const Vertex& c,
                        const Texture* texture = nullptr);
