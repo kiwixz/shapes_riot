@@ -59,7 +59,7 @@ jobs:
     steps:
       - name: Install system dependencies
         run: |
-          choco install nasm ninja
+          choco install nasm
 
       - name: Checkout
         run: |
