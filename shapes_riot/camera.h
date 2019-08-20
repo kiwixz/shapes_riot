@@ -7,8 +7,8 @@
 namespace shapes_riot {
 
 struct Camera {
-    Rectangle bounds() const;
-    utils::Matrix4f matrix() const;
+    [[nodiscard]] Rectangle bounds() const;
+    [[nodiscard]] utils::Matrix4f matrix() const;
 
     void center_on(utils::Vec2d center);
 
