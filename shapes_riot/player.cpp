@@ -31,11 +31,11 @@ void Player::set_angle(double angle)
 
 void Player::tick(double delta)
 {
-    velocity_ += acceleration_ * delta * 20.0;
-    acceleration_ /= 1.0 + delta * 20.0;
-    pos_ += velocity_ * delta;
+    static constexpr double acceleration_ratio = 8.0;
 
-    printf("%.2f %.2f\n", pos_.x, pos_.y);
+    velocity_ += acceleration_ * acceleration_ratio * delta;
+    pos_ += velocity_ * delta;
+    velocity_ /= 1.0 + delta * acceleration_ratio;
 }
 
 }  // namespace shapes_riot

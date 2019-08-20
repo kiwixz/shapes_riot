@@ -1,7 +1,6 @@
 #pragma once
 
 #include "gfx/draw_list.h"
-#include "utils/matrix.h"
 #include "utils/vec.h"
 
 namespace shapes_riot {

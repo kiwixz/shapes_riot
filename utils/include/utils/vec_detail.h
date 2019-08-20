@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cmath>
 #include <type_traits>
 
@@ -25,7 +26,8 @@ struct VecMeta : VecBase {
     [[nodiscard]] constexpr Element* ptr();
     [[nodiscard]] constexpr const Element* ptr() const;
 
-    constexpr Vec& normalize();
+    constexpr void clamp(Element min, Element max);
+    constexpr void normalize();
 
 private:
     [[nodiscard]] constexpr Vec& self();
@@ -173,9 +175,16 @@ constexpr TElement VecMeta<TVec, TElement, Tsize>::length() const
 }
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
-constexpr TVec<TElement>& VecMeta<TVec, TElement, Tsize>::normalize()
+constexpr void VecMeta<TVec, TElement, Tsize>::clamp(Element min, Element max)
 {
-    return self() /= length();
+    for (int i = 0; i < size; ++i)
+        self()[i] = std::clamp(self()[i], min, max);
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr void VecMeta<TVec, TElement, Tsize>::normalize()
+{
+    self() /= length();
 }
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
