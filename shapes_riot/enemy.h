@@ -5,13 +5,9 @@
 
 namespace shapes_riot {
 
-struct Player {
+struct Enemy {
     [[nodiscard]] gfx::DrawList draw() const;
 
-    utils::Vec2d position() const;
-
-    void add_acceleration(utils::Vec2d vec);
-    void set_angle(double angle);
     void tick(double delta);
 
 private:
