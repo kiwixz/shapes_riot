@@ -5,8 +5,8 @@
 namespace shapes_riot {
 
 struct Rectangle {
-    utils::Vec2d bottom_left;
-    utils::Vec2d top_right;
+    utils::Vec2d center;
+    utils::Vec2d half_size;
 };
 
 }  // namespace shapes_riot

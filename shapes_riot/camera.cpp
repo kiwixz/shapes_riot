@@ -3,14 +3,14 @@
 
 namespace shapes_riot {
 
-Rectangle Camera::bounds() const
+Rectangle Camera::view() const
 {
-    return {center_ - size_ / 2.0, center_ + size_ / 2.0};
+    return {center_, half_size_};
 }
 
 utils::Matrix4f Camera::matrix() const
 {
-    utils::Vec3f scale{utils::Vec2f{2.0 / size_}, 1.0f};
+    utils::Vec3f scale{utils::Vec2f{1.0 / half_size_}, 1.0f};
     return gfx::transformation(utils::Vec3f{utils::Vec2f{-center_}, 0.0f} * scale, scale, {});
 }
 

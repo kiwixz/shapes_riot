@@ -4,6 +4,10 @@
 
 namespace shapes_riot {
 
+Enemy::Enemy(utils::Vec2d pos) :
+    pos_{pos}
+{}
+
 gfx::DrawList Enemy::draw() const
 {
     gfx::DrawList draw_list;
@@ -14,11 +18,15 @@ gfx::DrawList Enemy::draw() const
     return draw_list;
 }
 
-void Enemy::tick(double delta)
+void Enemy::tick(double delta, utils::Vec2d target)
 {
     static constexpr double acceleration_ratio = 8.0;
 
-    velocity_ += acceleration_ * acceleration_ratio * delta;
+    utils::Vec2d acceleration = target - pos_;  // go towards target
+    acceleration.normalize();
+    angle_ = std::atan2(acceleration.y, acceleration.x);
+
+    velocity_ += acceleration * acceleration_ratio * delta;
     pos_ += velocity_ * delta;
     velocity_ /= 1.0 + delta * acceleration_ratio;
 }

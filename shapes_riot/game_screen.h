@@ -1,6 +1,7 @@
 #pragma once
 
 #include "camera.h"
+#include "enemy_manager.h"
 #include "gfx/drawer.h"
 #include "player.h"
 #include "screen_stack.h"
@@ -23,6 +24,7 @@ private:
     gfx::Drawer drawer_;
     Camera camera_;
     Player player_;
+    EnemyManager enemy_manager_;
 };
 
 }  // namespace shapes_riot

@@ -6,14 +6,15 @@
 namespace shapes_riot {
 
 struct Enemy {
+    Enemy(utils::Vec2d pos);
+
     [[nodiscard]] gfx::DrawList draw() const;
 
-    void tick(double delta);
+    void tick(double delta, utils::Vec2d target);
 
 private:
     utils::Vec2d pos_;
     utils::Vec2d velocity_;
-    utils::Vec2d acceleration_;
     double angle_ = 0.0;
 };
 

@@ -6,6 +6,7 @@ set(target "shapes_riot")
 add_library("${target}_base"
     camera.cpp
     enemy.cpp
+    enemy_manager.cpp
     game_screen.cpp
     main_menu.cpp
     player.cpp
