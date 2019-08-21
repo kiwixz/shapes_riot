@@ -19,6 +19,18 @@ void VerticalLayout::on_key(const WindowEvent::KeyEvent& event)
         focus_->on_key(event);
 }
 
+void VerticalLayout::add_widget(std::unique_ptr<Widget>&& widget)
+{
+    children_.push_back({std::move(widget), {}});
+    if (!focus_)
+        focus_ = children_.front().widget.get();
+    for (size_t i = 0; i < children_.size(); ++i) {
+        float size = 2.0f / children_.size();
+        children_[i].transform = {{0.0f, size / 2.0f + static_cast<float>(children_.size() - 1 - i) * size - 1.0f, 0.0f},
+                                  {1.0f, size / 2.0f, 1.0f}};
+    }
+}
+
 void VerticalLayout::on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos)
 {
     for (Child& child : children_) {
@@ -29,18 +41,6 @@ void VerticalLayout::on_mouse_button_(const WindowEvent::MouseButtonEvent& event
             child.widget->on_mouse_button(event, rel_pos);
             break;
         }
-    }
-}
-
-void VerticalLayout::add_widget(std::unique_ptr<Widget>&& widget)
-{
-    children_.push_back({std::move(widget), {}});
-    if (!focus_)
-        focus_ = children_.front().widget.get();
-    for (size_t i = 0; i < children_.size(); ++i) {
-        float size = 2.0f / children_.size();
-        children_[i].transform = {{0.0f, size / 2.0f + static_cast<float>(children_.size() - 1 - i) * size - 1.0f, 0.0f},
-                                  {1.0f, size / 2.0f, 1.0f}};
     }
 }
 

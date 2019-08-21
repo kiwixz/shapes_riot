@@ -14,7 +14,6 @@ struct Widget {
     virtual DrawList draw(double delta) = 0;
 
     virtual void on_key(const WindowEvent::KeyEvent& event) = 0;
-    virtual void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) = 0;
 
     [[nodiscard]] const Transform3f& margin_transform() const;
 
@@ -25,6 +24,8 @@ struct Widget {
 
 private:
     Transform3f margin_tranform_{};
+
+    virtual void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) = 0;
 };
 
 }  // namespace gfx::ui

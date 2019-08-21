@@ -12,12 +12,13 @@ struct Button : Widget {
     DrawList draw(double delta) override;
 
     void on_key(const WindowEvent::KeyEvent& event) override;
-    void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) override;
 
 private:
     utils::ResourceHandle<Font> font_;
     std::string label_;
     std::function<void()> on_click_;
+
+    void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) override;
 };
 
 }  // namespace gfx::ui
