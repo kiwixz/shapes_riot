@@ -9,7 +9,7 @@ namespace shapes_riot {
 MainMenu::MainMenu(ScreenStack& screens, utils::ResourceManager& resource_manager) :
     drawer_{resource_manager}
 {
-    layout_.set_margin(0.7f, 0.85f, 0.7f, 0.85f);
+    layout_.set_margin(0.8f, 0.8f, 0.8f, 0.8f);
 
     auto add_button = [&](std::string label, std::function<void()> on_click) {
         auto button = std::make_unique<gfx::ui::Button>(resource_manager, std::move(label), std::move(on_click));

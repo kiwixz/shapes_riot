@@ -62,11 +62,11 @@ int main(int /*argc*/, char** /*argv*/)
             window.poll_events([&](gfx::WindowEvent&& event) {
                 if (const auto* framebuffer_resize = event.as<gfx::WindowEvent::FramebufferResize>()) {
                     if (framebuffer_resize->width > framebuffer_resize->height)
-                        glViewport((framebuffer_resize->width - framebuffer_resize->height) / 2, 0,
-                                   framebuffer_resize->height, framebuffer_resize->height);
-                    else
-                        glViewport(0, (framebuffer_resize->height - framebuffer_resize->width) / 2,
+                        glViewport(0, -(framebuffer_resize->width - framebuffer_resize->height) / 2,
                                    framebuffer_resize->width, framebuffer_resize->width);
+                    else
+                        glViewport(-(framebuffer_resize->height - framebuffer_resize->width) / 2, 0,
+                                   framebuffer_resize->height, framebuffer_resize->height);
                 }
 
                 if (screens.empty())

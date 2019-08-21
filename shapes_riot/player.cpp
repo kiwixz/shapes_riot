@@ -7,9 +7,9 @@ namespace shapes_riot {
 gfx::DrawList Player::draw() const
 {
     gfx::DrawList draw_list;
-    draw_list.push_triangle({utils::Vec4f{-0.5f, 0.5f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f}},
-                            {utils::Vec4f{+0.5f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f}},
-                            {utils::Vec4f{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}});
+    draw_list.push_triangle({utils::Vec4f{-0.1f, 0.1f, 0.0f}, {1.0f, 0.0f, 0.0f, 1.0f}},
+                            {utils::Vec4f{0.1f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f}},
+                            {utils::Vec4f{-0.1f, -0.1f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}});
     draw_list.transform(gfx::transformation<float>({utils::Vec2f{pos_}, 0.0f}, {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, static_cast<float>(-angle_)}));
     return draw_list;
 }
