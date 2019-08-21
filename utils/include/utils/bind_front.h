@@ -13,12 +13,12 @@ using std::bind_front;
 #else
 
 template <typename F, typename... Args>
-[[nodiscard]] auto bind_front(F&& f, Args&&... args);
+[[nodiscard]] constexpr auto bind_front(F&& f, Args&&... args);
 
 
 /// Do not forget to wrap references in std::ref when appropriate.
 template <typename F, typename... Args>
-auto bind_front(F&& f, Args&&... args)
+constexpr auto bind_front(F&& f, Args&&... args)
 {
     return [callable = std::forward<F>(f),
             bound_args_tuple = std::make_tuple(std::forward<Args>(args)...)](auto&&... call_args) -> decltype(auto) {  // decltype to support references

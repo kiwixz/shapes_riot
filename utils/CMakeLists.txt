@@ -17,6 +17,7 @@ target_include_directories("${target}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/inclu
 test_target_cpp("${target}"
     bind_front.test.cpp
     config.test.cpp
+    make_array.test.cpp
     math.test.cpp
     matrix.test.cpp
     resource_manager.test.cpp
