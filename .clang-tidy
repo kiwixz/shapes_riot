@@ -17,6 +17,7 @@ Checks: "*  ,\
   -cppcoreguidelines-c-copy-assignment-signature  ,\
   -cppcoreguidelines-macro-usage  ,\
   -cppcoreguidelines-narrowing-conversions  ,\
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay  ,\
   -cppcoreguidelines-pro-bounds-constant-array-index  ,\
   -cppcoreguidelines-pro-bounds-pointer-arithmetic  ,\
   -cppcoreguidelines-pro-type-const-cast  ,\
@@ -36,6 +37,7 @@ Checks: "*  ,\
   -hicpp-explicit-conversions  ,\
   -hicpp-invalid-access-moved  ,\
   -hicpp-member-init  ,\
+  -hicpp-no-array-decay  ,\
   -hicpp-signed-bitwise  ,\
   -hicpp-uppercase-literal-suffix  ,\
   -hicpp-vararg  ,\
