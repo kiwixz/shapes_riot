@@ -36,7 +36,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS
-        "${CMAKE_CXX_FLAGS} -Weverything  \
+        "${CMAKE_CXX_FLAGS} -static -Weverything  \
         -Wno-c++98-compat-pedantic -Wno-disabled-macro-expansion -Wno-double-promotion -Wno-exit-time-destructors  \
         -Wno-float-equal -Wno-padded -Wno-return-std-move-in-c++11 -Wno-sign-conversion -Wno-weak-vtables"
     )
@@ -44,7 +44,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS_RELEASE "-D NDEBUG -O3 -flto -ffast-math")
     link_libraries("-lpthread -lstdc++fs")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /nologo /MP /diagnostics:caret /W4 /permissive- /EHsc")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /nologo /diagnostics:caret /W4 /permissive- /EHsc")
     set(CMAKE_CXX_FLAGS_DEBUG "/D DEBUG /MTd /JMC /RTC1 /ZI")
     set(CMAKE_CXX_FLAGS_RELEASE "/D NDEBUG /MT /O2 /GL /Gw /fp:fast")
     set(CMAKE_EXE_LINKER_FLAGS_DEBUG "/DEBUG:FASTLINK")
