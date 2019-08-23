@@ -35,21 +35,21 @@ void GameScreen::on_unfocus()
 
 void GameScreen::on_window_event(const gfx::WindowEvent& event, const gfx::WindowState& /*state*/)
 {
-    if (const auto* e = event.as<gfx::WindowEvent::KeyEvent>()) {
-        if (e->mods == 0 && (e->action == GLFW_PRESS || e->action == GLFW_RELEASE)) {
-            if (e->key == GLFW_KEY_W)
-                player_.add_acceleration({0.0, e->action == GLFW_PRESS ? 1.0 : -1.0});
-            else if (e->key == GLFW_KEY_D)
-                player_.add_acceleration({e->action == GLFW_PRESS ? 1.0 : -1.0, 0.0});
-            else if (e->key == GLFW_KEY_S)
-                player_.add_acceleration({0.0, e->action == GLFW_PRESS ? -1.0 : 1.0});
-            else if (e->key == GLFW_KEY_A)
-                player_.add_acceleration({e->action == GLFW_PRESS ? -1.0 : 1.0, 0.0});
+    if (const auto* key_event = event.as<gfx::WindowEvent::KeyEvent>()) {
+        if (key_event->mods == 0 && (key_event->action == GLFW_PRESS || key_event->action == GLFW_RELEASE)) {
+            if (key_event->key == GLFW_KEY_W)
+                player_.add_acceleration({0.0, key_event->action == GLFW_PRESS ? 1.0 : -1.0});
+            else if (key_event->key == GLFW_KEY_D)
+                player_.add_acceleration({key_event->action == GLFW_PRESS ? 1.0 : -1.0, 0.0});
+            else if (key_event->key == GLFW_KEY_S)
+                player_.add_acceleration({0.0, key_event->action == GLFW_PRESS ? -1.0 : 1.0});
+            else if (key_event->key == GLFW_KEY_A)
+                player_.add_acceleration({key_event->action == GLFW_PRESS ? -1.0 : 1.0, 0.0});
         }
     }
-    else if (const auto* e = event.as<gfx::WindowEvent::MouseButtonEvent>()) {
-        if (e->mods == 0 && e->button == GLFW_MOUSE_BUTTON_LEFT)
-            player_.set_is_shooting(e->action == GLFW_PRESS);
+    else if (const auto* mouse_event = event.as<gfx::WindowEvent::MouseButtonEvent>()) {
+        if (mouse_event->mods == 0 && mouse_event->button == GLFW_MOUSE_BUTTON_LEFT)
+            player_.set_is_shooting(mouse_event->action == GLFW_PRESS);
     }
 }
 
