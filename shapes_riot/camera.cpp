@@ -3,7 +3,7 @@
 
 namespace shapes_riot {
 
-Rectangle Camera::view() const
+Box Camera::view() const
 {
     return {center_, half_size_};
 }

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "rectangle.h"
+#include "box.h"
 #include "utils/matrix.h"
 #include "utils/vec.h"
 
 namespace shapes_riot {
 
 struct Camera {
-    [[nodiscard]] Rectangle view() const;
+    [[nodiscard]] Box view() const;
     [[nodiscard]] utils::Matrix4f matrix() const;
 
     void center_on(utils::Vec2d center);

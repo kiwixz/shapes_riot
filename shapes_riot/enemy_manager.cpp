@@ -10,7 +10,7 @@ gfx::DrawList EnemyManager::draw() const
     return draw_list;
 }
 
-void EnemyManager::tick(double delta, const Rectangle& camera_view, utils::Vec2d player_pos)
+void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d player_pos)
 {
     if (rand_.gen() < delta * 2) {
         // generate random pos either [-1.0; -0.5[ or [0.5; 1.0]

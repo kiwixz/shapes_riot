@@ -29,13 +29,23 @@ void Player::set_angle(double angle)
     angle_ = angle;
 }
 
-void Player::tick(double delta)
+void Player::set_is_shooting(bool is_shooting)
+{
+    is_shooting_ = is_shooting;
+}
+
+void Player::tick(double delta, BulletManager& bullet_manager)
 {
     static constexpr double acceleration_ratio = 8.0;
 
     velocity_ += acceleration_ * acceleration_ratio * delta;
     pos_ += velocity_ * delta;
     velocity_ /= 1.0 + delta * acceleration_ratio;
+
+    if (is_shooting_) {
+        weapon_.fire(pos_, angle_, bullet_manager);
+        is_shooting_ = false;
+    }
 }
 
 }  // namespace shapes_riot

@@ -1,21 +1,21 @@
 #pragma once
 
 #include "box.h"
-#include "enemy.h"
+#include "bullet.h"
 #include "gfx/draw_list.h"
 #include "utils/rand.h"
 #include <vector>
 
 namespace shapes_riot {
 
-struct EnemyManager {
+struct BulletManager {
     [[nodiscard]] gfx::DrawList draw() const;
 
-    void tick(double delta, const Box& camera_view, utils::Vec2d player_pos);
+    void add(Bullet bullet);
+    void tick(double delta, const Box& camera_view);
 
 private:
-    utils::RandF rand_;
-    std::vector<Enemy> enemies_;
+    std::vector<Bullet> bullets_;
 };
 
 }  // namespace shapes_riot

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "bullet_manager.h"
 #include "camera.h"
 #include "enemy_manager.h"
 #include "gfx/drawer.h"
@@ -24,6 +25,7 @@ private:
     gfx::Drawer drawer_;
     Camera camera_;
     Player player_;
+    BulletManager bullet_manager_;
     EnemyManager enemy_manager_;
 };
 

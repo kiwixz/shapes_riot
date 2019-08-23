@@ -4,7 +4,7 @@
 
 namespace shapes_riot {
 
-struct Rectangle {
+struct Box {
     utils::Vec2d center;
     utils::Vec2d half_size;
 };

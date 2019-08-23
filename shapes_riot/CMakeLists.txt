@@ -4,6 +4,8 @@ include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
 set(target "shapes_riot")
 
 add_library("${target}_base"
+    bullet.cpp
+    bullet_manager.cpp
     camera.cpp
     enemy.cpp
     enemy_manager.cpp
@@ -11,6 +13,7 @@ add_library("${target}_base"
     main_menu.cpp
     player.cpp
     screen_stack.cpp
+    weapon.cpp
 )
 add_executable("${target}" main.cpp)
 target_link_libraries("${target}" "${target}_base")
