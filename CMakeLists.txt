@@ -36,7 +36,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS
-        "${CMAKE_CXX_FLAGS} -static -Weverything  \
+        "${CMAKE_CXX_FLAGS} -Weverything  \
         -Wno-c++98-compat-pedantic -Wno-disabled-macro-expansion -Wno-double-promotion -Wno-exit-time-destructors  \
         -Wno-float-equal -Wno-padded -Wno-return-std-move-in-c++11 -Wno-sign-conversion -Wno-weak-vtables"
     )
