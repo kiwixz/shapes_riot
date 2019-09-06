@@ -39,7 +39,7 @@ TEST_SUITE("scope_exit")
         CHECK(c == 11);
     }
 
-    TEST_CASE("false")
+    TEST_CASE("empty")
     {
         ScopeExit{};
     }
