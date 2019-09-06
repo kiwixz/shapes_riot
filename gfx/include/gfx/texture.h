@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gfx/gl_object.h"
+#include "gfx/texture_view.h"
 #include "utils/scope_exit.h"
 #include "utils/vec.h"
 #include <glad/glad.h>
@@ -17,6 +18,8 @@ struct Texture {
     Texture& operator=(const Texture&) = delete;
     Texture(Texture&&) = delete;
     Texture& operator=(Texture&&) = delete;
+
+    operator TextureView() const;
 
     [[nodiscard]] utils::Vec2i size() const;
     [[nodiscard]] utils::ScopeExit bind() const;

@@ -7,6 +7,11 @@ Texture::Texture(utils::Vec2i size, GLenum format)
     resize(size, format);
 }
 
+Texture::operator TextureView() const
+{
+    return TextureView{texture_[0]};
+}
+
 utils::Vec2i Texture::size() const
 {
     return size_;

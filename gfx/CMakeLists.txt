@@ -12,6 +12,7 @@ add_library("${target}"
     glfw_handle.cpp
     shader.cpp
     texture.cpp
+    texture_view.cpp
     window_state.cpp
     window.cpp
 
