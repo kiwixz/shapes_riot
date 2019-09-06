@@ -9,9 +9,7 @@ TEST_SUITE("scope_exit")
     {
         bool pass = false;
         {
-            ScopeExit scope_exit{[&] {
-                pass = true;
-            }};
+            ScopeExit scope_exit{[&] { pass = true; }};
             CHECK(!pass);
         }
         CHECK(pass);
@@ -21,14 +19,24 @@ TEST_SUITE("scope_exit")
     {
         int c = 0;
         {
-            ScopeExit scope_exit{[&] {
-                ++c;
-            }};
+            ScopeExit scope_exit{[&] { ++c; }};
             CHECK(c == 0);
             scope_exit.release()();
             CHECK(c == 1);
         }
         CHECK(c == 1);
+    }
+
+    TEST_CASE("reassign")
+    {
+        int c = 0;
+        {
+            ScopeExit scope_exit{[&] { ++c; }};
+            CHECK(c == 0);
+            scope_exit = ScopeExit{[&] { c += 10; }};
+            CHECK(c == 1);
+        }
+        CHECK(c == 11);
     }
 
     TEST_CASE("false")

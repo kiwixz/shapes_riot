@@ -20,6 +20,8 @@ ScopeExit::ScopeExit(ScopeExit&& other) noexcept
 
 ScopeExit& ScopeExit::operator=(ScopeExit&& other) noexcept
 {
+    if (function_)
+        function_();
     function_ = std::move(other.function_);
     other.function_ = {};
     return *this;
