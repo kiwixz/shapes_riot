@@ -66,9 +66,13 @@ void Drawer::draw(const DrawList& draw_list)
 {
     utils::ScopeExit program_binding = program_->bind();
     glBindVertexArray(vertex_array_[0]);
-    for (const auto& it : draw_list) {
-        const SubDrawList& sub_list = it.second;
-        utils::ScopeExit texture_binding = (it.first ? *it.first : *blank_).bind();
+    for (const SubDrawList& sub_list : draw_list) {
+        utils::ScopeExit texture_binding;
+        if (sub_list.texture())
+            texture_binding = sub_list.texture().bind();
+        else
+            texture_binding = blank_->bind();
+
         glNamedBufferData(buffers_[0], sub_list.vertices().size_bytes(), sub_list.vertices().data(), GL_STREAM_DRAW);
         glNamedBufferData(buffers_[1], sub_list.indexes().size_bytes(), sub_list.indexes().data(), GL_STREAM_DRAW);
         glDrawElements(GL_TRIANGLES, static_cast<int>(sub_list.indexes().size()), GL_UNSIGNED_INT, nullptr);

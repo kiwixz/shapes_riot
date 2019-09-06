@@ -6,6 +6,15 @@
 
 namespace gfx {
 
+SubDrawList::SubDrawList(TextureView texture) :
+    texture_{std::move(texture)}
+{}
+
+TextureView SubDrawList::texture() const
+{
+    return texture_;
+}
+
 utils::Span<const Vertex> SubDrawList::vertices() const
 {
     return vertices_;
@@ -60,32 +69,47 @@ DrawList::Iterator DrawList::end() const
     return sub_lists_.end();
 }
 
-void DrawList::push_triangle(const Vertex& a, const Vertex& b, const Vertex& c, const Texture* texture)
+void DrawList::push_triangle(const Vertex& a, const Vertex& b, const Vertex& c, TextureView texture)
 {
     push(std::array<Vertex, 3>{a, b, c}, {}, texture);
 }
 
-void DrawList::push_quad(const Vertex& a, const Vertex& b, const Vertex& c, const Vertex& d, const Texture* texture)
+void DrawList::push_quad(const Vertex& a, const Vertex& b, const Vertex& c, const Vertex& d, TextureView texture)
 {
     static constexpr std::array<Vertex::Index, 6> indexes = {{0, 1, 3, 1, 3, 2}};
     push(std::array<Vertex, 4>{a, b, c, d}, indexes, texture);
 }
 
-void DrawList::push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes, const Texture* texture)
+void DrawList::push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes, TextureView texture)
 {
-    sub_lists_[texture].push(vertices, indexes);
+    SubDrawList* sub_list = find_sub_list(texture);
+    if (!sub_list)
+        sub_list = &sub_lists_.emplace_back(texture);
+    sub_list->push(vertices, indexes);
 }
 
-void DrawList::push(const DrawList& draw_list)
+void DrawList::push(const DrawList& other)
 {
-    for (const std::pair<const Texture* const, SubDrawList>& pair : draw_list.sub_lists_)
-        sub_lists_[pair.first].push(pair.second);
+    for (const SubDrawList& other_sub_list : other.sub_lists_) {
+        if (SubDrawList* sub_list = find_sub_list(other_sub_list.texture()))
+            sub_list->push(other_sub_list);
+        else
+            sub_lists_.push_back(other_sub_list);
+    }
 }
 
 void DrawList::transform(const utils::Matrix4f& transform)
 {
-    for (std::pair<const Texture* const, SubDrawList>& pair : sub_lists_)
-        pair.second.transform(transform);
+    for (SubDrawList& sub_list : sub_lists_)
+        sub_list.transform(transform);
+}
+
+SubDrawList* DrawList::find_sub_list(TextureView texture)
+{
+    auto it = std::find_if(sub_lists_.begin(), sub_lists_.end(), [&](const SubDrawList& sub_list) {
+        return sub_list.texture() == texture;
+    });
+    return (it == sub_lists_.end() ? nullptr : &*it);
 }
 
 

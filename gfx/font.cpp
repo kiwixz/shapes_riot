@@ -123,7 +123,7 @@ DrawList Font::draw_text_linear(std::string_view text, utils::Vec3f& pen, utils:
                                 {{bottom_left.x, bottom_left.y + quad_size.y, bottom_left.z}, glyph.uv_offset},
                                 {bottom_left + quad_size, {glyph.uv_offset.x + glyph.uv_size.x, glyph.uv_offset.y}},
                                 {{bottom_left.x + quad_size.x, bottom_left.y, bottom_left.z}, glyph.uv_offset + glyph.uv_size},
-                                &texture_);
+                                texture_);
         }
         pen.x += glyph.advance * size.x;
     }

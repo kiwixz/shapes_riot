@@ -4,12 +4,14 @@
 #include "gfx/vertex.h"
 #include "utils/matrix.h"
 #include "utils/span.h"
-#include <map>
 #include <vector>
 
 namespace gfx {
 
 struct SubDrawList {
+    SubDrawList(TextureView texture);
+
+    [[nodiscard]] TextureView texture() const;
     [[nodiscard]] utils::Span<const Vertex> vertices() const;
     [[nodiscard]] utils::Span<const Vertex::Index> indexes() const;
 
@@ -18,6 +20,7 @@ struct SubDrawList {
     void transform(const utils::Matrix4f& transform);
 
 private:
+    TextureView texture_;
     std::vector<Vertex> vertices_;
     std::vector<Vertex::Index> indexes_;
     Vertex::Index next_index_ = 0;
@@ -25,22 +28,21 @@ private:
 
 
 struct DrawList {
-    using Iterator = std::map<const Texture*, SubDrawList>::const_iterator;
+    using Iterator = std::vector<SubDrawList>::const_iterator;
 
     [[nodiscard]] Iterator begin() const;
     [[nodiscard]] Iterator end() const;
 
-    void push_triangle(const Vertex& a, const Vertex& b, const Vertex& c,
-                       const Texture* texture = nullptr);
-    void push_quad(const Vertex& a, const Vertex& b, const Vertex& c, const Vertex& d,
-                   const Texture* texture = nullptr);
-    void push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {},
-              const Texture* texture = nullptr);
-    void push(const DrawList& draw_list);
+    void push_triangle(const Vertex& a, const Vertex& b, const Vertex& c, TextureView texture = {});
+    void push_quad(const Vertex& a, const Vertex& b, const Vertex& c, const Vertex& d, TextureView texture = {});
+    void push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes = {}, TextureView texture = {});
+    void push(const DrawList& other);
     void transform(const utils::Matrix4f& transform);
 
 private:
-    std::map<const Texture*, SubDrawList> sub_lists_;
+    std::vector<SubDrawList> sub_lists_;
+
+    SubDrawList* find_sub_list(TextureView texture);
 };
 
 
