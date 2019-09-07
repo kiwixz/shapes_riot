@@ -2,8 +2,8 @@
 
 namespace shapes_riot {
 
-HealthBar::HealthBar(double hp) :
-    hp_{hp}
+HealthBar::HealthBar(int hp, int max_hp) :
+    hp_{hp}, max_hp_{max_hp}
 {}
 
 gfx::DrawList HealthBar::draw() const
@@ -11,7 +11,7 @@ gfx::DrawList HealthBar::draw() const
     return gfx::DrawList();
 }
 
-void HealthBar::tick(double /*delta*/, double hp)
+void HealthBar::tick(double /*delta*/, int hp)
 {
     hp_ = hp;
 }

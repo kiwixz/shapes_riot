@@ -5,15 +5,15 @@
 namespace shapes_riot {
 
 struct HealthBar {
-    HealthBar() = default;
-    HealthBar(double hp);
+    HealthBar(int hp, int max_hp);
 
     [[nodiscard]] gfx::DrawList draw() const;
 
-    void tick(double delta, double hp);
+    void tick(double delta, int hp);
 
 private:
-    double hp_ = 1.0;
+    int hp_;
+    int max_hp_;
 };
 
 }  // namespace shapes_riot
