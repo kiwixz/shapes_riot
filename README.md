@@ -1,6 +1,6 @@
 # Shapes Riot
 
-Top-down shooter.
+Shapes Riot is a multidirectional shooter in which your only goal is to survive by killing enemies before they kill you.
 
 
 #
