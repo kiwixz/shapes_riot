@@ -10,6 +10,7 @@ add_library("${target}_base"
     enemy.cpp
     enemy_manager.cpp
     game_screen.cpp
+    health_bar.cpp
     main_menu.cpp
     player.cpp
     screen_stack.cpp

@@ -3,6 +3,7 @@
 #include "bullet_manager.h"
 #include "gfx/draw_list.h"
 #include "gfx/window_state.h"
+#include "health_bar.h"
 #include "utils/vec.h"
 #include "weapon.h"
 
@@ -22,6 +23,10 @@ private:
     utils::Vec2d velocity_;
     utils::Vec2d acceleration_;
     double angle_ = 0.0;
+
+    int hp_ = 100;
+    HealthBar health_bar_;
+
     Weapon weapon_;
     bool is_shooting_ = false;
 };
