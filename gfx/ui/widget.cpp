@@ -23,6 +23,13 @@ void Widget::on_window_event(const WindowEvent& event, const WindowState& state)
         on_mouse_button(*mouse_event, {state.mouse_pos, 0.0f});
 }
 
+DrawList Widget::draw(double delta, double aspect_ratio)
+{
+    DrawList draw_list = draw_impl(delta, aspect_ratio);
+    draw_list.transform(margin_tranform_.matrix());
+    return draw_list;
+}
+
 void Widget::set_margin(float top, float right, float bottom, float left)
 {
     margin_tranform_ = {utils::Vec3f{left - right, bottom - top, 0.0f} / 2.0f,

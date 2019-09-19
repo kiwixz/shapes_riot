@@ -8,17 +8,6 @@ void VerticalLayout::on_key(const WindowEvent::KeyEvent& event)
         focus_->on_key(event);
 }
 
-DrawList VerticalLayout::draw(double delta)
-{
-    DrawList draw_list;
-    for (const Child& child : children_) {
-        DrawList child_draw_list = child.widget->draw(delta);
-        child_draw_list.transform((child.transform * margin_transform()).matrix());
-        draw_list.push(child_draw_list);
-    }
-    return draw_list;
-}
-
 void VerticalLayout::add_widget(std::unique_ptr<Widget>&& widget)
 {
     children_.push_back({std::move(widget), {}});
@@ -42,6 +31,17 @@ void VerticalLayout::on_mouse_button_impl(const WindowEvent::MouseButtonEvent& e
             break;
         }
     }
+}
+
+DrawList VerticalLayout::draw_impl(double delta, double aspect_ratio)
+{
+    DrawList draw_list;
+    for (const Child& child : children_) {
+        DrawList child_draw_list = child.widget->draw(delta, aspect_ratio / (child.transform.scale.x / child.transform.scale.y));
+        child_draw_list.transform(child.transform.matrix());
+        draw_list.push(child_draw_list);
+    }
+    return draw_list;
 }
 
 }  // namespace gfx::ui
