@@ -11,9 +11,9 @@ namespace gfx::ui {
 struct Widget {
     virtual ~Widget() = default;
 
-    virtual DrawList draw(double delta) = 0;
-
     virtual void on_key(const WindowEvent::KeyEvent& event) = 0;
+
+    virtual DrawList draw(double delta) = 0;
 
     [[nodiscard]] const Transform3f& margin_transform() const;
 

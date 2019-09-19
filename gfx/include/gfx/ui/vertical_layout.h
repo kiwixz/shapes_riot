@@ -8,9 +8,9 @@
 namespace gfx::ui {
 
 struct VerticalLayout : Widget {
-    DrawList draw(double delta) override;
-
     void on_key(const WindowEvent::KeyEvent& event) override;
+
+    DrawList draw(double delta) override;
 
     void add_widget(std::unique_ptr<Widget>&& widget);
 

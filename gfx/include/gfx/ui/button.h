@@ -9,9 +9,9 @@ namespace gfx::ui {
 struct Button : Widget {
     Button(utils::ResourceManager& resource_manager, std::string label, std::function<void()> on_click);
 
-    DrawList draw(double delta) override;
-
     void on_key(const WindowEvent::KeyEvent& event) override;
+
+    DrawList draw(double delta) override;
 
 private:
     utils::ResourceHandle<Font> font_;

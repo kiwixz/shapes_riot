@@ -2,6 +2,12 @@
 
 namespace gfx::ui {
 
+void VerticalLayout::on_key(const WindowEvent::KeyEvent& event)
+{
+    if (focus_)
+        focus_->on_key(event);
+}
+
 DrawList VerticalLayout::draw(double delta)
 {
     DrawList draw_list;
@@ -11,12 +17,6 @@ DrawList VerticalLayout::draw(double delta)
         draw_list.push(child_draw_list);
     }
     return draw_list;
-}
-
-void VerticalLayout::on_key(const WindowEvent::KeyEvent& event)
-{
-    if (focus_)
-        focus_->on_key(event);
 }
 
 void VerticalLayout::add_widget(std::unique_ptr<Widget>&& widget)

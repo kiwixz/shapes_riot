@@ -11,6 +11,13 @@ Button::Button(utils::ResourceManager& resource_manager, std::string label, std:
     });
 }
 
+void Button::on_key(const WindowEvent::KeyEvent& event)
+{
+    if (event.action == GLFW_RELEASE && event.mods == 0
+        && (event.key == GLFW_KEY_ENTER || event.key == GLFW_KEY_SPACE))
+        on_click_();
+}
+
 DrawList Button::draw(double /*delta*/)
 {
     static constexpr utils::Vec4f color = {0.0f, 0.0f, 0.0f, 0.85f};
@@ -23,13 +30,6 @@ DrawList Button::draw(double /*delta*/)
     draw_list += font_->draw_text(label_, {0.0f, 0.0f, 0.5f}, {0.25f, 0.5f});
     draw_list.transform(margin_transform().matrix());
     return draw_list;
-}
-
-void Button::on_key(const WindowEvent::KeyEvent& event)
-{
-    if (event.action == GLFW_RELEASE && event.mods == 0
-        && (event.key == GLFW_KEY_ENTER || event.key == GLFW_KEY_SPACE))
-        on_click_();
 }
 
 void Button::on_mouse_button_impl(const WindowEvent::MouseButtonEvent& event, utils::Vec3f /*pos*/)
