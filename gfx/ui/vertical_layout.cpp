@@ -31,7 +31,7 @@ void VerticalLayout::add_widget(std::unique_ptr<Widget>&& widget)
     }
 }
 
-void VerticalLayout::on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos)
+void VerticalLayout::on_mouse_button_impl(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos)
 {
     for (Child& child : children_) {
         utils::Vec3f rel_pos = pos * child.transform.inverse();

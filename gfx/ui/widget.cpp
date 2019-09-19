@@ -12,7 +12,7 @@ void Widget::on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::
     utils::Vec3f rel_pos = pos * margin_transform().inverse();
     if (rel_pos.x >= -1.0f && rel_pos.x <= 1.0f
         && rel_pos.y >= -1.0f && rel_pos.y <= 1.0f)
-        on_mouse_button_(event, rel_pos);
+        on_mouse_button_impl(event, rel_pos);
 }
 
 void Widget::on_window_event(const WindowEvent& event, const WindowState& state)

@@ -25,7 +25,7 @@ struct Widget {
 private:
     Transform3f margin_tranform_{};
 
-    virtual void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) = 0;
+    virtual void on_mouse_button_impl(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) = 0;
 };
 
 }  // namespace gfx::ui

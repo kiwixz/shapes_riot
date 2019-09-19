@@ -23,7 +23,7 @@ private:
     std::vector<Child> children_;
     Widget* focus_ = nullptr;
 
-    void on_mouse_button_(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) override;
+    void on_mouse_button_impl(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) override;
 };
 
 }  // namespace gfx::ui
