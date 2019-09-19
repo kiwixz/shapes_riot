@@ -9,7 +9,7 @@ template <typename TElement>
 struct Transform3 {
     using Element = TElement;
 
-    utils::Vec3<Element> translation{};
+    utils::Vec3<Element> translation;
     utils::Vec3<Element> scale{utils::Vec3i{1, 1, 1}};
 
     [[nodiscard]] Transform3<TElement> inverse() const;
