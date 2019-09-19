@@ -1,5 +1,6 @@
 #include "gfx/font.h"
 #include "gfx/freetype.h"
+#include "gfx/transformation.h"
 #include "utils/exception.h"
 #include "utils/math.h"
 #include <cmath>
@@ -101,14 +102,28 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
     texture_.update(texture_pixels.data(), GL_BGRA);
 }
 
+DrawList Font::draw_glyph(GlyphCode code, utils::Vec3f pen, utils::Vec2f size) const
+{
+    return draw_glyph(glyphs_.at(code), pen, size);
+}
+
 DrawList Font::draw_text(std::string_view text, utils::Vec3f center, utils::Vec2f size) const
 {
+    DrawList draw_list;
+    utils::Vec3f pen;
+    float y_min = 0.0f;
+    float y_max = 0.0f;
     for (char c : text) {
         const Glyph& glyph = glyphs_.at(static_cast<unsigned char>(c));
-        center.x -= glyph.advance * size.x / 2;
+        draw_list += draw_glyph(glyph, pen, size);
+        pen.x += glyph.advance * size.x;
+        y_min = std::min(y_min, glyph.bearing.y - glyph.size.y);
+        y_max = std::max(y_max, glyph.bearing.y);
     }
-    center.y -= size.y / 2;
-    return draw_text_linear(text, center, size);
+    draw_list.transform(translation(utils::Vec3f{center.x - pen.x / 2,
+                                                 center.y - (y_max + y_min) / 2,
+                                                 0.0f}));
+    return draw_list;
 }
 
 DrawList Font::draw_text_linear(std::string_view text, utils::Vec3f& pen, utils::Vec2f size) const
@@ -116,15 +131,7 @@ DrawList Font::draw_text_linear(std::string_view text, utils::Vec3f& pen, utils:
     DrawList draw_list;
     for (char c : text) {
         const Glyph& glyph = glyphs_.at(static_cast<unsigned char>(c));
-        if (glyph.size != utils::Vec2f{}) {
-            utils::Vec3f bottom_left = pen + utils::Vec3f{glyph.bearing.x * size.x, (glyph.bearing.y - glyph.size.y) * size.y, 0.0f};
-            utils::Vec3f quad_size{glyph.size * size, 0.0f};
-            draw_list.push_quad({bottom_left, {glyph.uv_offset.x, glyph.uv_offset.y + glyph.uv_size.y}},
-                                {{bottom_left.x, bottom_left.y + quad_size.y, bottom_left.z}, glyph.uv_offset},
-                                {bottom_left + quad_size, {glyph.uv_offset.x + glyph.uv_size.x, glyph.uv_offset.y}},
-                                {{bottom_left.x + quad_size.x, bottom_left.y, bottom_left.z}, glyph.uv_offset + glyph.uv_size},
-                                texture_);
-        }
+        draw_list += draw_glyph(glyph, pen, size);
         pen.x += glyph.advance * size.x;
     }
     return draw_list;
@@ -133,6 +140,21 @@ DrawList Font::draw_text_linear(std::string_view text, utils::Vec3f& pen, utils:
 const Texture& Font::texture() const
 {
     return texture_;
+}
+
+DrawList Font::draw_glyph(const Glyph& glyph, utils::Vec3f pen, utils::Vec2f size) const
+{
+    DrawList draw_list;
+    if (glyph.size != utils::Vec2f{}) {
+        utils::Vec3f bottom_left = pen + utils::Vec3f{glyph.bearing.x * size.x, (glyph.bearing.y - glyph.size.y) * size.y, 0.0f};
+        utils::Vec3f quad_size{glyph.size * size, 0.0f};
+        draw_list.push_quad({bottom_left, {glyph.uv_offset.x, glyph.uv_offset.y + glyph.uv_size.y}},
+                            {{bottom_left.x, bottom_left.y + quad_size.y, bottom_left.z}, glyph.uv_offset},
+                            {bottom_left + quad_size, {glyph.uv_offset.x + glyph.uv_size.x, glyph.uv_offset.y}},
+                            {{bottom_left.x + quad_size.x, bottom_left.y, bottom_left.z}, glyph.uv_offset + glyph.uv_size},
+                            texture_);
+    }
+    return draw_list;
 }
 
 }  // namespace gfx

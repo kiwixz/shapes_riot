@@ -25,7 +25,7 @@ void Widget::on_window_event(const WindowEvent& event, const WindowState& state)
 
 DrawList Widget::draw(double delta, double aspect_ratio)
 {
-    DrawList draw_list = draw_impl(delta, aspect_ratio);
+    DrawList draw_list = draw_impl(delta, aspect_ratio * margin_tranform_.scale.x / margin_tranform_.scale.y);
     draw_list.transform(margin_tranform_.matrix());
     return draw_list;
 }

@@ -37,7 +37,7 @@ DrawList VerticalLayout::draw_impl(double delta, double aspect_ratio)
 {
     DrawList draw_list;
     for (const Child& child : children_) {
-        DrawList child_draw_list = child.widget->draw(delta, aspect_ratio / (child.transform.scale.x / child.transform.scale.y));
+        DrawList child_draw_list = child.widget->draw(delta, aspect_ratio * child.transform.scale.x / child.transform.scale.y);
         child_draw_list.transform(child.transform.matrix());
         draw_list.push(child_draw_list);
     }

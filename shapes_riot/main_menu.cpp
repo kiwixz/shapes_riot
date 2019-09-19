@@ -9,7 +9,7 @@ namespace shapes_riot {
 MainMenu::MainMenu(ScreenStack& screens, utils::ResourceManager& resource_manager) :
     drawer_{resource_manager}
 {
-    layout_.set_margin(0.8f, 0.8f, 0.8f, 0.8f);
+    layout_.set_margin(0.7f, 0.7f, 0.7f, 0.7f);
 
     auto add_button = [&](std::string label, std::function<void()> on_click) {
         auto button = std::make_unique<gfx::ui::Button>(resource_manager, std::move(label), std::move(on_click));
@@ -23,16 +23,16 @@ MainMenu::MainMenu(ScreenStack& screens, utils::ResourceManager& resource_manage
     add_button("Quit", [screens_ = &screens] { screens_->pop(); });
 }
 
-void MainMenu::tick(double delta, const gfx::WindowState& /*state*/)
+void MainMenu::tick(double delta, const gfx::WindowState& state)
 {
     glClearColor(0.4f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     gfx::DrawList draw_list;
-    draw_list.push_triangle({{-0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f, 1.0f}},
-                            {{0.0f, 0.5f, -0.5f}, {0.0f, 1.0f, 0.0f, 1.0f}},
-                            {{0.5f, -0.5f, -0.5f}, {0.0f, 0.0f, 1.0f, 1.0f}});
-    draw_list += layout_.draw(delta);
+    draw_list.push_triangle({{-0.9f, -0.9f, -0.9f}, {1.0f, 0.0f, 0.0f, 1.0f}},
+                            {{0.0f, 0.9f, -0.9f}, {0.0f, 1.0f, 0.0f, 1.0f}},
+                            {{0.9f, -0.9f, -0.9f}, {0.0f, 0.0f, 1.0f, 1.0f}});
+    draw_list += layout_.draw(delta, static_cast<double>(state.framebuffer_size.x) / state.framebuffer_size.y);
     drawer_.draw(draw_list);
 }
 

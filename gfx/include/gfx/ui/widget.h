@@ -17,7 +17,7 @@ struct Widget {
 
     void on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos);
     void on_window_event(const WindowEvent& event, const WindowState& state);
-    DrawList draw(double delta, double aspect_ratio = 1.0);
+    DrawList draw(double delta, double aspect_ratio);
     void set_margin(float top, float right, float bottom, float left);
 
 private:

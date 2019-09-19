@@ -60,17 +60,8 @@ int main(int /*argc*/, char** /*argv*/)
 
             gfx::WindowState state = window.state();
             window.poll_events([&](gfx::WindowEvent&& event) {
-                if (const auto* framebuffer_resize = event.as<gfx::WindowEvent::FramebufferResize>()) {
-                    if (framebuffer_resize->width > framebuffer_resize->height)
-                        glViewport(0, -(framebuffer_resize->width - framebuffer_resize->height) / 2,
-                                   framebuffer_resize->width, framebuffer_resize->width);
-                    else
-                        glViewport(-(framebuffer_resize->height - framebuffer_resize->width) / 2, 0,
-                                   framebuffer_resize->height, framebuffer_resize->height);
-                }
-
-                if (screens.empty())
-                    return;
+                if (const auto* framebuffer_resize = event.as<gfx::WindowEvent::FramebufferResize>())
+                    glViewport(0, 0, framebuffer_resize->width, framebuffer_resize->height);
                 screens.top().on_window_event(event, state);
             });
             if (screens.empty())
