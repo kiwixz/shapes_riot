@@ -16,7 +16,7 @@ else ()
     set(CMAKE_CXX_COMPILER "clang++" CACHE FILEPATH "")
 endif ()
 
-install_vcpkg("2019.07"
+install_vcpkg("2019.09"
     LIBS
         # gfx
         "freetype"
