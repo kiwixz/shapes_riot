@@ -1,10 +1,11 @@
-# clang-tidy 8.0.0
+# clang-tidy 9
 
 ---
 Checks: "*  ,\
   -abseil-*  ,\
   -fuchsia-*  ,\
   \
+  -bugprone-branch-clone  ,\
   -bugprone-integer-division  ,\
   -bugprone-macro-parentheses  ,\
   -bugprone-narrowing-conversions  ,\
