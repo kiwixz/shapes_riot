@@ -30,7 +30,7 @@ jobs:
             ln -s "/opt/vcpkg"
             mkdir -p "build/vcpkg"
             cd "build/vcpkg"
-            cmake "../.."
+            cmake -G Ninja "../.."
       - save_cache:
           name: Save vcpkg cache
           key: vcpkg-0-{{ .Branch }}-{{ .Revision }}

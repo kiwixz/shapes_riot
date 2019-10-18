@@ -23,7 +23,7 @@ jobs:
           ln -s "/opt/vcpkg"
           mkdir -p "build/vcpkg"
           cd "build/vcpkg"
-          cmake "../.."
+          cmake -G Ninja "../.."
 
       - name: Dump versions
         run: |
@@ -72,7 +72,7 @@ jobs:
           mkdir "build\vcpkg"
           cd "build\vcpkg"
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          cmake "..\.."
+          cmake -G Ninja "..\.."
 
       - name: Test debug
         run: |
