@@ -4,11 +4,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: kiwixz/ci-cpp:2019-08-18
+      image: kiwixz/ci-cpp:2019-10-13
     steps:
       - name: Install system dependencies
         run: |
           pacman --color=always --needed --noconfirm -Sy  \
+              git openssh  \
               clang cmake nasm ninja python  \
               libxcursor libxi libxinerama libxrandr  `# glfw`
 

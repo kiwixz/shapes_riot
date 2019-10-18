@@ -4,7 +4,6 @@ include("${CMAKE_SOURCE_DIR}/cmake/install_vcpkg.cmake")
 option(BUILD_TESTS "Build tests" ON)
 option(USE_VCPKG "Use vcpkg toolchain to install and find libs" ON)
 
-set(CMAKE_BUILD_TYPE "Release" CACHE STRING "")
 set(CMAKE_C_FLAGS "" CACHE STRING "")
 set(CMAKE_CXX_FLAGS "" CACHE STRING "")
 set(CMAKE_ASM_NASM_FLAGS "" CACHE STRING "")
