@@ -9,7 +9,7 @@ namespace utils::vec_detail {
 struct VecBase {};  // simplify sfinae
 
 template <typename T>
-constexpr bool is_vec = std::is_base_of_v<VecBase, T>;
+inline constexpr bool is_vec = std::is_base_of_v<VecBase, T>;
 
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
