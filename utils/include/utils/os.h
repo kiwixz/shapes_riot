@@ -5,7 +5,6 @@
 #    define NOMINMAX
 #    include <windows.h>
 #else
-#    define _GNU_SOURCE
 #    include <sys/syscall.h>
 #    include <unistd.h>
 #endif

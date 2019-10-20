@@ -1,13 +1,12 @@
 #pragma once
 
+#include "utils/logging.h"
 #include <fmt/format.h>
 #include <string_view>
-#include "utils/logging.h"
 
 namespace utils {
 
-struct Logger
-{
+struct Logger {
     Logger(std::string tag);
 
     bool operator()(LogLevel level, std::string_view message) const;
