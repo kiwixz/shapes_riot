@@ -51,7 +51,7 @@ int main(int /*argc*/, char** /*argv*/)
         ScreenStack screens;
         screens.emplace<MainMenu>(resource_manager);
 
-        using Clock = std::chrono::high_resolution_clock;
+        using Clock = std::chrono::steady_clock;
         Clock::time_point last_frame = Clock::now();
 
         glfwSetWindowSize(window.ptr(), 1600, 900);
