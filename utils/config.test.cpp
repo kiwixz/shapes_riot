@@ -87,7 +87,6 @@ TEST_SUITE("config")
         bool allow_unknown = false;
 
         auto parse = [&](auto&&... args) {
-            // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay, hicpp-no-array-decay)
             std::array<std::string, sizeof...(args) + 1> args_str{"self", std::forward<decltype(args)>(args)...};
             std::array<char*, sizeof...(args) + 2> argv;
             for (size_t i = 0; i < args_str.size(); ++i)
@@ -127,7 +126,6 @@ TEST_SUITE("config")
         Config conf;
 
         auto parse = [&](auto&&... args) {
-            // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-array-to-pointer-decay, hicpp-no-array-decay)
             std::array<std::string, sizeof...(args) + 1> args_str = {"self", std::forward<decltype(args)>(args)...};
             std::array<char*, sizeof...(args) + 2> argv;
             for (size_t i = 0; i < args_str.size(); ++i)
