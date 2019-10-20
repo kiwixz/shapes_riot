@@ -8,6 +8,7 @@ add_library("${target}"
     exception.cpp
     logger.cpp
     logging.cpp
+    os.cpp
     paths.cpp
     rand.cpp
     resource_manager.cpp

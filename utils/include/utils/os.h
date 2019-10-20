@@ -5,7 +5,6 @@
 #    define NOMINMAX
 #    include <windows.h>
 #else
-#    include <sys/syscall.h>
 #    include <unistd.h>
 #endif
 
@@ -15,22 +14,13 @@ namespace utils {
 
 using ThreadId = DWORD;
 
-ThreadId thread_id()
-{
-    thread_local const ThreadId id = GetCurrentThreadId();
-    return id;
-}
-
 #else
 
 using ThreadId = pid_t;
 
-ThreadId thread_id()
-{
-    thread_local const ThreadId id = static_cast<ThreadId>(syscall(SYS_gettid));
-    return id;
-}
-
 #endif
+
+
+ThreadId thread_id();
 
 }  // namespace utils
