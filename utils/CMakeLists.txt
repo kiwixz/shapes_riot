@@ -6,6 +6,7 @@ set(target "utils")
 add_library("${target}"
     config.cpp
     exception.cpp
+    log.cpp
     paths.cpp
     rand.cpp
     resource_manager.cpp
