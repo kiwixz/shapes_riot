@@ -1,5 +1,6 @@
 #include "utils/log.h"
 #include "utils/exception.h"
+#include "utils/os.h"
 #include <fmt/printf.h>
 #include <chrono>
 #include <thread>
@@ -74,7 +75,7 @@ bool log(LogLevel level, std::string_view tag, std::string_view message)
     std::chrono::duration<double> time = std::chrono::steady_clock::now().time_since_epoch();
 
     fmt::print(stderr, "[{:.6f}][{:5}][{:x}] {}: {}\n",
-               time.count(), log_level_name(level), 0,
+               time.count(), log_level_name(level), thread_id(),
                tag, message);
     return true;
 }
