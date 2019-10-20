@@ -35,9 +35,9 @@ TEST_SUITE("span")
     {
         static constexpr std::array<const char, 6> container{"hello"};
         constexpr Span<const char> midspan = container;
-        constexpr Span<const char> midspan2 = midspan;
-        constexpr Span<const char> midspan3 = std::move(midspan2);
-        constexpr Span<const char> span{midspan3.data(), midspan3.size()};
+        Span<const char> midspan2 = midspan;
+        Span<const char> midspan3 = std::move(midspan2);
+        constexpr Span<const char> span{midspan.data(), midspan.size()};
         static_assert(*span.begin() == 'h');
         static_assert(span.data() == container.data());
         static_assert(span[2] == 'l');
