@@ -23,11 +23,6 @@ Rand64::Rand64()
 
 uint64_t Rand64::operator()()
 {
-    return gen();
-}
-
-uint64_t Rand64::gen()
-{
     // xoshiro256starstar
     uint64_t* s = state_.data();
 
@@ -52,11 +47,6 @@ RandF::RandF()
 }
 
 double RandF::operator()()
-{
-    return gen();
-}
-
-double RandF::gen()
 {
     // xoshiro256plus
     uint64_t* s = state_.data();

@@ -10,8 +10,6 @@ struct Rand64 {
 
     uint64_t operator()();
 
-    uint64_t gen();
-
 private:
     std::array<uint64_t, 4> state_;
 };
@@ -21,8 +19,6 @@ struct RandF {
     RandF();
 
     double operator()();
-
-    double gen();
 
 private:
     std::array<uint64_t, 4> state_;
