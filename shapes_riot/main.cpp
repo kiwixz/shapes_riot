@@ -91,5 +91,5 @@ int main(int /*argc*/, char** /*argv*/)
 
 int main(int argc, char** argv)
 {
-    shapes_riot::main(argc, argv);
+    return shapes_riot::main(argc, argv);
 }
