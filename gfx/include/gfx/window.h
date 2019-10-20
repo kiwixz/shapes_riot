@@ -21,7 +21,7 @@ struct Window {
 
     [[nodiscard]] WindowState state() const;
     [[nodiscard]] GLFWwindow* ptr();
-    [[nodiscard]] GLFWwindow const* ptr() const;
+    [[nodiscard]] const GLFWwindow* ptr() const;
 
     void poll_events(const std::function<void(WindowEvent&& event)>& event_handler);
 

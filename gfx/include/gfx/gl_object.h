@@ -6,7 +6,7 @@
 namespace gfx {
 
 using GlDeleter = void (*)(GLuint id);
-using GlArrayDeleter = void (*)(GLsizei size, GLuint const* ids);
+using GlArrayDeleter = void (*)(GLsizei size, const GLuint* ids);
 
 
 // we need to take pointers to functions to make deleters compile time constants
@@ -18,8 +18,8 @@ struct GlObject {
     GlObject() = default;
     explicit GlObject(GLuint id);
     ~GlObject();
-    GlObject(GlObject const&) = delete;
-    GlObject& operator=(GlObject const&) = delete;
+    GlObject(const GlObject&) = delete;
+    GlObject& operator=(const GlObject&) = delete;
     GlObject(GlObject&& other) noexcept;
     GlObject& operator=(GlObject&& other) noexcept;
 
@@ -39,8 +39,8 @@ struct GlArrayObject {
 
     GlArrayObject() = default;
     ~GlArrayObject();
-    GlArrayObject(GlArrayObject const&) = delete;
-    GlArrayObject& operator=(GlArrayObject const&) = delete;
+    GlArrayObject(const GlArrayObject&) = delete;
+    GlArrayObject& operator=(const GlArrayObject&) = delete;
     GlArrayObject(GlArrayObject&& other) noexcept;
     GlArrayObject& operator=(GlArrayObject&& other) noexcept;
 

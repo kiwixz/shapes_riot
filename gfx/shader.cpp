@@ -6,7 +6,7 @@ namespace gfx {
 Shader::Shader(GLenum type, std::string_view source)
 {
     shader_ = GlShader{glCreateShader(type)};
-    GLchar const* source_ptr = source.data();
+    const GLchar* source_ptr = source.data();
     auto source_length = static_cast<GLint>(source.length());
     glShaderSource(shader_.id(), 1, &source_ptr, &source_length);
     glCompileShader(shader_.id());
@@ -28,7 +28,7 @@ ShaderProgram::ShaderProgram()
     program_ = GlProgram{glCreateProgram()};
 }
 
-void ShaderProgram::attach(Shader const& shader)
+void ShaderProgram::attach(const Shader& shader)
 {
     glAttachShader(program_.id(), shader.shader_.id());
 }

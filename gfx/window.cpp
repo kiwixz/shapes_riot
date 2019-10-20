@@ -12,9 +12,7 @@ Window::Window(utils::Vec2i size, std::string_view title, GLFWmonitor* monitor, 
 
     glfwMakeContextCurrent(window_.get());
 
-    if (!gladLoadGLLoader([](char const* name) {
-            return reinterpret_cast<void*>(glfwGetProcAddress(name));
-        }))
+    if (!gladLoadGLLoader([](const char* name) { return reinterpret_cast<void*>(glfwGetProcAddress(name)); }))
         throw MAKE_EXCEPTION("could not load opengl");
 
     glfwSetWindowUserPointer(window_.get(), this);
@@ -42,7 +40,7 @@ GLFWwindow* Window::ptr()
     return window_.get();
 }
 
-GLFWwindow const* Window::ptr() const
+const GLFWwindow* Window::ptr() const
 {
     return window_.get();
 }

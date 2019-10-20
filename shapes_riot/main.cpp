@@ -15,7 +15,7 @@ namespace {
 int main(int /*argc*/, char** /*argv*/)
 {
     try {
-        glfwSetErrorCallback([](int error, char const* description) {
+        glfwSetErrorCallback([](int error, const char* description) {
             utils::Logger{"glfw"}(utils::LogLevel::error, "error {:#x}: {}", error, description);
         });
 
@@ -34,7 +34,7 @@ int main(int /*argc*/, char** /*argv*/)
         glDebugMessageControl(GL_DONT_CARE, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION,
                               0, nullptr, GL_FALSE);
         glDebugMessageCallback([](GLenum source, GLenum type, GLuint id, GLenum severity,
-                                  GLsizei /*length*/, GLchar const* message, void const* /*userParam*/) {
+                                  GLsizei /*length*/, const GLchar* message, const void* /*userParam*/) {
             utils::Logger{"opengl"}(utils::LogLevel::info, "source:{:#x} type:{:#x} id:{:#x} severity:{:#x}\n\t {}",
                                     source, type, id, severity, message);
         },
