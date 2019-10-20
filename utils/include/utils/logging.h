@@ -9,9 +9,9 @@ namespace utils {
 enum class LogLevel {
     debug,
     info,
-    warn,
+    warning,
     error,
-    crit,
+    critical,
     none,
 
 #ifdef DEBUG
@@ -45,11 +45,11 @@ constexpr LogLevelInfo log_level_info(LogLevel level)
         return {"DEBUG", fmt::fg(fmt::terminal_color::green)};
     case LogLevel::info:
         return {"INFO"};
-    case LogLevel::warn:
+    case LogLevel::warning:
         return {"WARN", fmt::fg(fmt::terminal_color::bright_yellow)};
     case LogLevel::error:
         return {"ERROR", fmt::fg(fmt::terminal_color::bright_red)};
-    case LogLevel::crit:
+    case LogLevel::critical:
         return {"CRIT", fmt::bg(fmt::terminal_color::red) | fmt::fg(fmt::terminal_color::bright_white)};
     case LogLevel::none:
         return {"NONE"};

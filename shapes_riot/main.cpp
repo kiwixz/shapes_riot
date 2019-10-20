@@ -16,7 +16,7 @@ int main(int /*argc*/, char** /*argv*/)
 {
     try {
         glfwSetErrorCallback([](int error, char const* description) {
-            fmt::print(stderr, "[glfw] error {:#x}: {}\n", error, description);
+            utils::Logger{"glfw"}(utils::LogLevel::error, "error {:#x}: {}", error, description);
         });
 
         gfx::GlfwHandle glfw_handle;
@@ -35,8 +35,8 @@ int main(int /*argc*/, char** /*argv*/)
                               0, nullptr, GL_FALSE);
         glDebugMessageCallback([](GLenum source, GLenum type, GLuint id, GLenum severity,
                                   GLsizei /*length*/, GLchar const* message, void const* /*userParam*/) {
-            fmt::print(stderr, "[opengl] source:{:#x} type:{:#x} id:{:#x} severity:{:#x}\n\t {}\n",
-                       source, type, id, severity, message);
+            utils::Logger{"opengl"}(utils::LogLevel::info, "source:{:#x} type:{:#x} id:{:#x} severity:{:#x}\n\t {}",
+                                    source, type, id, severity, message);
         },
                                nullptr);
 
@@ -55,7 +55,6 @@ int main(int /*argc*/, char** /*argv*/)
         Clock::time_point last_frame = Clock::now();
 
         glfwSetWindowSize(window.ptr(), 1600, 900);
-
         while (!glfwWindowShouldClose(window.ptr())) {
             Clock::time_point now = Clock::now();
             double delta = std::chrono::duration<double>(now - last_frame).count();
@@ -78,10 +77,10 @@ int main(int /*argc*/, char** /*argv*/)
         return 0;
     }
     catch (const utils::Exception& ex) {
-        fmt::print(stderr, "fatal exception: {}\nfrom: {}\n", ex.what(), ex.from());
+        utils::Logger{""}(utils::LogLevel::critical, "fatal exception: {}\nfrom: {}", ex.what(), ex.from());
     }
     catch (const std::exception& ex) {
-        fmt::print(stderr, "fatal exception: {}\n", ex.what());
+        utils::Logger{""}(utils::LogLevel::critical, "fatal exception: {}", ex.what());
     }
     return 1;
 }
