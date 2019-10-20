@@ -18,7 +18,7 @@ ThreadId thread_id()
 
 ThreadId thread_id()
 {
-    thread_local const ThreadId id = static_cast<ThreadId>(syscall(SYS_gettid));
+    thread_local const auto id = static_cast<ThreadId>(syscall(SYS_gettid));
     return id;
 }
 
