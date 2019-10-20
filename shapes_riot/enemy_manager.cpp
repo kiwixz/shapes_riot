@@ -12,9 +12,9 @@ gfx::DrawList EnemyManager::draw() const
 
 void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d player_pos)
 {
-    if (rand_.gen() < delta * 2) {
+    if (rand_() < delta * 2) {
         // generate random pos either [-1.0; -0.5[ or [0.5; 1.0]
-        utils::Vec2d pos{rand_.gen(), rand_.gen()};
+        utils::Vec2d pos{rand_(), rand_()};
         if (pos.x < 0.5)
             pos.x = -(pos.x + 0.5);
         if (pos.y < 0.5)

@@ -2,20 +2,18 @@
 #include "main_menu.h"
 #include "screen_stack.h"
 #include "utils/exception.h"
-#include "utils/log.h"
+#include "utils/logger.h"
 #include "utils/resource_manager.h"
 #include <fmt/printf.h>
 #include <chrono>
+
+#include <iostream>
 
 namespace shapes_riot {
 namespace {
 
 int main(int /*argc*/, char** /*argv*/)
 {
-    utils::log(utils::LogLevel::debug, "main", "hello {}", 42);
-    utils::log(utils::LogLevel::info, "main", "world {}", 42);
-    utils::log(utils::LogLevel::warn, "main", "hihi {}", 42);
-
     try {
         glfwSetErrorCallback([](int error, char const* description) {
             fmt::print(stderr, "[glfw] error {:#x}: {}\n", error, description);
