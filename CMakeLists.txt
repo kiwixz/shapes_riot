@@ -5,9 +5,6 @@ option(BUILD_TESTS "Build tests" ON)
 option(USE_VCPKG "Use vcpkg toolchain to install and find libs" ON)
 
 set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "")
-set(CMAKE_C_FLAGS "" CACHE STRING "")
-set(CMAKE_CXX_FLAGS "" CACHE STRING "")
-set(CMAKE_ASM_NASM_FLAGS "" CACHE STRING "")
 if (WIN32)
     set(CMAKE_C_COMPILER "cl" CACHE FILEPATH "")
     set(CMAKE_CXX_COMPILER "cl" CACHE FILEPATH "")
@@ -36,16 +33,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS
-        "${CMAKE_CXX_FLAGS} -Weverything  \
+        "${CMAKE_CXX_FLAGS} -pedantic -Weverything  \
         -Wno-c++98-compat-pedantic -Wno-ctad-maybe-unsupported -Wno-disabled-macro-expansion  \
         -Wno-double-promotion -Wno-exit-time-destructors -Wno-float-equal -Wno-padded  \
         -Wno-return-std-move-in-c++11 -Wno-sign-conversion -Wno-weak-vtables"
     )
     set(CMAKE_CXX_FLAGS_DEBUG "-D DEBUG -Og -g -fno-omit-frame-pointer -fsanitize=address,undefined")
-    set(CMAKE_CXX_FLAGS_RELEASE "-D NDEBUG -O3 -flto -ffast-math")
+    set(CMAKE_CXX_FLAGS_RELEASE "-D NDEBUG -O3 -flto=thin")
     link_libraries("pthread" "stdc++fs")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /nologo /diagnostics:caret /bigobj /MP /W4 /permissive- /EHsc /fp:fast")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /nologo /diagnostics:caret /bigobj /MP /permissive- /EHsc /W4")
     set(CMAKE_CXX_FLAGS_DEBUG "/D DEBUG /MTd /GF /Oi /JMC /RTC1 /ZI")
     set(CMAKE_CXX_FLAGS_RELEASE "/D NDEBUG /MT /O2 /GL /Gw")
     set(CMAKE_EXE_LINKER_FLAGS_DEBUG "/DEBUG:FASTLINK")
