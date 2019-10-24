@@ -13,23 +13,25 @@ else ()
     set(CMAKE_CXX_COMPILER "clang++" CACHE FILEPATH "")
 endif ()
 
-install_vcpkg("2019.09"
-    LIBS
-        # gfx
-        "freetype"
-        "glad"
-        "glfw3"
+if (USE_VCPKG)
+    install_vcpkg("2019.09"
+        LIBS
+            # gfx
+            "freetype"
+            "glad"
+            "glfw3"
 
-        "doctest"
-        "fmt"
-)
+            "doctest"
+            "fmt"
+    )
+endif ()
 
 project("shapes_riot" C CXX ASM_NASM)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS
@@ -65,7 +67,7 @@ endif ()
 
 if (BUILD_TESTS)
     enable_testing()
-    find_package("Python3" COMPONENTS "Interpreter")
+    find_package("Python3" REQUIRED COMPONENTS "Interpreter")
     add_test(NAME "check_clang_format"
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/check_clang_format.py"
     )

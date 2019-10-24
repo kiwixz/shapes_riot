@@ -19,8 +19,10 @@ add_library("${target}_base"
 add_executable("${target}" main.cpp)
 target_link_libraries("${target}" "${target}_base")
 
-test_target_cpp("${target}_base"
-)
+if (BUILD_TESTS)
+    test_target_cpp("${target}_base"
+    )
+endif ()
 
 
 find_package("fmt" CONFIG REQUIRED)

@@ -17,19 +17,21 @@ add_library("${target}"
 )
 target_include_directories("${target}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-test_target_cpp("${target}"
-    bind_front.test.cpp
-    config.test.cpp
-    make_array.test.cpp
-    math.test.cpp
-    matrix.test.cpp
-    resource_manager.test.cpp
-    scope_exit.test.cpp
-    shared_handle.test.cpp
-    span.test.cpp
-    thread_pool.test.cpp
-    vec.test.cpp
-)
+if (BUILD_TESTS)
+    test_target_cpp("${target}"
+        bind_front.test.cpp
+        config.test.cpp
+        make_array.test.cpp
+        math.test.cpp
+        matrix.test.cpp
+        resource_manager.test.cpp
+        scope_exit.test.cpp
+        shared_handle.test.cpp
+        span.test.cpp
+        thread_pool.test.cpp
+        vec.test.cpp
+    )
+endif ()
 
 
 find_package("fmt" CONFIG REQUIRED)
