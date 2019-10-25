@@ -16,7 +16,7 @@ int& global()
 
 TEST_SUITE("shared_handle")
 {
-#ifndef __GNUC__  // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83258
+#if defined(__GNUC__) || !defined(__clang__)  // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83258
     TEST_CASE("simple")
     {
         int& c = global<struct simple>();
