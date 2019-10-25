@@ -2,11 +2,11 @@ on: [create, pull_request, push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         build_type: ["Debug", "Release"]
         cxx: ["g++", "clang++"]
+    runs-on: ubuntu-latest
     container:
       image: kiwixz/ci-cpp:2019-10-20
     steps:
@@ -51,7 +51,12 @@ jobs:
 
 
   build_windows:
+    strategy:
+      matrix:
+        build_type: ["Debug", "Release"]
     runs-on: windows-latest
+    env:
+      VCVARS: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
     steps:
       - name: Install system dependencies
         run: |
@@ -62,27 +67,19 @@ jobs:
           git clone "https://github.com/%GITHUB_REPOSITORY%" "."
           git checkout "%GITHUB_SHA%"
 
-      - name: Install vcpkg dependencies
+      - name: Configure
+        env:
+          BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          mkdir "build\vcpkg"
-          cd "build\vcpkg"
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          cmake -G Ninja "..\.."
+          call "%VCVARS%"
+          cmake -G Ninja -D "CMAKE_BUILD_TYPE=$BUILD_TYPE" -S "." -B "build"
 
-      - name: Test debug
+      - name: Build
         run: |
-          mkdir "build\debug"
-          cd "build\debug"
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          cmake -G Ninja -D "CMAKE_BUILD_TYPE=Debug" "..\.."
-          ninja
-          ctest --output-on-failure -E "check_.*"
+          call "%VCVARS%"
+          ninja -C "build"
 
-      - name: Test release
+      - name: Test
         run: |
-          mkdir "build\release"
-          cd "build\release"
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          cmake -G Ninja -D "CMAKE_BUILD_TYPE=Release" "..\.."
-          ninja
-          ctest --output-on-failure -E "check_.*"
+          call "%VCVARS%"
+          ctest --output-on-failure -C "build"
