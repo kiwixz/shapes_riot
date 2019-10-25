@@ -78,7 +78,6 @@ jobs:
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          set PATH=%PATH:mingw=%
           call "%VCVARS%"
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=$BUILD_TYPE" -S "." -B "build"
 
