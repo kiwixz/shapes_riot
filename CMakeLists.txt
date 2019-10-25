@@ -8,6 +8,7 @@ option(USE_VCPKG "Use vcpkg toolchain to install and find libs" ON)
 
 
 set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "")
+set(CMAKE_CXX_FLAGS_INIT "" CACHE STRING "")
 set_defaults_tools_cpp()
 
 if (USE_VCPKG)
@@ -26,7 +27,7 @@ endif ()
 
 project("shapes_riot" C CXX ASM_NASM)
 
-set_defaults_options()
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_defaults_flags_asm()
 set_defaults_flags_cpp()
 

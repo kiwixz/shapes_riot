@@ -52,11 +52,6 @@ macro (set_defaults_flags_cpp)
 endmacro ()
 
 
-macro (set_defaults_options)
-    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-endmacro ()
-
-
 function (set_defaults_tools_cpp)
     if (WIN32)
         find_program(cl_PATH "cl")
