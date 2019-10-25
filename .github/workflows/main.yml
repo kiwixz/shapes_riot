@@ -30,6 +30,8 @@ jobs:
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
           CXX: ${{ matrix.cxx }}
+          CXXFLAGS: -fdiagnostics-color=always
+          LDFLAGS: -fdiagnostics-color=always
         run: |
           ln -s "/opt/vcpkg"
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=$BUILD_TYPE" -D "CMAKE_CXX_COMPILER=$CXX" -S "." -B "build"
