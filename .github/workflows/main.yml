@@ -74,18 +74,21 @@ jobs:
           git checkout "${{ github.sha }}"
 
       - name: Configure
+        shell: cmd
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          cmd /k call "%VCVARS%"
+          call "%VCVARS%"
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=$BUILD_TYPE" -S "." -B "build"
 
       - name: Build
+        shell: cmd
         run: |
-          cmd /k call "%VCVARS%"
+          call "%VCVARS%"
           ninja -C "build"
 
       - name: Test
+        shell: cmd
         run: |
-          cmd /k call "%VCVARS%"
+          call "%VCVARS%"
           ctest --output-on-failure -C "build"
