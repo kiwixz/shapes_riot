@@ -7,7 +7,14 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}/build/${name}",
       "cmakeCommandArgs": "--no-warn-unused-cli",
-      "ctestCommandArgs": "--output-on-failure -E check_clang_tidy"
+      "ctestCommandArgs": "--output-on-failure -E check_clang_tidy",
+      "variables": [
+        {
+          "name": "CMAKE_CXX_FLAGS",
+          "value": "",
+          "type": "STRING"
+        }
+      ]
     },
     {
       "name": "release",
@@ -16,7 +23,14 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}/build/${name}",
       "cmakeCommandArgs": "--no-warn-unused-cli",
-      "ctestCommandArgs": "--output-on-failure -E check_clang_tidy"
+      "ctestCommandArgs": "--output-on-failure -E check_clang_tidy",
+      "variables": [
+        {
+          "name": "CMAKE_CXX_FLAGS",
+          "value": "",
+          "type": "STRING"
+        }
+      ]
     }
   ]
 }
