@@ -79,7 +79,7 @@ jobs:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
           call "%VCVARS%"
-          cmake -G Ninja -D "CMAKE_BUILD_TYPE=$BUILD_TYPE" -S "." -B "build"
+          cmake -G Ninja -D "CMAKE_BUILD_TYPE=%BUILD_TYPE%" -S "." -B "build"
 
       - name: Build
         shell: cmd
