@@ -52,7 +52,8 @@ jobs:
           ASAN_OPTIONS: check_initialization_order=1:detect_stack_use_after_return=1
           UBSAN_OPTIONS: print_stacktrace=1
         run: |
-          ctest --output-on-failure -C "build"
+          cd "build"
+          ctest --output-on-failure
 
 
   build_windows:
@@ -91,4 +92,5 @@ jobs:
         shell: cmd
         run: |
           call "%VCVARS%"
-          ctest --output-on-failure -C "build"
+          cd "build"
+          ctest --output-on-failure
