@@ -35,7 +35,9 @@ jobs:
           LDFLAGS: -fdiagnostics-color=always
         run: |
           ln -s "/opt/vcpkg"
-          cmake -G Ninja -D "CMAKE_BUILD_TYPE=$BUILD_TYPE" -D "CMAKE_CXX_COMPILER=$CXX" -S "." -B "build"
+          cmake -G Ninja  \
+              -D "CMAKE_BUILD_TYPE=$BUILD_TYPE" -D "CMAKE_CXX_COMPILER=$(which $CXX)"  \
+              -S "." -B "build"
 
       - name: Dump libraries versions
         run: |
