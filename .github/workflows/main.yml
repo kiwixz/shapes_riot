@@ -93,4 +93,4 @@ jobs:
         run: |
           call "%VCVARS%"
           cd "build"
-          ctest --output-on-failure
+          ctest --output-on-failure -E "check_clang_.*"
