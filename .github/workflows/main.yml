@@ -24,8 +24,8 @@ jobs:
 
       - name: Checkout
         run: |
-          git clone "https://github.com/$GITHUB_REPOSITORY" "./"
-          git checkout "$GITHUB_SHA"
+          git clone "https://github.com/${{ github.repository }}" "./"
+          git checkout "${{ github.sha }}"
 
       - name: Configure
         env:
@@ -70,8 +70,8 @@ jobs:
 
       - name: Checkout
         run: |
-          git clone "https://github.com/%GITHUB_REPOSITORY%" "."
-          git checkout "%GITHUB_SHA%"
+          git clone "https://github.com/${{ github.repository }}" "."
+          git checkout "${{ github.sha }}"
 
       - name: Configure
         env:
