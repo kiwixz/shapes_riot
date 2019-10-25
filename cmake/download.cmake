@@ -4,6 +4,7 @@ function (download name url)
     ExternalProject_Add("${name}"
         SOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/${name}"
         URL "${url}"
+        DOWNLOAD_NO_PROGRESS ON
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
         INSTALL_COMMAND ""
