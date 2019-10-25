@@ -16,15 +16,16 @@ int& global()
 
 TEST_SUITE("shared_handle")
 {
+#ifndef __GNUC__  // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83258
     TEST_CASE("simple")
     {
         int& c = global<struct simple>();
         c = 100;
 
-        static constexpr auto init = []() {
+        constexpr auto init = []() {
             global<struct simple>() *= 2;
         };
-        static constexpr auto destroy = []() {
+        constexpr auto destroy = []() {
             global<struct simple>() /= 2;
         };
         using Handle = SharedHandle<init, destroy>;
@@ -44,6 +45,7 @@ TEST_SUITE("shared_handle")
         }
         CHECK(c == 100);
     }
+#endif
 }
 
 }  // namespace utils::test

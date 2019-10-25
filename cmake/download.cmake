@@ -12,6 +12,7 @@ function (download name url)
     set(${name}_DIR "${CMAKE_CURRENT_BINARY_DIR}/${name}" PARENT_SCOPE)
 endfunction ()
 
+
 function (download_github name repo ref)
     download("${name}" "https://github.com/${repo}/archive/${ref}.zip")
     set(${name}_DIR "${${name}_DIR}" PARENT_SCOPE)
