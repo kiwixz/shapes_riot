@@ -10,6 +10,11 @@ endmacro ()
 
 
 macro (set_defaults_flags_cpp)
+    if (NOT ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug"
+        OR "${CMAKE_BUILD_TYPE}" STREQUAL "Release"))
+        message(WARNING "unknown build type '${CMAKE_BUILD_TYPE}'")
+    endif ()
+
     set(CMAKE_CXX_EXTENSIONS OFF)
     set(CMAKE_CXX_STANDARD 20)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
