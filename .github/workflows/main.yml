@@ -3,6 +3,7 @@ on: [create, pull_request, push]
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         build_type: ["Debug", "Release"]
         cxx: ["g++", "clang++"]
@@ -54,6 +55,7 @@ jobs:
 
   build_windows:
     strategy:
+      fail-fast: false
       matrix:
         build_type: ["Debug", "Release"]
     runs-on: windows-latest
