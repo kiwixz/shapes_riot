@@ -3,8 +3,12 @@ on: [create, pull_request, push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        build_type: ["Debug", "Release"]
+        cxx: ["g++", "clang++"]
     container:
-      image: kiwixz/ci-cpp:2019-10-13
+      image: kiwixz/ci-cpp:2019-10-20
     steps:
       - name: Install system dependencies
         run: |
@@ -13,46 +17,37 @@ jobs:
               clang cmake nasm ninja python  \
               libxcursor libxi libxinerama libxrandr  `# glfw`
 
+      - name: Dump packages versions
+        run: |
+          pacman --color=always -Q
+
       - name: Checkout
         run: |
           git clone "https://github.com/$GITHUB_REPOSITORY" "./"
           git checkout "$GITHUB_SHA"
 
-      - name: Install vcpkg dependencies
+      - name: Configure
+        env:
+          BUILD_TYPE: ${{ matrix.build_type }}
+          CXX: ${{ matrix.cxx }}
         run: |
           ln -s "/opt/vcpkg"
-          mkdir -p "build/vcpkg"
-          cd "build/vcpkg"
-          cmake -G Ninja "../.."
+          cmake -G Ninja -D "CMAKE_BUILD_TYPE=$BUILD_TYPE" -D "CMAKE_CXX_COMPILER=$CXX" -S "." -B "build"
 
-      - name: Dump versions
+      - name: Dump libraries versions
         run: |
-          pacman --color=always -Q
           vcpkg list
 
-      - name: Test debug
+      - name: Build
+        run: |
+          ninja -C "build"
+
+      - name: Test
         env:
           ASAN_OPTIONS: check_initialization_order=1:detect_stack_use_after_return=1
           UBSAN_OPTIONS: print_stacktrace=1
         run: |
-          mkdir -p "build/debug"
-          cd "build/debug"
-          cmake -G Ninja -D "CMAKE_BUILD_TYPE=Debug" "../.."
-          ninja
-          ctest --output-on-failure -E "check_.*"
-
-      - name: Test release
-        run: |
-          mkdir -p "build/release"
-          cd "build/release"
-          cmake -G Ninja -D "CMAKE_BUILD_TYPE=Release" "../.."
-          ninja
-          ctest --output-on-failure -E "check_.*"
-
-      - name: Additional checks
-        run: |
-          cd "build/debug"
-          ctest --output-on-failure -R "check_.*"
+          ctest --output-on-failure -C "build"
 
 
   build_windows:
