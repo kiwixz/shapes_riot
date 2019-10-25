@@ -15,7 +15,7 @@ jobs:
         run: |
           pacman --color=always --needed --noconfirm -Sy  \
               git openssh  \
-              clang cmake nasm ninja python  \
+              clang cmake gcc lld nasm ninja python  \
               libxcursor libxi libxinerama libxrandr  `# glfw`
 
       - name: Dump packages versions
