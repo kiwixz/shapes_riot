@@ -5,6 +5,11 @@ function (install_vcpkg vcpkg_ref)
     endif ()
 
     find_package("Python3" REQUIRED COMPONENTS "Interpreter")
-    execute_process(COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/cmake/install_vcpkg.py" "${vcpkg_ref}" ${ARG_LIBS})
+    execute_process(COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/cmake/install_vcpkg.py" "${vcpkg_ref}" ${ARG_LIBS}
+        RESULT_VARIABLE exit_code)
+    if (exit_code)
+        message(FATAL_ERROR "could not install vcpkg")
+    endif ()
+
     set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE FILEPATH "")
 endfunction ()
