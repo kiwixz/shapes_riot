@@ -8,7 +8,7 @@ option(USE_VCPKG "Use vcpkg toolchain to install and find libs" ON)
 
 
 set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "")
-set(CMAKE_CXX_FLAGS_INIT "" CACHE STRING "")
+set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS}" CACHE STRING "")
 set_defaults_tools_cpp()
 
 if (USE_VCPKG)
