@@ -77,18 +77,15 @@ jobs:
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
-          cmd
-          call "%VCVARS%"
+          cmd /k call "%VCVARS%"
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=$BUILD_TYPE" -S "." -B "build"
 
       - name: Build
         run: |
-          cmd
-          call "%VCVARS%"
+          cmd /k call "%VCVARS%"
           ninja -C "build"
 
       - name: Test
         run: |
-          cmd
-          call "%VCVARS%"
+          cmd /k call "%VCVARS%"
           ctest --output-on-failure -C "build"
