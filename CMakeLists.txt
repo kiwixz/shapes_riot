@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
-include("${CMAKE_SOURCE_DIR}/cmake/install_vcpkg.cmake")
-include("${CMAKE_SOURCE_DIR}/cmake/set_defaults.cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+include("install_vcpkg")
+include("set_defaults")
 
 
 option(BUILD_TESTS "Build tests" ON)

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
+include("test_target_cpp")
 
 set(target "shapes_riot")
 

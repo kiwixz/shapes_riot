@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
-include("${CMAKE_SOURCE_DIR}/cmake/download.cmake")
-include("${CMAKE_SOURCE_DIR}/cmake/file_embed.cmake")
-include("${CMAKE_SOURCE_DIR}/cmake/test_target_cpp.cmake")
+include("download")
+include("file_embed")
+include("test_target_cpp")
 
 set(target "gfx")
 
