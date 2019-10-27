@@ -29,7 +29,6 @@ private:
 
 
 template <typename... Args>
-// NOLINTNEXTLINE(performance-unnecessary-value-param)
 Exception::Exception(std::string from, std::string_view format, Args... args) :
     Exception{std::move(from), fmt::format(format, std::forward<Args>(args)...)}
 {}
