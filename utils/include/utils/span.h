@@ -19,7 +19,6 @@ struct Span {
     constexpr Span(const T& container);
 
     template <typename T, std::enable_if_t<!std::is_same_v<T, Span<Element>>, int> = 0>
-    // NOLINTNEXTLINE(bugprone-forwarding-reference-overload)
     constexpr Span(T&& container);
 
     [[nodiscard]] constexpr Element& operator[](size_t idx) const;
@@ -51,7 +50,6 @@ constexpr Span<TElement>::Span(const T& container) :
 
 template <typename TElement>
 template <typename T, std::enable_if_t<!std::is_same_v<T, Span<TElement>>, int>>
-// NOLINTNEXTLINE(bugprone-forwarding-reference-overload)
 constexpr Span<TElement>::Span(T&& container) :
     Span{container.data(), container.size()}
 {}
