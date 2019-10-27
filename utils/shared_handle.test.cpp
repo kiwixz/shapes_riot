@@ -1,5 +1,6 @@
 #include "utils/shared_handle.h"
 #include <doctest/doctest.h>
+#include <utility>
 
 namespace utils::test {
 namespace {

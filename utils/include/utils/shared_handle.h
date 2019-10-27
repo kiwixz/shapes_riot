@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 namespace utils {
 
 template <void (*Tinit)(), void (*Tdestroy)()>
@@ -11,9 +9,9 @@ struct SharedHandle {
 
     SharedHandle();
     ~SharedHandle();
-    SharedHandle(const SharedHandle& other);
+    SharedHandle(const SharedHandle& other) = default;
     SharedHandle& operator=(const SharedHandle& other) = default;
-    SharedHandle(SharedHandle&& other) noexcept;
+    SharedHandle(SharedHandle&& other) noexcept = default;
     SharedHandle& operator=(SharedHandle&& other) noexcept = default;
 
 private:
@@ -38,16 +36,6 @@ SharedHandle<Tinit, Tdestroy>::~SharedHandle()
     if (c == 0)
         destroy();
 }
-
-template <void (*Tinit)(), void (*Tdestroy)()>
-SharedHandle<Tinit, Tdestroy>::SharedHandle(const SharedHandle& /*other*/) :
-    SharedHandle{}
-{}
-
-template <void (*Tinit)(), void (*Tdestroy)()>
-SharedHandle<Tinit, Tdestroy>::SharedHandle(SharedHandle&& /*other*/) noexcept :
-    SharedHandle{}
-{}
 
 template <void (*Tinit)(), void (*Tdestroy)()>
 int& SharedHandle<Tinit, Tdestroy>::counter()
