@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+include("doc_target")
 include("install_vcpkg")
 include("set_defaults")
 
@@ -34,7 +35,7 @@ set_defaults_flags_cpp()
 
 if (BUILD_TESTS)
     enable_testing()
-    find_package("Python3" REQUIRED COMPONENTS "Interpreter")
+    find_package("Python3" REQUIRED "Interpreter")
     add_test(NAME "check_clang_format"
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/check_clang_format.py"
     )
@@ -42,6 +43,13 @@ if (BUILD_TESTS)
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/check_clang_tidy.py" "${CMAKE_BINARY_DIR}"
     )
 endif ()
+
+
+doc_target(DIRS
+    "gfx"
+    "utils"
+    "shapes_riot"
+)
 
 
 add_subdirectory("gfx")

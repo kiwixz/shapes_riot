@@ -30,12 +30,12 @@ struct LogLevelInfo {
 
 constexpr LogLevelInfo log_level_info(LogLevel level);
 
-LogLevel global_log_level();                   ///< thread-safe
-LogLevel tag_log_level(std::string_view tag);  ///< thread-safe
+LogLevel global_log_level();                   ///< Thread-safe.
+LogLevel tag_log_level(std::string_view tag);  ///< Thread-safe.
 
-void set_global_log_level(LogLevel level);                     ///< thread-safe
-void set_tag_log_level(std::string_view tag, LogLevel level);  ///< thread-safe
-void reset_tag_log_level(std::string_view tag);                ///< thread-safe
+void set_global_log_level(LogLevel level);                     ///< Thread-safe.
+void set_tag_log_level(std::string_view tag, LogLevel level);  ///< Thread-safe.
+void reset_tag_log_level(std::string_view tag);                ///< Thread-safe.
 
 
 constexpr LogLevelInfo log_level_info(LogLevel level)

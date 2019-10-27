@@ -4,7 +4,7 @@ function (install_vcpkg vcpkg_ref)
         message(FATAL_ERROR "unparsed arguments")
     endif ()
 
-    find_package("Python3" REQUIRED COMPONENTS "Interpreter")
+    find_package("Python3" REQUIRED "Interpreter")
     execute_process(COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/cmake/install_vcpkg.py" "${vcpkg_ref}" ${ARG_LIBS}
         RESULT_VARIABLE exit_code)
     if (exit_code)
