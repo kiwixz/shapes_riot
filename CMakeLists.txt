@@ -14,9 +14,11 @@ set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "")
 set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS}" CACHE STRING "")
 set_defaults_tools_cpp()
 
+
 if (USE_VCPKG)
     vcpkg_setup("2019.09")
 endif ()
+
 
 project("shapes_riot" C CXX ASM_NASM)
 

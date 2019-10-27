@@ -65,8 +65,6 @@ if __name__ == "__main__":
                         stream=sys.stderr)
     os.chdir(str(Path(__file__).parent.parent))
 
-    logging.info(f"detected platform: {platform.system()}")
-
     vcpkg_ref = sys.argv[1]
     libs = sys.argv[2:]
 
