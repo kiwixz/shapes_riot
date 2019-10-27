@@ -21,6 +21,6 @@ using ThreadId = pid_t;
 #endif
 
 
-ThreadId thread_id();
+[[nodiscard]] ThreadId thread_id();
 
 }  // namespace utils
