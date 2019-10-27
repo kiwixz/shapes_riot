@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 include("download")
 include("file_embed")
 include("test_target_cpp")
+include("vcpkg")
 
 set(target "gfx")
 
@@ -33,6 +34,15 @@ download_github("source_sans_pro" "adobe-fonts/source-sans-pro" "2.045R-ro/1.095
 file_embed("${target}" "source_sans_pro"
     "${source_sans_pro_DIR}/OTF/SourceSansPro-Regular.otf"
     DEPENDS "source_sans_pro")
+
+
+if (USE_VCPKG)
+    vcpkg_install(LIBS
+        "freetype"
+        "glad"
+        "glfw3"
+    )
+endif ()
 
 find_package("Freetype" CONFIG REQUIRED)
 find_package("glad" CONFIG REQUIRED)

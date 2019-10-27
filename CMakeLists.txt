@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include("doc_target")
-include("install_vcpkg")
+include("vcpkg")
 include("set_defaults")
 
 
@@ -14,20 +14,9 @@ set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "")
 set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS}" CACHE STRING "")
 set_defaults_tools_cpp()
 
-
 if (USE_VCPKG)
-    install_vcpkg("2019.09"
-        LIBS
-            # gfx
-            "freetype"
-            "glad"
-            "glfw3"
-
-            "doctest"
-            "fmt"
-    )
+    vcpkg_setup("2019.09")
 endif ()
-
 
 project("shapes_riot" C CXX ASM_NASM)
 
@@ -37,6 +26,11 @@ set_defaults_flags_cpp()
 
 if (BUILD_TESTS)
     enable_testing()
+
+    if (USE_VCPKG)
+        vcpkg_install(LIBS "doctest")
+    endif ()
+
     find_package("Python3" REQUIRED "Interpreter")
     add_test(NAME "check_clang_format"
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/check_clang_format.py"

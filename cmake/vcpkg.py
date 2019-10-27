@@ -70,6 +70,8 @@ if __name__ == "__main__":
     vcpkg_ref = sys.argv[1]
     libs = sys.argv[2:]
 
-    install_vcpkg(vcpkg_ref)
-    install_vcpkg_packages(libs)
+    if vcpkg_ref:
+        install_vcpkg(vcpkg_ref)
+    if len(libs) > 0:
+        install_vcpkg_packages(libs)
     cleanup_vcpkg()

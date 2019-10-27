@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 include("test_target_cpp")
+include("vcpkg")
 
 set(target "shapes_riot")
 
@@ -24,6 +25,12 @@ if (BUILD_TESTS)
     )
 endif ()
 
+
+if (USE_VCPKG)
+    vcpkg_install(LIBS
+        "fmt"
+    )
+endif ()
 
 find_package("fmt" CONFIG REQUIRED)
 
