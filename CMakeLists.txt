@@ -6,12 +6,14 @@ include("set_defaults")
 
 
 option(BUILD_TESTS "Build tests" ON)
+option(DOC_GENERATION "Add target 'doc' to generate documentation" OFF)
 option(USE_VCPKG "Use vcpkg toolchain to install and find libs" ON)
 
 
 set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "")
 set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS}" CACHE STRING "")
 set_defaults_tools_cpp()
+
 
 if (USE_VCPKG)
     install_vcpkg("2019.09"
@@ -45,14 +47,18 @@ if (BUILD_TESTS)
 endif ()
 
 
-doc_target(DIRS
+set(subdirs
     "gfx"
     "utils"
+
     "shapes_riot"
 )
 
 
-add_subdirectory("gfx")
-add_subdirectory("utils")
+if (DOC_GENERATION)
+    doc_target(DIRS ${subdirs})
+endif ()
 
-add_subdirectory("shapes_riot")
+foreach(dir ${subdirs})
+    add_subdirectory("${dir}")
+endforeach()
