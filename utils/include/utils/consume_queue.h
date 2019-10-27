@@ -27,7 +27,7 @@ private:
     size_t max_size_ = std::numeric_limits<size_t>::max();
 
     bool ended_ = false;
-    mutable std::mutex mutex_;
+    std::mutex mutex_;
     std::condition_variable condvar_push_;
     std::condition_variable condvar_pop_;
     std::queue<Element> queue_;
