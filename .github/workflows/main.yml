@@ -29,14 +29,12 @@ jobs:
 
       - name: Configure
         env:
-          BUILD_TYPE: ${{ matrix.build_type }}
-          CXX: ${{ matrix.cxx }}
           CXXFLAGS: -fdiagnostics-color=always
           LDFLAGS: -fdiagnostics-color=always
         run: |
           ln -s "/opt/vcpkg"
           cmake -G Ninja  \
-              -D "CMAKE_BUILD_TYPE=$BUILD_TYPE" -D "CMAKE_CXX_COMPILER=$(which $CXX)"  \
+              -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -D "CMAKE_CXX_COMPILER=$(which ${{ matrix.cxx }})"  \
               -S "." -B "build"
 
       - name: Dump libraries versions
@@ -76,11 +74,9 @@ jobs:
 
       - name: Configure
         shell: cmd
-        env:
-          BUILD_TYPE: ${{ matrix.build_type }}
         run: |
           call "%VCVARS%"
-          cmake -G Ninja -D "CMAKE_BUILD_TYPE=%BUILD_TYPE%" -S "." -B "build"
+          cmake -G Ninja -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -S "." -B "build"
 
       - name: Build
         shell: cmd
