@@ -6,7 +6,7 @@ include("vcpkg")
 
 set(target "gfx")
 
-add_library("${target}"
+add_library("${target}" STATIC
     draw_list.cpp
     drawer.cpp
     font.cpp

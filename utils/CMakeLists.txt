@@ -4,7 +4,7 @@ include("vcpkg")
 
 set(target "utils")
 
-add_library("${target}"
+add_library("${target}" STATIC
     config.cpp
     exception.cpp
     logger.cpp
