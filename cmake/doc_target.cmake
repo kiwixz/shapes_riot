@@ -15,7 +15,7 @@ function (doc_target)
     find_package("Doxygen" REQUIRED "dot")
     configure_file("${CMAKE_SOURCE_DIR}/cmake/doc_target.Doxyfile" "${CMAKE_BINARY_DIR}/Doxyfile" @ONLY)
     add_custom_target("doc"
-        COMMAND "${DOXYGEN_EXECUTABLE}" "${CMAKE_BINARY_DIR}/Doxyfile"
+        COMMAND Doxygen::doxygen "${CMAKE_BINARY_DIR}/Doxyfile"
         COMMENT "Generating doc..."
         VERBATIM
         WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
