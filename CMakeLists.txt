@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.12)
+
+option(BUILD_TESTING "Build tests" ON)
+option(DOC_GENERATION "Add target 'doc' to generate documentation" OFF)
+option(USE_VCPKG "Use vcpkg toolchain to install and find libs" ON)
+
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include("doc_target")
 include("vcpkg")
 include("set_defaults")
-
-
-option(BUILD_TESTS "Build tests" ON)
-option(DOC_GENERATION "Add target 'doc' to generate documentation" OFF)
-option(USE_VCPKG "Use vcpkg toolchain to install and find libs" ON)
 
 
 set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "")
@@ -26,7 +27,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_defaults_flags_asm()
 set_defaults_flags_cpp()
 
-if (BUILD_TESTS)
+if (BUILD_TESTING)
     enable_testing()
 
     if (USE_VCPKG)

@@ -18,7 +18,7 @@ add_library("${target}"
 )
 target_include_directories("${target}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-if (BUILD_TESTS)
+if (BUILD_TESTING)
     test_target_cpp("${target}"
         bind_front.test.cpp
         config.test.cpp
