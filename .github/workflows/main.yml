@@ -34,9 +34,7 @@ jobs:
           LDFLAGS: -fdiagnostics-color=always
         run: |
           ln -s "/opt/vcpkg"
-          cmake -G Ninja  \
-              -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}"  \
-              -S "." -B "build"
+          cmake -G Ninja -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -S "." -B "build"
 
       - name: Dump libraries versions
         run: |
@@ -60,13 +58,14 @@ jobs:
       fail-fast: false
       matrix:
         build_type: ["Debug", "Release"]
+        cxx_toolchain: ["", "llvm"]
     runs-on: windows-latest
     env:
       VCVARS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat"
     steps:
       - name: Install system dependencies
         run: |
-          choco install nasm
+          choco install nasm ${{ matrix.cxx_toolchain }}
 
       - name: Checkout
         run: |
