@@ -14,7 +14,7 @@
       "inheritEnvironments": [ "msvc_x64_x64", "clang" ],
       "buildRoot": "${projectDir}/build/${name}",
       "cmakeCommandArgs": "--no-warn-unused-cli",
-      "ctestCommandArgs": "--output-on-failure -E check_clang_tidy",
+      "ctestCommandArgs": "--output-on-failure",
       "variables": [
         {
           "name": "CMAKE_C_COMPILER",
@@ -40,7 +40,7 @@
       "inheritEnvironments": [ "msvc_x64_x64", "clang" ],
       "buildRoot": "${projectDir}/build/${name}",
       "cmakeCommandArgs": "--no-warn-unused-cli",
-      "ctestCommandArgs": "--output-on-failure -E check_clang_tidy",
+      "ctestCommandArgs": "--output-on-failure",
       "variables": [
         {
           "name": "CMAKE_C_COMPILER",

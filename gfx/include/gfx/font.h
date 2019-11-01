@@ -35,7 +35,7 @@ private:
     Texture texture_;
     std::unordered_map<GlyphCode, Glyph> glyphs_;
 
-    DrawList draw_glyph(const Glyph& glyph, utils::Vec3f pen, utils::Vec2f size) const;
+    [[nodiscard]] DrawList draw_glyph(const Glyph& glyph, utils::Vec3f pen, utils::Vec2f size) const;
 };
 
 }  // namespace gfx

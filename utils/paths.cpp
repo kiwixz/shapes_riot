@@ -3,7 +3,7 @@
 #include "utils/scope_exit.h"
 
 #ifdef _WIN32
-#    include <shlobj.h>
+#    include <ShlObj.h>
 #else
 #    include <pwd.h>
 #    include <unistd.h>
