@@ -58,14 +58,14 @@ jobs:
       fail-fast: false
       matrix:
         build_type: ["Debug", "Release"]
-        cxx_toolchain: ["", "llvm"]
+        cxx: ["cl", "clang"]
     runs-on: windows-latest
     env:
       VCVARS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat"
     steps:
       - name: Install system dependencies
         run: |
-          choco install nasm ${{ matrix.cxx_toolchain }}
+          choco install llvm nasm
 
       - name: Checkout
         run: |
@@ -75,6 +75,14 @@ jobs:
       - name: Configure
         shell: cmd
         run: |
+          if "${{ matrix.cxx }}"=="cl" (
+            set "CC=cl"
+            set "CXX=cl"
+          )
+          if "${{ matrix.cxx }}"=="clang" (
+            set "CC=clang"
+            set "CXX=clang++"
+          )
           call "%VCVARS%"
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -S "." -B "build"
 
