@@ -80,6 +80,7 @@ jobs:
             set "CXX=cl"
           )
           if "${{ matrix.cxx }}"=="clang" (
+            set "PATH=C:\\Program Files\\LLVM\\bin;%PATH%"
             set "CC=clang"
             set "CXX=clang++"
           )
