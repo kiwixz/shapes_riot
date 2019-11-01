@@ -29,12 +29,13 @@ jobs:
 
       - name: Configure
         env:
+          CXX: ${{ matrix.cxx }}
           CXXFLAGS: -fdiagnostics-color=always
           LDFLAGS: -fdiagnostics-color=always
         run: |
           ln -s "/opt/vcpkg"
           cmake -G Ninja  \
-              -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -D "CMAKE_CXX_COMPILER=$(which ${{ matrix.cxx }})"  \
+              -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}"  \
               -S "." -B "build"
 
       - name: Dump libraries versions
