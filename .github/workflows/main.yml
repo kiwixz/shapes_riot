@@ -98,4 +98,8 @@ jobs:
         run: |
           call "%VCVARS%"
           cd "build"
-          ctest --output-on-failure
+          if "${{ matrix.cxx }}"=="clang" (
+            ctest --output-on-failure
+          ) else (
+            ctest --output-on-failure -E "check_clang_.*"
+          )
