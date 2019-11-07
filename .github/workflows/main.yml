@@ -99,6 +99,7 @@ jobs:
           call "%VCVARS%"
           cd "build"
           if "${{ matrix.cxx }}"=="clang" (
+            set "PATH=C:\\Program Files\\LLVM\\bin;%PATH%"
             ctest --output-on-failure
           ) else (
             ctest --output-on-failure -E "check_clang_.*"
