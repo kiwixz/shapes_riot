@@ -1,5 +1,6 @@
 #include "utils/thread_pool.h"
 #include <doctest/doctest.h>
+#include <atomic>
 #include <memory>
 
 namespace utils::test {
@@ -44,7 +45,7 @@ TEST_SUITE("thread_pool")
     {
         ThreadPool pool;
 
-        int c = 0;
+        std::atomic<int> c = 0;
         auto f0 = pool.submit([&] {
             ++c;
         });

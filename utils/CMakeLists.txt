@@ -22,6 +22,7 @@ if (BUILD_TESTING)
     test_target_cpp("${target}"
         bind_front.test.cpp
         config.test.cpp
+        guarded.test.cpp
         make_array.test.cpp
         math.test.cpp
         matrix.test.cpp

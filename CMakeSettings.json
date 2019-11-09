@@ -14,7 +14,7 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}/build/${name}",
       "cmakeCommandArgs": "--no-warn-unused-cli",
-      "ctestCommandArgs": "--output-on-failure",
+      "ctestCommandArgs": "--output-on-failure -E check_clang_tidy",
       "variables": [
         {
           "name": "DOC_GENERATION",
@@ -30,7 +30,7 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}/build/${name}",
       "cmakeCommandArgs": "--no-warn-unused-cli",
-      "ctestCommandArgs": "--output-on-failure",
+      "ctestCommandArgs": "--output-on-failure -E check_clang_tidy",
       "variables": [
         {
           "name": "DOC_GENERATION",
