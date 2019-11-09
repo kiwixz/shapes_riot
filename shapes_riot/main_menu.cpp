@@ -36,10 +36,10 @@ void MainMenu::tick(double delta, const gfx::WindowState& state)
     drawer_.draw(draw_list);
 }
 
-void MainMenu::on_focus()
+void MainMenu::on_focus(const gfx::WindowState& /*state*/)
 {}
 
-void MainMenu::on_unfocus()
+void MainMenu::on_unfocus(const gfx::WindowState& /*state*/)
 {}
 
 void MainMenu::on_window_event(const gfx::WindowEvent& event, const gfx::WindowState& state)

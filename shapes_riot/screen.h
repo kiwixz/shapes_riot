@@ -10,8 +10,8 @@ struct Screen {
 
     virtual void tick(double delta, const gfx::WindowState& state) = 0;
 
-    virtual void on_focus() = 0;
-    virtual void on_unfocus() = 0;
+    virtual void on_focus(const gfx::WindowState& state) = 0;
+    virtual void on_unfocus(const gfx::WindowState& state) = 0;
     virtual void on_window_event(const gfx::WindowEvent& event, const gfx::WindowState& state) = 0;
 };
 

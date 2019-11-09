@@ -33,7 +33,7 @@ int main(int /*argc*/, char** /*argv*/)
         glEnable(GL_DEPTH_TEST);
 
         utils::ResourceManager resource_manager;
-        ScreenStack screens;
+        ScreenStack screens{window};
         screens.emplace<MainMenu>(resource_manager);
 
         using Clock = std::chrono::steady_clock;

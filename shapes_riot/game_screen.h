@@ -15,8 +15,8 @@ struct GameScreen : Screen {
 
     void tick(double delta, const gfx::WindowState& state) override;
 
-    void on_focus() override;
-    void on_unfocus() override;
+    void on_focus(const gfx::WindowState& state) override;
+    void on_unfocus(const gfx::WindowState& state) override;
     void on_window_event(const gfx::WindowEvent& event, const gfx::WindowState& state) override;
 
 private:
