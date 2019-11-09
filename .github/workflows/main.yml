@@ -58,7 +58,7 @@ jobs:
       fail-fast: false
       matrix:
         build_type: ["Debug", "Release"]
-        cxx: ["cl", "clang"]
+        cxx: ["cl"]
     runs-on: windows-latest
     env:
       VCVARS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat"
