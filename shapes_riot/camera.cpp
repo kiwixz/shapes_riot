@@ -14,6 +14,11 @@ utils::Matrix4f Camera::matrix() const
     return gfx::transformation(utils::Vec3f{utils::Vec2f{-center_}, 0.0f} * scale, scale, {});
 }
 
+void Camera::set_ratio(double ratio)
+{
+    half_size_.x = half_size_.y * ratio;
+}
+
 void Camera::center_on(utils::Vec2d center)
 {
     center_ = center;

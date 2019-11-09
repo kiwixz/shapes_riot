@@ -35,7 +35,10 @@ void GameScreen::on_unfocus()
 
 void GameScreen::on_window_event(const gfx::WindowEvent& event, const gfx::WindowState& /*state*/)
 {
-    if (const auto* key_event = event.as<gfx::WindowEvent::KeyEvent>()) {
+    if (const auto* resize = event.as<gfx::WindowEvent::FramebufferResize>()) {
+        camera_.set_ratio(static_cast<double>(resize->width) / resize->height);
+    }
+    else if (const auto* key_event = event.as<gfx::WindowEvent::KeyEvent>()) {
         if (key_event->mods == 0 && (key_event->action == GLFW_PRESS || key_event->action == GLFW_RELEASE)) {
             if (key_event->key == GLFW_KEY_W)
                 player_.add_acceleration({0.0, key_event->action == GLFW_PRESS ? 1.0 : -1.0});
