@@ -15,21 +15,7 @@ namespace {
 int main(int /*argc*/, char** /*argv*/)
 {
     try {
-        glfwSetErrorCallback([](int error, const char* description) {
-            utils::Logger{"glfw"}(utils::LogLevel::error, "error {:#x}: {}", error, description);
-        });
-
-        gfx::GlfwHandle glfw_handle;
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        glfwWindowHint(GLFW_SAMPLES, 8);
-#ifdef DEBUG
-        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
-#endif
-
-        gfx::Window window{{1, 1}, "Shapes Riot"};
+        gfx::Window window{"Shapes Riot", {1600, 900}};
 
         glDebugMessageControl(GL_DONT_CARE, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION,
                               0, nullptr, GL_FALSE);
@@ -40,7 +26,6 @@ int main(int /*argc*/, char** /*argv*/)
         },
                                nullptr);
 
-        glfwSwapInterval(1);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
         glClearDepth(-1.0f);
@@ -54,8 +39,7 @@ int main(int /*argc*/, char** /*argv*/)
         using Clock = std::chrono::steady_clock;
         Clock::time_point last_frame = Clock::now();
 
-        glfwSetWindowSize(window.ptr(), 1600, 900);
-        while (!glfwWindowShouldClose(window.ptr())) {
+        while (!window.is_closed()) {
             Clock::time_point now = Clock::now();
             double delta = std::chrono::duration<double>(now - last_frame).count();
             last_frame = now;
@@ -71,7 +55,7 @@ int main(int /*argc*/, char** /*argv*/)
             glClear(GL_DEPTH_BUFFER_BIT);
             screens.top().tick(delta, state);
 
-            glfwSwapBuffers(window.ptr());
+            window.swap_buffers();
         }
 
         return 0;

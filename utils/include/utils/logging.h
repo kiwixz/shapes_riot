@@ -42,9 +42,9 @@ constexpr LogLevelInfo log_level_info(LogLevel level)
 {
     switch (level) {
     case LogLevel::debug:
-        return {"DEBUG", fmt::fg(fmt::terminal_color::green)};
+        return {"DEBUG", fmt::fg(fmt::terminal_color::cyan)};
     case LogLevel::info:
-        return {"INFO", {}};
+        return {"INFO", fmt::fg(fmt::terminal_color::green)};
     case LogLevel::warning:
         return {"WARN", fmt::fg(fmt::terminal_color::bright_yellow)};
     case LogLevel::error:
@@ -52,7 +52,7 @@ constexpr LogLevelInfo log_level_info(LogLevel level)
     case LogLevel::critical:
         return {"CRIT", fmt::bg(fmt::terminal_color::red) | fmt::fg(fmt::terminal_color::bright_white)};
     case LogLevel::none:
-        return {"NONE", {}};
+        return {"NONE", fmt::fg(fmt::terminal_color::magenta)};
     }
 
     throw MAKE_EXCEPTION("log level not handled: {}", level);
