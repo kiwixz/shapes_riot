@@ -64,6 +64,32 @@
           "type": "BOOL"
         }
       ]
+    },
+    {
+      "name": "clang-release",
+      "configurationType": "Release",
+      "generator": "Ninja",
+      "inheritEnvironments": [ "clang_cl_x64", "clang" ],
+      "buildRoot": "${projectDir}/build/${name}",
+      "cmakeCommandArgs": "--no-warn-unused-cli",
+      "ctestCommandArgs": "--output-on-failure",
+      "variables": [
+        {
+          "name": "CMAKE_C_COMPILER",
+          "value": "",
+          "type": "FILEPATH"
+        },
+        {
+          "name": "CMAKE_CXX_COMPILER",
+          "value": "",
+          "type": "FILEPATH"
+        },
+        {
+          "name": "DOC_GENERATION",
+          "value": "True",
+          "type": "BOOL"
+        }
+      ]
     }
   ]
 }
