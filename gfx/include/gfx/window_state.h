@@ -1,6 +1,6 @@
 #pragma once
 
-#include "glad_glfw.h"
+#include "gfx/glad_glfw.h"
 #include "utils/vec.h"
 
 namespace gfx {

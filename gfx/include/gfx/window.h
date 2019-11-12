@@ -1,5 +1,6 @@
 #pragma once
 
+#include "gfx/glad_glfw.h"
 #include "gfx/glfw_handle.h"
 #include "gfx/window_event.h"
 #include "gfx/window_state.h"
