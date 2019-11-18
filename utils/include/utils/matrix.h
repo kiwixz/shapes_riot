@@ -26,8 +26,8 @@ struct Matrix {
     template <typename T>
     constexpr Self& operator=(const Matrix<T, dim>& other);
 
-    constexpr Element& operator()(size_t row, size_t col);
-    constexpr Element operator()(size_t row, size_t col) const;
+    [[nodiscard]] constexpr Element& operator()(size_t row, size_t col);
+    [[nodiscard]] constexpr Element operator()(size_t row, size_t col) const;
 
     [[nodiscard]] constexpr Element* ptr();
     [[nodiscard]] constexpr const Element* ptr() const;
