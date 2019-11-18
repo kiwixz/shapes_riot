@@ -6,12 +6,6 @@
 
 namespace utils {
 
-#ifdef __cpp_lib_bind_front
-
-using std::bind_front;
-
-#else
-
 template <typename F, typename... Args>
 [[nodiscard]] constexpr auto bind_front(F&& f, Args&&... args);
 
@@ -30,7 +24,5 @@ constexpr auto bind_front(F&& f, Args&&... args)
                           decltype(bound_args_tuple){bound_args_tuple});  // force a copy so we can call it multiple times
     };
 }
-
-#endif
 
 }  // namespace utils
