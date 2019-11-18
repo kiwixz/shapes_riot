@@ -110,15 +110,13 @@ constexpr TElement Matrix<TElement, Tdim>::operator()(size_t row, size_t col) co
 template <typename TElement, int Tdim>
 constexpr TElement* Matrix<TElement, Tdim>::ptr()
 {
-    static_assert(sizeof(Self) == size * sizeof(Element));
-    return reinterpret_cast<Element*>(this);
+    return data_.data();
 }
 
 template <typename TElement, int Tdim>
 constexpr const TElement* Matrix<TElement, Tdim>::ptr() const
 {
-    static_assert(sizeof(Self) == size * sizeof(Element));
-    return reinterpret_cast<const Element*>(this);
+    return data_.data();
 }
 
 
