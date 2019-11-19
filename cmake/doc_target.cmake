@@ -13,10 +13,10 @@ function (doc_target)
     list(JOIN ARG_DIRS " " DOC_INPUT_DIRS)
 
     find_package("Doxygen" REQUIRED "dot")
-    configure_file("${CMAKE_SOURCE_DIR}/cmake/doc_target.Doxyfile" "${CMAKE_BINARY_DIR}/Doxyfile" @ONLY)
+    configure_file("${PROJECT_SOURCE_DIR}/cmake/doc_target.Doxyfile" "${PROJECT_BINARY_DIR}/Doxyfile" @ONLY)
     add_custom_target("doc"
-        COMMAND Doxygen::doxygen "${CMAKE_BINARY_DIR}/Doxyfile"
+        COMMAND Doxygen::doxygen "${PROJECT_BINARY_DIR}/Doxyfile"
         COMMENT "Generating doc..."
         VERBATIM
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+        WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}")
 endfunction ()

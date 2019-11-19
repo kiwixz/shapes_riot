@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include("doc_target")
 include("vcpkg")
 include("set_defaults")
@@ -36,10 +36,10 @@ if (BUILD_TESTING)
 
     find_package("Python3" REQUIRED "Interpreter")
     add_test(NAME "check_clang_format"
-        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/check_clang_format.py"
+        COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/check_clang_format.py"
     )
     add_test(NAME "check_clang_tidy"
-        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_SOURCE_DIR}/check_clang_tidy.py" "${CMAKE_BINARY_DIR}"
+        COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/check_clang_tidy.py" "${PROJECT_BINARY_DIR}"
     )
 endif ()
 
