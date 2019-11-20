@@ -13,8 +13,7 @@
 
 namespace utils {
 
-struct [[nodiscard]] Exception : std::runtime_error
-{
+struct Exception : std::runtime_error {
     explicit Exception(std::string_view what);
     Exception(std::string from, std::string_view what);
 
