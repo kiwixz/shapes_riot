@@ -12,7 +12,7 @@ struct Logger {
     bool operator()(LogLevel level, std::string_view message) const;
 
     template <typename... Args>
-    bool operator()(LogLevel level, std::string_view format, Args... args) const;
+    bool operator()(LogLevel level, std::string_view format, Args&&... args) const;
 
 private:
     std::string tag_;
@@ -22,7 +22,7 @@ private:
 
 
 template <typename... Args>
-bool Logger::operator()(LogLevel level, std::string_view format, Args... args) const
+bool Logger::operator()(LogLevel level, std::string_view format, Args&&... args) const
 {
     if (level < tag_log_level(tag_))
         return false;
