@@ -29,9 +29,6 @@ struct Matrix {
     [[nodiscard]] constexpr Element& operator()(size_t row, size_t col);
     [[nodiscard]] constexpr Element operator()(size_t row, size_t col) const;
 
-    [[nodiscard]] constexpr Element* ptr();
-    [[nodiscard]] constexpr const Element* ptr() const;
-
 private:
     std::array<Element, size> data_{};
 };
@@ -105,18 +102,6 @@ template <typename TElement, int Tdim>
 constexpr TElement Matrix<TElement, Tdim>::operator()(size_t row, size_t col) const
 {
     return data_[row * dim + col];
-}
-
-template <typename TElement, int Tdim>
-constexpr TElement* Matrix<TElement, Tdim>::ptr()
-{
-    return data_.data();
-}
-
-template <typename TElement, int Tdim>
-constexpr const TElement* Matrix<TElement, Tdim>::ptr() const
-{
-    return data_.data();
 }
 
 

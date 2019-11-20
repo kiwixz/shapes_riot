@@ -23,8 +23,6 @@ struct VecMeta : VecBase {
 
     [[nodiscard]] constexpr Element dot(const Vec& other) const;
     [[nodiscard]] constexpr Element length() const;
-    [[nodiscard]] constexpr Element* ptr();
-    [[nodiscard]] constexpr const Element* ptr() const;
 
     constexpr void clamp(Element min, Element max);
     constexpr void normalize();
@@ -143,20 +141,6 @@ template <template <typename> typename TVec, typename TElement, int Tsize>
 constexpr TElement VecMeta<TVec, TElement, Tsize>::operator[](size_t idx) const
 {
     return reinterpret_cast<const Element*>(this)[idx];
-}
-
-template <template <typename> typename TVec, typename TElement, int Tsize>
-constexpr TElement* VecMeta<TVec, TElement, Tsize>::ptr()
-{
-    static_assert(sizeof(Vec) == size * sizeof(Element));
-    return reinterpret_cast<Element*>(this);
-}
-
-template <template <typename> typename TVec, typename TElement, int Tsize>
-constexpr const TElement* VecMeta<TVec, TElement, Tsize>::ptr() const
-{
-    static_assert(sizeof(Vec) == size * sizeof(Element));
-    return reinterpret_cast<const Element*>(this);
 }
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
