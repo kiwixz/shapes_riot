@@ -5,7 +5,37 @@
 #include <chrono>
 #include <iostream>
 
+
 namespace utils {
+namespace {
+
+struct LogLevelInfo {
+    std::string_view name;
+    fmt::text_style style;
+};
+
+constexpr LogLevelInfo log_level_info(LogLevel level)
+{
+    switch (level) {
+    case LogLevel::debug:
+        return {"DEBUG", fmt::fg(fmt::terminal_color::cyan)};
+    case LogLevel::info:
+        return {"INFO", fmt::fg(fmt::terminal_color::green)};
+    case LogLevel::warning:
+        return {"WARN", fmt::fg(fmt::terminal_color::bright_yellow)};
+    case LogLevel::error:
+        return {"ERROR", fmt::fg(fmt::terminal_color::bright_red)};
+    case LogLevel::critical:
+        return {"CRIT", fmt::bg(fmt::terminal_color::red) | fmt::fg(fmt::terminal_color::bright_white)};
+    case LogLevel::none:
+        return {"NONE", fmt::fg(fmt::terminal_color::magenta)};
+    }
+
+    throw MAKE_EXCEPTION("log level not handled: {}", level);
+}
+
+}  // namespace
+
 
 Logger::Logger(std::string tag) :
     tag_{std::move(tag)}
