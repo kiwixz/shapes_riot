@@ -23,10 +23,10 @@ TEST_SUITE("shared_handle")
         int& c = global<struct simple>();
         c = 100;
 
-        constexpr auto init = [] {
+        constexpr auto init = +[] {
             global<struct simple>() *= 2;
         };
-        constexpr auto destroy = [] {
+        constexpr auto destroy = +[] {
             global<struct simple>() /= 2;
         };
         using Handle = SharedHandle<init, destroy>;
@@ -41,7 +41,17 @@ TEST_SUITE("shared_handle")
                 CHECK(c == 200);
             }
             CHECK(c == 200);
+            {
+                Handle handle3 = handle2;
+                CHECK(c == 200);
+            }
+            CHECK(c == 200);
             Handle handle4 = std::move(handle);
+            CHECK(c == 200);
+        }
+        CHECK(c == 100);
+        {
+            Handle handle;
             CHECK(c == 200);
         }
         CHECK(c == 100);

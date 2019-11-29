@@ -2,16 +2,16 @@
 
 namespace utils {
 
-template <void (*Tinit)(), void (*Tdestroy)()>
+template <auto Tinit, auto Tdestroy>
 struct SharedHandle {
-    static constexpr void (*init)() = Tinit;
-    static constexpr void (*destroy)() = Tdestroy;
+    static constexpr auto init = Tinit;
+    static constexpr auto destroy = Tdestroy;
 
     SharedHandle();
     ~SharedHandle();
-    SharedHandle(const SharedHandle& other) = default;
+    SharedHandle(const SharedHandle& other);
     SharedHandle& operator=(const SharedHandle& other) = default;
-    SharedHandle(SharedHandle&& other) noexcept = default;
+    SharedHandle(SharedHandle&& other) noexcept;
     SharedHandle& operator=(SharedHandle&& other) noexcept = default;
 
 private:
@@ -19,27 +19,38 @@ private:
 };
 
 
-template <void (*Tinit)(), void (*Tdestroy)()>
+template <auto Tinit, auto Tdestroy>
 SharedHandle<Tinit, Tdestroy>::SharedHandle()
 {
     int& c = counter();
+    if (c == 0)
+        Tinit();  // msvc doesnt like init();
     ++c;
-    if (c == 1)  // was zero
-        init();
 }
 
-template <void (*Tinit)(), void (*Tdestroy)()>
+template <auto Tinit, auto Tdestroy>
 SharedHandle<Tinit, Tdestroy>::~SharedHandle()
 {
     int& c = counter();
     --c;
     if (c == 0)
-        destroy();
+        Tdestroy();  // msvc doesnt like destroy();
 }
 
-template <void (*Tinit)(), void (*Tdestroy)()>
+template <auto Tinit, auto Tdestroy>
+SharedHandle<Tinit, Tdestroy>::SharedHandle(const SharedHandle& /*other*/) :
+    SharedHandle{}
+{}
+
+template <auto Tinit, auto Tdestroy>
+SharedHandle<Tinit, Tdestroy>::SharedHandle(SharedHandle&& /*other*/) noexcept :
+    SharedHandle{}
+{}
+
+template <auto Tinit, auto Tdestroy>
 int& SharedHandle<Tinit, Tdestroy>::counter()
 {
+    // TODO thread-safety
     static int counter;
     return counter;
 }
