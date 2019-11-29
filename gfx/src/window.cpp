@@ -56,16 +56,6 @@ WindowState Window::state() const
     return WindowState{window_.get()};
 }
 
-GLFWwindow* Window::native()
-{
-    return window_.get();
-}
-
-const GLFWwindow* Window::native() const
-{
-    return window_.get();
-}
-
 void Window::swap_buffers()
 {
     glfwSwapBuffers(window_.get());

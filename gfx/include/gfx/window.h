@@ -26,8 +26,6 @@ struct Window {
 
     [[nodiscard]] bool is_closed() const;
     [[nodiscard]] WindowState state() const;
-    [[nodiscard]] GLFWwindow* native();
-    [[nodiscard]] const GLFWwindow* native() const;
 
     void swap_buffers();
 
