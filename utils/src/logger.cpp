@@ -26,7 +26,7 @@ constexpr LogLevelInfo log_level_info(LogLevel level)
     case LogLevel::error:
         return {"ERROR", fmt::fg(fmt::terminal_color::bright_red)};
     case LogLevel::critical:
-        return {"CRIT", fmt::bg(fmt::terminal_color::red) | fmt::fg(fmt::terminal_color::bright_white)};
+        return {"CRIT", fmt::emphasis::bold | fmt::fg(fmt::terminal_color::bright_red)};
     case LogLevel::none:
         return {"NONE", fmt::fg(fmt::terminal_color::magenta)};
     }

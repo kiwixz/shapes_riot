@@ -61,10 +61,10 @@ int main(int /*argc*/, char** /*argv*/)
         return 0;
     }
     catch (const utils::Exception& ex) {
-        utils::Logger{""}(utils::LogLevel::critical, "fatal exception: {}\nfrom: {}", ex.what(), ex.from());
+        utils::Logger{"main"}(utils::LogLevel::critical, "fatal exception: {}\nfrom: {}", ex.what(), ex.from());
     }
     catch (const std::exception& ex) {
-        utils::Logger{""}(utils::LogLevel::critical, "fatal exception: {}", ex.what());
+        utils::Logger{"main"}(utils::LogLevel::critical, "fatal exception: {}", ex.what());
     }
     return 1;
 }
