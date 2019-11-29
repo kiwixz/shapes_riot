@@ -4,6 +4,7 @@
 #include "gfx/glfw_handle.h"
 #include "gfx/window_event.h"
 #include "gfx/window_state.h"
+#include "utils/c_ptr.h"
 #include "utils/guarded.h"
 #include "utils/logger.h"
 #include "utils/vec.h"
@@ -37,7 +38,7 @@ struct Window {
 private:
     utils::Logger logger_{"window"};
     std::optional<GlfwHandle> glfw_handle_;
-    std::unique_ptr<GLFWwindow, void (*)(GLFWwindow*)> window_{nullptr, glfwDestroyWindow};
+    utils::CPtr<GLFWwindow, glfwDestroyWindow> window_;
     utils::Guarded<std::vector<WindowEvent>> event_queue_;
 };
 

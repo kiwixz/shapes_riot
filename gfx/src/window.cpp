@@ -20,18 +20,16 @@ Window::Window(std::string_view title, utils::Vec2i size)
 #endif
 
     logger_(utils::LogLevel::info, "creating window");
-    GLFWwindow* native = glfwCreateWindow(size.x, size.y, title.data(), nullptr, nullptr);
-    if (!native)
+    if (!utils::set_c_ptr(window_, glfwCreateWindow(size.x, size.y, title.data(), nullptr, nullptr)))
         throw MAKE_EXCEPTION("could not create window");
-    window_.reset(native);
 
     logger_(utils::LogLevel::info, "loading gl");
     glfwMakeContextCurrent(window_.get());
     if (!gladLoadGLLoader([](const char* name) { return reinterpret_cast<void*>(glfwGetProcAddress(name)); }))
         throw MAKE_EXCEPTION("could not load opengl");
-    logger_(utils::LogLevel::debug, "got gl context with version: {}", glGetString(GL_VERSION));
+    logger_(utils::LogLevel::info, "got gl context with version: {}", glGetString(GL_VERSION));
 
-    logger_(utils::LogLevel::debug, "setting up window");
+    logger_(utils::LogLevel::info, "setting up window");
     glfwSwapInterval(1);
     glfwSetWindowUserPointer(window_.get(), this);
     glfwSetFramebufferSizeCallback(window_.get(), [](GLFWwindow* glfw_window, int width, int height) {

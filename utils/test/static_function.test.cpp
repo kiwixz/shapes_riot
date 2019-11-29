@@ -18,7 +18,7 @@ TEST_SUITE("static_function")
         }
         {
             int i = 0;
-            constexpr auto f = +[](int& i) -> int& { return i; };
+            constexpr auto f = +[](int& ref) -> int& { return ref; };
             StaticFunction<f>{}(i) = 42;
             CHECK(i == 42);
         }
