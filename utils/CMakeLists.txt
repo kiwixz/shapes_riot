@@ -30,6 +30,7 @@ if (BUILD_TESTING)
         scope_exit.test.cpp
         shared_handle.test.cpp
         span.test.cpp
+        static_function.test.cpp
         thread_pool.test.cpp
         vec.test.cpp
     )

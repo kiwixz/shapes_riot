@@ -23,10 +23,10 @@ TEST_SUITE("shared_handle")
         int& c = global<struct simple>();
         c = 100;
 
-        constexpr auto init = []() {
+        constexpr auto init = [] {
             global<struct simple>() *= 2;
         };
-        constexpr auto destroy = []() {
+        constexpr auto destroy = [] {
             global<struct simple>() /= 2;
         };
         using Handle = SharedHandle<init, destroy>;
