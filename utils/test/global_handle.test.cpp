@@ -44,6 +44,10 @@ TEST_SUITE("global_handle")
             {
                 Handle handle3 = handle2;
                 CHECK(c == 200);
+                handle2 = handle3;
+                CHECK(c == 200);
+                handle2 = std::move(handle3);
+                CHECK(c == 200);
             }
             CHECK(c == 200);
             Handle handle4 = std::move(handle);
