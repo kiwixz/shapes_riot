@@ -30,7 +30,7 @@ bool set_c_ptr(T& ptr, FunctionRef<bool(typename T::pointer)> setter)
     if (!setter(native))
         return false;
 
-    return set_c_ptr(native);
+    return set_c_ptr(ptr, native);
 }
 
 }  // namespace utils
