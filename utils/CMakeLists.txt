@@ -18,6 +18,7 @@ set(src
 set(test
     bind_front
     config
+    function_ref
     guarded
     make_array
     math

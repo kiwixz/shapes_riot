@@ -1,0 +1,64 @@
+#pragma once
+
+#include <functional>
+#include <type_traits>
+
+namespace utils {
+
+template <typename>
+struct FunctionRef;
+
+
+template <typename Result, typename... Args>
+struct FunctionRef<Result(Args...)> {
+    FunctionRef() = default;
+
+    template <typename T, std::enable_if_t<!std::is_pointer_v<T>, int> = 0>
+    FunctionRef(T&& function);
+
+    template <typename T>
+    FunctionRef(T* function);
+
+    ~FunctionRef() = default;
+    FunctionRef(const FunctionRef&) = default;
+    FunctionRef& operator=(const FunctionRef&) = default;
+    FunctionRef(FunctionRef&&) noexcept = default;
+    FunctionRef& operator=(FunctionRef&&) noexcept = default;
+
+    Result operator()(Args&&...) const;
+
+private:
+    void* native_;
+    Result (*invoker_)(void*, Args&&...);
+};
+
+
+template <typename Result, typename... Args>
+template <typename T, std::enable_if_t<!std::is_pointer_v<T>, int>>
+FunctionRef<Result(Args...)>::FunctionRef(T&& function) :
+    native_{reinterpret_cast<void*>(&function)}
+{
+    invoker_ = +[](void* native, Args&&... args) -> decltype(auto) {
+        return std::invoke(*reinterpret_cast<std::add_pointer_t<T>>(native),
+                           std::forward<Args>(args)...);
+    };
+}
+
+template <typename Result, typename... Args>
+template <typename T>
+FunctionRef<Result(Args...)>::FunctionRef(T* function) :
+    native_{reinterpret_cast<void*>(function)}
+{
+    invoker_ = +[](void* native, Args&&... args) -> decltype(auto) {
+        return std::invoke(reinterpret_cast<T*>(native),
+                           std::forward<Args>(args)...);
+    };
+}
+
+template <typename Result, typename... Args>
+Result FunctionRef<Result(Args...)>::operator()(Args&&... args) const
+{
+    return invoker_(native_, std::forward<Args>(args)...);
+}
+
+}  // namespace utils
