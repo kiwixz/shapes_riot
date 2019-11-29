@@ -25,7 +25,7 @@ struct FunctionRef<Result(Args...)> {
     FunctionRef(FunctionRef&&) noexcept = default;
     FunctionRef& operator=(FunctionRef&&) noexcept = default;
 
-    Result operator()(Args&&...) const;
+    Result operator()(Args&&... args) const;
 
 private:
     void* native_;
