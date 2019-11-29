@@ -1,28 +1,37 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.12)
 include("test_target_cpp")
 include("vcpkg")
 
 set(target "shapes_riot")
-
-add_library("${target}_base"
-    bullet.cpp
-    bullet_manager.cpp
-    camera.cpp
-    enemy.cpp
-    enemy_manager.cpp
-    game_screen.cpp
-    health_bar.cpp
-    main_menu.cpp
-    player.cpp
-    screen_stack.cpp
-    weapon.cpp
+set(src
+    bullet
+    bullet_manager
+    camera
+    enemy
+    enemy_manager
+    game_screen
+    health_bar
+    main_menu
+    player
+    screen_stack
+    weapon
 )
-add_executable("${target}" main.cpp)
+set(test
+)
+
+
+list(TRANSFORM src PREPEND "src/")
+list(TRANSFORM src APPEND ".cpp")
+add_library("${target}_base" STATIC ${src})
+target_include_directories("${target}_base" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+
+add_executable("${target}" src/main.cpp)
 target_link_libraries("${target}" "${target}_base")
 
 if (BUILD_TESTING)
-    test_target_cpp("${target}_base"
-    )
+    list(TRANSFORM test PREPEND "test/")
+    list(TRANSFORM test APPEND ".test.cpp")
+    test_target_cpp("${target}_base" ${test})
 endif ()
 
 

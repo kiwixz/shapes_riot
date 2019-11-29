@@ -1,32 +1,39 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.12)
 include("download")
 include("file_embed")
 include("test_target_cpp")
 include("vcpkg")
 
 set(target "gfx")
+set(src
+    draw_list
+    drawer
+    font
+    glfw_handle
+    shader
+    texture
+    texture_view
+    window_state
+    window
 
-add_library("${target}" STATIC
-    draw_list.cpp
-    drawer.cpp
-    font.cpp
-    glfw_handle.cpp
-    shader.cpp
-    texture.cpp
-    texture_view.cpp
-    window_state.cpp
-    window.cpp
-
-    ui/button.cpp
-    ui/vertical_layout.cpp
-    ui/widget.cpp
+    ui/button
+    ui/vertical_layout
+    ui/widget
 )
+set(test
+    transformation
+)
+
+
+list(TRANSFORM src PREPEND "src/")
+list(TRANSFORM src APPEND ".cpp")
+add_library("${target}" STATIC ${src})
 target_include_directories("${target}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 if (BUILD_TESTING)
-    test_target_cpp("${target}"
-        transformation.test.cpp
-    )
+    list(TRANSFORM test PREPEND "test/")
+    list(TRANSFORM test APPEND ".test.cpp")
+    test_target_cpp("${target}" ${test})
 endif ()
 
 

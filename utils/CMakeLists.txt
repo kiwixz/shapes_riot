@@ -1,39 +1,46 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.12)
 include("test_target_cpp")
 include("vcpkg")
 
 set(target "utils")
-
-add_library("${target}" STATIC
-    config.cpp
-    exception.cpp
-    logger.cpp
-    logging.cpp
-    os.cpp
-    paths.cpp
-    rand.cpp
-    resource_manager.cpp
-    scope_exit.cpp
-    thread_pool.cpp
+set(src
+    config
+    exception
+    logger
+    logging
+    os
+    paths
+    rand
+    resource_manager
+    scope_exit
+    thread_pool
 )
+set(test
+    bind_front
+    config
+    guarded
+    make_array
+    math
+    matrix
+    resource_manager
+    scope_exit
+    global_handle
+    span
+    static_function
+    thread_pool
+    vec
+)
+
+
+list(TRANSFORM src PREPEND "src/")
+list(TRANSFORM src APPEND ".cpp")
+add_library("${target}" STATIC ${src})
 target_include_directories("${target}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 if (BUILD_TESTING)
-    test_target_cpp("${target}"
-        bind_front.test.cpp
-        config.test.cpp
-        guarded.test.cpp
-        make_array.test.cpp
-        math.test.cpp
-        matrix.test.cpp
-        resource_manager.test.cpp
-        scope_exit.test.cpp
-        global_handle.test.cpp
-        span.test.cpp
-        static_function.test.cpp
-        thread_pool.test.cpp
-        vec.test.cpp
-    )
+    list(TRANSFORM test PREPEND "test/")
+    list(TRANSFORM test APPEND ".test.cpp")
+    test_target_cpp("${target}" ${test})
 endif ()
 
 
