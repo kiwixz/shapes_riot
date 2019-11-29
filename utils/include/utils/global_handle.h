@@ -3,16 +3,16 @@
 namespace utils {
 
 template <auto Tinit, auto Tdestroy>
-struct SharedHandle {
+struct GlobalHandle {
     static constexpr auto init = Tinit;
     static constexpr auto destroy = Tdestroy;
 
-    SharedHandle();
-    ~SharedHandle();
-    SharedHandle(const SharedHandle& other);
-    SharedHandle& operator=(const SharedHandle& other) = default;
-    SharedHandle(SharedHandle&& other) noexcept;
-    SharedHandle& operator=(SharedHandle&& other) noexcept = default;
+    GlobalHandle();
+    ~GlobalHandle();
+    GlobalHandle(const GlobalHandle& other);
+    GlobalHandle& operator=(const GlobalHandle& other) = default;
+    GlobalHandle(GlobalHandle&& other) noexcept;
+    GlobalHandle& operator=(GlobalHandle&& other) noexcept = default;
 
 private:
     static int& counter();
@@ -20,7 +20,7 @@ private:
 
 
 template <auto Tinit, auto Tdestroy>
-SharedHandle<Tinit, Tdestroy>::SharedHandle()
+GlobalHandle<Tinit, Tdestroy>::GlobalHandle()
 {
     int& c = counter();
     if (c == 0)
@@ -29,7 +29,7 @@ SharedHandle<Tinit, Tdestroy>::SharedHandle()
 }
 
 template <auto Tinit, auto Tdestroy>
-SharedHandle<Tinit, Tdestroy>::~SharedHandle()
+GlobalHandle<Tinit, Tdestroy>::~GlobalHandle()
 {
     int& c = counter();
     --c;
@@ -38,17 +38,17 @@ SharedHandle<Tinit, Tdestroy>::~SharedHandle()
 }
 
 template <auto Tinit, auto Tdestroy>
-SharedHandle<Tinit, Tdestroy>::SharedHandle(const SharedHandle& /*other*/) :
-    SharedHandle{}
+GlobalHandle<Tinit, Tdestroy>::GlobalHandle(const GlobalHandle& /*other*/) :
+    GlobalHandle{}
 {}
 
 template <auto Tinit, auto Tdestroy>
-SharedHandle<Tinit, Tdestroy>::SharedHandle(SharedHandle&& /*other*/) noexcept :
-    SharedHandle{}
+GlobalHandle<Tinit, Tdestroy>::GlobalHandle(GlobalHandle&& /*other*/) noexcept :
+    GlobalHandle{}
 {}
 
 template <auto Tinit, auto Tdestroy>
-int& SharedHandle<Tinit, Tdestroy>::counter()
+int& GlobalHandle<Tinit, Tdestroy>::counter()
 {
     // TODO thread-safety
     static int counter;

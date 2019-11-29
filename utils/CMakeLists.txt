@@ -28,7 +28,7 @@ if (BUILD_TESTING)
         matrix.test.cpp
         resource_manager.test.cpp
         scope_exit.test.cpp
-        shared_handle.test.cpp
+        global_handle.test.cpp
         span.test.cpp
         static_function.test.cpp
         thread_pool.test.cpp

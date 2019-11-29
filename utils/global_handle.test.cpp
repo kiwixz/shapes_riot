@@ -1,4 +1,4 @@
-#include "utils/shared_handle.h"
+#include "utils/global_handle.h"
 #include <doctest/doctest.h>
 #include <utility>
 
@@ -15,7 +15,7 @@ int& global()
 }  // namespace
 
 
-TEST_SUITE("shared_handle")
+TEST_SUITE("global_handle")
 {
 #if !defined(__GNUC__) || defined(__clang__)  // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83258
     TEST_CASE("simple")
@@ -29,7 +29,7 @@ TEST_SUITE("shared_handle")
         constexpr auto destroy = +[] {
             global<struct simple>() /= 2;
         };
-        using Handle = SharedHandle<init, destroy>;
+        using Handle = GlobalHandle<init, destroy>;
 
         {
             Handle handle;
