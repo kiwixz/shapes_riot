@@ -47,12 +47,12 @@ TEST_SUITE("function_ref")
     TEST_CASE("member_pointers")
     {
         struct S {
-            int foo() const
+            [[nodiscard]] int foo() const
             {
                 return 42;
             }
 
-            static int bar(int i)
+            [[nodiscard]] static int bar(int i)
             {
                 return i;
             }
