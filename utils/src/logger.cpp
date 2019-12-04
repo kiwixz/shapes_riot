@@ -65,10 +65,10 @@ void Logger::sink(LogLevel level, std::string_view message) const
     LogLevelInfo level_info = log_level_info(level);
 
 #if 0  // not yet compiling on fmt 6.0.0
-    std::clog << fmt::format(level_info.style, "[{:.6f}][{:>5}][{:x}][{}] {}\n",
+    std::clog << fmt::format(level_info.style, "[{:.6f}][{:>5}][{}] {}: {}\n",
                              time.count(), level_info.name, thread_id(), tag_, message);
 #else
-    std::clog << fmt::vformat(level_info.style, "[{:.6f}][{:>5}][{:x}][{}] {}\n",
+    std::clog << fmt::vformat(level_info.style, "[{:.6f}][{:>5}][{}] {}: {}\n",
                               {fmt::make_format_args(time.count(), level_info.name, thread_id(), tag_, message)});
 #endif
 }
