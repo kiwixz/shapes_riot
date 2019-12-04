@@ -6,31 +6,39 @@
 
 namespace utils {
 
-template <typename T, void (*Tdeleter)(T*)>
+template <typename T, void (*Tdeleter)(std::remove_all_extents_t<T>*)>
 using CPtr = std::unique_ptr<T, StaticFunction<Tdeleter>>;
 
-template <typename T>
-bool set_c_ptr(T& ptr, typename T::pointer native);
 
-template <typename T>
-bool set_c_ptr(T& ptr, FunctionRef<bool(typename T::pointer)> setter);
+template <typename T, void (*Tdeleter)(std::remove_all_extents_t<T>*)>
+CPtr<T, Tdeleter> make_c_ptr(std::remove_all_extents_t<T>* native);
+
+template <typename T, void (*Tdeleter)(std::remove_all_extents_t<T>*)>
+CPtr<T, Tdeleter> make_c_ptr(FunctionRef<void(std::remove_all_extents_t<T>*&)> setter);
+
+template <typename T, typename... Args>
+bool set_c_ptr(T& ptr, Args&&... args);
 
 
-template <typename T>
-bool set_c_ptr(T& ptr, typename T::pointer native)
+template <typename T, void (*Tdeleter)(std::remove_all_extents_t<T>*)>
+CPtr<T, Tdeleter> make_c_ptr(std::remove_all_extents_t<T>* native)
 {
-    ptr.reset(native);
-    return native;
+    return CPtr<T, Tdeleter>{native};
 }
 
-template <typename T>
-bool set_c_ptr(T& ptr, FunctionRef<bool(typename T::pointer)> setter)
+template <typename T, void (*Tdeleter)(std::remove_all_extents_t<T>*)>
+CPtr<T, Tdeleter> make_c_ptr(FunctionRef<void(std::remove_all_extents_t<T>*&)> setter)
 {
-    typename T::pointer native = nullptr;
-    if (!setter(native))
-        return false;
+    std::remove_all_extents_t<T>* native = nullptr;
+    setter(native);
+    return make_c_ptr<T, Tdeleter>(native);
+}
 
-    return set_c_ptr(ptr, native);
+template <typename T, typename... Args>
+bool set_c_ptr(T& ptr, Args&&... args)
+{
+    ptr = make_c_ptr<T::element_type, T::deleter_type::function>(std::forward<Args>(args)...);
+    return static_cast<bool>(ptr);
 }
 
 }  // namespace utils
