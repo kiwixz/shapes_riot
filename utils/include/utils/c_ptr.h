@@ -37,7 +37,7 @@ CPtr<T, Tdeleter> make_c_ptr(FunctionRef<void(std::remove_all_extents_t<T>*&)> s
 template <typename T, typename... Args>
 bool set_c_ptr(T& ptr, Args&&... args)
 {
-    ptr = make_c_ptr<T::element_type, T::deleter_type::function>(std::forward<Args>(args)...);
+    ptr = make_c_ptr<typename T::element_type, T::deleter_type::function>(std::forward<Args>(args)...);
     return static_cast<bool>(ptr);
 }
 
