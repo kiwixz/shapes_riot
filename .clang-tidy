@@ -31,6 +31,7 @@ Checks: "*  ,\
   -google-readability-braces-around-statements  ,\
   -google-readability-namespace-comments  ,\
   -google-readability-todo  ,\
+  -google-runtime-int  ,\
   -google-runtime-references  ,\
   \
   -hicpp-braces-around-statements  ,\
@@ -63,6 +64,9 @@ Checks: "*  ,\
   \
   -bugprone-branch-clone  ,\
   -bugprone-forwarding-reference-overload  ,\
+  -cppcoreguidelines-avoid-c-arrays  ,\
+  -hicpp-avoid-c-arrays  ,\
+  -modernize-avoid-c-arrays  ,\
   -performance-unnecessary-value-param  ,\
 "
 
