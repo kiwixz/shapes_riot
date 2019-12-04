@@ -15,7 +15,7 @@ set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS}" CACHE STRING "")
 set_defaults_tools_cpp()
 
 if (USE_VCPKG)
-    vcpkg_setup("2019.10")
+    vcpkg_setup("2019.11")
 endif ()
 
 
