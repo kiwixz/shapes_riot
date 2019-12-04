@@ -3,10 +3,10 @@
 #include "screen_stack.h"
 #include "utils/exception.h"
 #include "utils/logger.h"
+#include "utils/os.h"
 #include "utils/resource_manager.h"
 #include <fmt/printf.h>
 #include <chrono>
-
 #include <iostream>
 
 namespace shapes_riot {
@@ -15,6 +15,8 @@ namespace {
 int main(int /*argc*/, char** /*argv*/)
 {
     try {
+        utils::set_thread_name("main_thread");
+
         gfx::Window window{"Shapes Riot", {1600, 900}};
 
         glDebugMessageControl(GL_DONT_CARE, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION,

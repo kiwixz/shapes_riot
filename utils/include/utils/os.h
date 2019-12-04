@@ -1,26 +1,15 @@
 #pragma once
 
-#ifdef _WIN32
-#    define WIN32_LEAN_AND_MEAN
-#    define NOMINMAX
-#    include <Windows.h>
-#else
-#    include <unistd.h>
-#endif
+#include <string>
+#include <string_view>
 
 namespace utils {
 
-#ifdef _WIN32
-
-using ThreadId = DWORD;
-
-#else
-
-using ThreadId = pid_t;
-
-#endif
-
+using ThreadId = unsigned long long;
 
 [[nodiscard]] ThreadId thread_id();
+
+[[nodiscard]] std::string thread_name();
+void set_thread_name(std::string_view name);
 
 }  // namespace utils
