@@ -7,6 +7,7 @@
 #    define NOMINMAX
 #    include <Windows.h>
 #else
+#    include <pthread.h>
 #    include <sys/syscall.h>
 #    include <unistd.h>
 #endif
@@ -70,7 +71,7 @@ std::string thread_name()
     return from_native_string(name.get());
 }
 
-void set_thread_name(std::string_view name)
+void set_thread_name(const std::string& name)
 {
     SetThreadDescription(GetCurrentThread(), to_native_string(name).c_str());
 }
@@ -85,12 +86,16 @@ ThreadId thread_id()
 
 std::string thread_name()
 {
-    NOT_IMPLEMENTED
+    std::string r;
+    r.resize(16);
+    pthread_getname_np(pthread_self(), r.data(), r.size());
+    r.resize(r.find('\0'));
+    return r;
 }
 
-void set_thread_name(std::string_view name)
+void set_thread_name(const std::string& name)
 {
-    NOT_IMPLEMENTED
+    pthread_setname_np(pthread_self(), name.c_str());
 }
 
 #endif

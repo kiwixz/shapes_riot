@@ -29,7 +29,7 @@ struct Span {
     [[nodiscard]] constexpr size_t size() const;
     [[nodiscard]] constexpr size_t size_bytes() const;
     [[nodiscard]] constexpr Span<Element> subspan(size_t offset, size_t size) const;
-
+    [[nodiscard]] constexpr Span<const std::byte> as_bytes() const;
 
 private:
     Element* data_ = nullptr;
@@ -101,6 +101,12 @@ template <typename TElement>
 constexpr Span<TElement> Span<TElement>::subspan(size_t offset, size_t size) const
 {
     return {begin() + offset, size};
+}
+
+template <typename TElement>
+constexpr Span<const std::byte> Span<TElement>::as_bytes() const
+{
+    return {reinterpret_cast<const std::byte*>(data_), size_bytes()};
 }
 
 }  // namespace utils

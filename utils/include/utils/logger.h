@@ -15,16 +15,16 @@ struct Logger {
     template <typename... Args>
     bool operator()(LogLevel level, std::string_view format, Args&&... args) const;
 
-    bool operator()(LogLevel level, utils::Span<const std::byte> data, std::string_view title) const;
+    bool hexdump(LogLevel level, Span<const std::byte> data, std::string_view title) const;
 
     template <typename... Args>
-    bool operator()(LogLevel level, utils::Span<const std::byte> data, std::string_view format, Args&&... args) const;
+    bool hexdump(LogLevel level, Span<const std::byte> data, std::string_view format, Args&&... args) const;
 
 private:
     std::string tag_;
 
     void sink(LogLevel level, std::string_view message) const;
-    void sink_hex(LogLevel level, utils::Span<const std::byte> data, std::string_view title) const;
+    void sink_hexdump(LogLevel level, Span<const std::byte> data, std::string_view title) const;
 };
 
 
@@ -39,12 +39,12 @@ bool Logger::operator()(LogLevel level, std::string_view format, Args&&... args)
 }
 
 template <typename... Args>
-bool Logger::operator()(LogLevel level, utils::Span<const std::byte> data, std::string_view format, Args&&... args) const
+bool Logger::hexdump(LogLevel level, Span<const std::byte> data, std::string_view format, Args&&... args) const
 {
     if (level < tag_log_level(tag_))
         return false;
 
-    sink_hex(level, data, fmt::format(format, std::forward<Args>(args)...));
+    sink_hexdump(level, data.as_bytes(), fmt::format(format, std::forward<Args>(args)...));
     return true;
 }
 
