@@ -27,10 +27,10 @@ struct WindowEvent {
     explicit WindowEvent(T event);
 
     template <typename T>
-    [[nodiscard]] T* as();
+    T* as();
 
     template <typename T>
-    [[nodiscard]] const T* as() const;
+    const T* as() const;
 
 private:
     using Variant = std::variant<FramebufferResize,

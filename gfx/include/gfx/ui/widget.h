@@ -13,7 +13,7 @@ struct Widget {
 
     virtual void on_key(const WindowEvent::KeyEvent& event) = 0;
 
-    [[nodiscard]] const Transform3f& margin_transform() const;
+    const Transform3f& margin_transform() const;
 
     void on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos);
     void on_window_event(const WindowEvent& event, const WindowState& state);

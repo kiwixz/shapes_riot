@@ -24,8 +24,8 @@ struct Window {
     Window(Window&& other) noexcept = delete;
     Window& operator=(Window&& other) noexcept = delete;
 
-    [[nodiscard]] bool is_closed() const;
-    [[nodiscard]] WindowState state() const;
+    bool is_closed() const;
+    WindowState state() const;
 
     void swap_buffers();
 

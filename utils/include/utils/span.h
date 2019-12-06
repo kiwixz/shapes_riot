@@ -21,15 +21,15 @@ struct Span {
     template <typename T, std::enable_if_t<!std::is_same_v<T, Span<Element>>, int> = 0>
     constexpr Span(T&& container);
 
-    [[nodiscard]] constexpr Element& operator[](size_t idx) const;
+    constexpr Element& operator[](size_t idx) const;
 
-    [[nodiscard]] constexpr Element* begin() const;
-    [[nodiscard]] constexpr Element* data() const;
-    [[nodiscard]] constexpr Element* end() const;
-    [[nodiscard]] constexpr size_t size() const;
-    [[nodiscard]] constexpr size_t size_bytes() const;
-    [[nodiscard]] constexpr Span<Element> subspan(size_t offset, size_t size) const;
-    [[nodiscard]] constexpr Span<const std::byte> as_bytes() const;
+    constexpr Element* begin() const;
+    constexpr Element* data() const;
+    constexpr Element* end() const;
+    constexpr size_t size() const;
+    constexpr size_t size_bytes() const;
+    constexpr Span<Element> subspan(size_t offset, size_t size) const;
+    constexpr Span<const std::byte> as_bytes() const;
 
 private:
     Element* data_ = nullptr;

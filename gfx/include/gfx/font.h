@@ -26,16 +26,16 @@ struct Font {
     Font(GlyphCode first_glyph, int nr_glyphs,
          utils::Span<const std::byte> file, int size_px);
 
-    [[nodiscard]] DrawList draw_glyph(GlyphCode code, utils::Vec3f pen, utils::Vec2f size) const;
-    [[nodiscard]] DrawList draw_text(std::string_view text, utils::Vec3f center, utils::Vec2f size) const;
-    [[nodiscard]] DrawList draw_text_linear(std::string_view text, utils::Vec3f& pen, utils::Vec2f size) const;
-    [[nodiscard]] const Texture& texture() const;
+    DrawList draw_glyph(GlyphCode code, utils::Vec3f pen, utils::Vec2f size) const;
+    DrawList draw_text(std::string_view text, utils::Vec3f center, utils::Vec2f size) const;
+    DrawList draw_text_linear(std::string_view text, utils::Vec3f& pen, utils::Vec2f size) const;
+    const Texture& texture() const;
 
 private:
     Texture texture_;
     std::unordered_map<GlyphCode, Glyph> glyphs_;
 
-    [[nodiscard]] DrawList draw_glyph(const Glyph& glyph, utils::Vec3f pen, utils::Vec2f size) const;
+    DrawList draw_glyph(const Glyph& glyph, utils::Vec3f pen, utils::Vec2f size) const;
 };
 
 }  // namespace gfx

@@ -51,6 +51,7 @@ Checks: "*  ,\
   -misc-unused-parameters  ,\
   \
   -modernize-avoid-bind  ,\
+  -modernize-use-nodiscard  ,\
   -modernize-use-trailing-return-type  ,\
   \
   -readability-braces-around-statements  ,\

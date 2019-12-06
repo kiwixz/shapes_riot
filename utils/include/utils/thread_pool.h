@@ -19,7 +19,7 @@ struct ThreadPool {
     ThreadPool(ThreadPool&&) noexcept = delete;
     ThreadPool& operator=(ThreadPool&&) noexcept = delete;
 
-    [[nodiscard]] size_t size() const;
+    size_t size() const;
     void extend(size_t nr_threads);
 
     /// Callable only needs to be moveable, but args must be copyable.

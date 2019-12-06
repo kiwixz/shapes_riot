@@ -7,7 +7,7 @@ namespace shapes_riot {
 struct HealthBar {
     HealthBar(int hp, int max_hp);
 
-    [[nodiscard]] gfx::DrawList draw() const;
+    gfx::DrawList draw() const;
 
     void tick(double delta, int hp);
 

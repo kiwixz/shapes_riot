@@ -9,7 +9,7 @@
 namespace shapes_riot {
 
 struct EnemyManager {
-    [[nodiscard]] gfx::DrawList draw() const;
+    gfx::DrawList draw() const;
 
     void tick(double delta, const Box& camera_view, utils::Vec2d player_pos);
 

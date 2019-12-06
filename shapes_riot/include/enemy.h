@@ -8,7 +8,7 @@ namespace shapes_riot {
 struct Enemy {
     Enemy(utils::Vec2d pos);
 
-    [[nodiscard]] gfx::DrawList draw() const;
+    gfx::DrawList draw() const;
 
     void tick(double delta, utils::Vec2d target);
 

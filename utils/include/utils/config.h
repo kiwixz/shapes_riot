@@ -10,13 +10,13 @@
 namespace utils {
 
 struct Config {
-    [[nodiscard]] bool contains(const std::string& key) const;
-    [[nodiscard]] std::string dump(std::string_view prefix) const;
-    [[nodiscard]] const std::string& get_raw(const std::string& key) const;
+    bool contains(const std::string& key) const;
+    std::string dump(std::string_view prefix) const;
+    const std::string& get_raw(const std::string& key) const;
     void show_help(std::string_view app_name, std::string_view pos_args = "") const;
 
     template <typename T>
-    [[nodiscard]] T get(const std::string& key) const;
+    T get(const std::string& key) const;
 
     template <typename T>
     void get_to(const std::string& key, T& value) const;

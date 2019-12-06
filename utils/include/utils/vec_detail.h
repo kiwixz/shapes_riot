@@ -21,15 +21,15 @@ struct VecMeta : VecBase {
     constexpr Element& operator[](size_t idx);
     constexpr Element operator[](size_t idx) const;
 
-    [[nodiscard]] constexpr Element dot(const Vec& other) const;
-    [[nodiscard]] constexpr Element length() const;
+    constexpr Element dot(const Vec& other) const;
+    constexpr Element length() const;
 
     constexpr void clamp(Element min, Element max);
     constexpr void normalize();
 
 private:
-    [[nodiscard]] constexpr Vec& self();
-    [[nodiscard]] constexpr const Vec& self() const;
+    constexpr Vec& self();
+    constexpr const Vec& self() const;
 };
 
 

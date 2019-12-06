@@ -23,9 +23,9 @@ struct GlObject {
     GlObject(GlObject&& other) noexcept;
     GlObject& operator=(GlObject&& other) noexcept;
 
-    [[nodiscard]] GLuint id() const;
+    GLuint id() const;
 
-    [[nodiscard]] GLuint* ptr();
+    GLuint* ptr();
 
 private:
     GLuint id_ = 0;
@@ -44,9 +44,9 @@ struct GlArrayObject {
     GlArrayObject(GlArrayObject&& other) noexcept;
     GlArrayObject& operator=(GlArrayObject&& other) noexcept;
 
-    [[nodiscard]] GLuint operator[](size_t index) const;
+    GLuint operator[](size_t index) const;
 
-    [[nodiscard]] GLuint* ptr();
+    GLuint* ptr();
 
 private:
     std::array<GLuint, size> ids_ = {};

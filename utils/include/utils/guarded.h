@@ -16,8 +16,8 @@ struct Guarded {
         Handle() = default;
         Handle(Type& native, std::unique_lock<Mutex>&& lock);
 
-        [[nodiscard]] Type& operator*() const;
-        [[nodiscard]] Type* operator->() const;
+        Type& operator*() const;
+        Type* operator->() const;
 
     private:
         Type* native_ = nullptr;
@@ -33,8 +33,8 @@ struct Guarded {
     template <typename... Args>
     Guarded(Args&&... args);
 
-    [[nodiscard]] Handle lock();
-    [[nodiscard]] std::optional<Handle> try_lock();
+    Handle lock();
+    std::optional<Handle> try_lock();
 
 private:
     Type native_;

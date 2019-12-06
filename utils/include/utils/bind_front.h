@@ -7,7 +7,7 @@
 namespace utils {
 
 template <typename F, typename... Args>
-[[nodiscard]] constexpr auto bind_front(F&& f, Args&&... args);
+constexpr auto bind_front(F&& f, Args&&... args);
 
 
 /// Do not forget to wrap references in std::ref when appropriate.

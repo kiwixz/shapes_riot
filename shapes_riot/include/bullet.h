@@ -8,8 +8,8 @@ namespace shapes_riot {
 struct Bullet {
     Bullet(utils::Vec2d pos, double velocity, double angle);
 
-    [[nodiscard]] gfx::DrawList draw() const;
-    [[nodiscard]] utils::Vec2d position() const;
+    gfx::DrawList draw() const;
+    utils::Vec2d position() const;
 
     void tick(double delta);
 

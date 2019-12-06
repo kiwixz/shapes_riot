@@ -9,7 +9,7 @@
 namespace shapes_riot {
 
 struct BulletManager {
-    [[nodiscard]] gfx::DrawList draw() const;
+    gfx::DrawList draw() const;
 
     void add(Bullet bullet);
     void tick(double delta, const Box& camera_view);

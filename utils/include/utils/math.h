@@ -6,15 +6,15 @@ namespace utils {
 
 /// Only works with positive numbers.
 template <typename T>
-[[nodiscard]] constexpr T ceil2(T a);
+constexpr T ceil2(T a);
 
 /// Only works with positive numbers.
 template <typename T>
-[[nodiscard]] constexpr T div_ceil(T a, T b);
+constexpr T div_ceil(T a, T b);
 
 /// Only works with positive numbers.
 template <typename T>
-[[nodiscard]] constexpr T round_up(T a, T unit);
+constexpr T round_up(T a, T unit);
 
 
 template <typename T>

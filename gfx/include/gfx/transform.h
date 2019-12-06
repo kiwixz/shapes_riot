@@ -12,8 +12,8 @@ struct Transform3 {
     utils::Vec3<Element> translation;
     utils::Vec3<Element> scale{utils::Vec3i{1, 1, 1}};
 
-    [[nodiscard]] Transform3<TElement> inverse() const;
-    [[nodiscard]] utils::Matrix4<TElement> matrix() const;
+    Transform3<TElement> inverse() const;
+    utils::Matrix4<TElement> matrix() const;
 };
 
 

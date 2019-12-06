@@ -7,8 +7,8 @@
 namespace shapes_riot {
 
 struct Camera {
-    [[nodiscard]] Box view() const;
-    [[nodiscard]] utils::Matrix4f matrix() const;
+    Box view() const;
+    utils::Matrix4f matrix() const;
 
     void set_ratio(double ratio);
     void center_on(utils::Vec2d center);

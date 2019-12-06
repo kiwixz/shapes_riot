@@ -10,8 +10,8 @@ namespace shapes_riot {
 struct ScreenStack {
     ScreenStack(gfx::Window& window);
 
-    [[nodiscard]] bool empty() const;
-    [[nodiscard]] Screen& top() const;
+    bool empty() const;
+    Screen& top() const;
 
     void pop();
 

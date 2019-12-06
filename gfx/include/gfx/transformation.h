@@ -7,18 +7,18 @@
 namespace gfx {
 
 template <typename T>
-[[nodiscard]] constexpr utils::Matrix4<T> transformation(const utils::Vec3<T>& translation_vec,
-                                                         const utils::Vec3<T>& scale_factors,
-                                                         const utils::Vec3<T>& rotation_angles);
+constexpr utils::Matrix4<T> transformation(const utils::Vec3<T>& translation_vec,
+                                           const utils::Vec3<T>& scale_factors,
+                                           const utils::Vec3<T>& rotation_angles);
 
 template <typename T>
-[[nodiscard]] constexpr utils::Matrix4<T> translation(const utils::Vec3<T>& vec);
+constexpr utils::Matrix4<T> translation(const utils::Vec3<T>& vec);
 
 template <typename T>
-[[nodiscard]] constexpr utils::Matrix4<T> scale(const utils::Vec3<T>& factors);
+constexpr utils::Matrix4<T> scale(const utils::Vec3<T>& factors);
 
 template <typename T>
-[[nodiscard]] constexpr utils::Matrix4<T> rotation(const utils::Vec3<T>& angles);
+constexpr utils::Matrix4<T> rotation(const utils::Vec3<T>& angles);
 
 
 template <typename T>

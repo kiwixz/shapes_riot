@@ -14,9 +14,9 @@ struct Texture {
 
     operator TextureView() const;
 
-    [[nodiscard]] utils::Vec2i size() const;
-    [[nodiscard]] utils::ScopeExit bind() const;
+    utils::Vec2i size() const;
 
+    [[nodiscard]] utils::ScopeExit bind() const;
     void resize(utils::Vec2i size, GLenum format = GL_RGB8);
 
     template <typename T>

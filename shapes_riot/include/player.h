@@ -12,8 +12,8 @@ namespace shapes_riot {
 struct Player {
     Player();
 
-    [[nodiscard]] gfx::DrawList draw() const;
-    [[nodiscard]] utils::Vec2d position() const;
+    gfx::DrawList draw() const;
+    utils::Vec2d position() const;
 
     void add_acceleration(utils::Vec2d vec);
     void set_angle(double angle);

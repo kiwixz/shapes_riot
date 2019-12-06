@@ -13,10 +13,10 @@ using ResourceHandle = std::shared_ptr<const T>;
 
 struct ResourceManager {
     template <typename T>
-    [[nodiscard]] ResourceHandle<T> get(const std::string& id) const;
+    ResourceHandle<T> get(const std::string& id) const;
 
     template <typename T, typename F>
-    [[nodiscard]] ResourceHandle<T> get(const std::string& id, const F& make);
+    ResourceHandle<T> get(const std::string& id, const F& make);
 
     template <typename T>
     void get_to(const std::string& id, ResourceHandle<T>& handle) const;
