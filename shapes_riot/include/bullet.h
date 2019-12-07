@@ -1,6 +1,8 @@
 #pragma once
 
+#include "enemy.h"
 #include "gfx/draw_list.h"
+#include "hitbox.h"
 #include "utils/vec.h"
 
 namespace shapes_riot {
@@ -10,8 +12,10 @@ struct Bullet {
 
     gfx::DrawList draw() const;
     utils::Vec2d position() const;
+    Hitbox hitbox() const;
 
     void tick(double delta);
+    void on_collision(Enemy& enemy);
 
 private:
     utils::Vec2d pos_;

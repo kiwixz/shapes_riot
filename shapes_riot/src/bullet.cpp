@@ -30,9 +30,19 @@ utils::Vec2d Bullet::position() const
     return pos_;
 }
 
+Hitbox Bullet::hitbox() const
+{
+    return {pos_, 0.01};
+}
+
 void Bullet::tick(double delta)
 {
     pos_ += velocity_ * delta;
+}
+
+void Bullet::on_collision(Enemy& enemy)
+{
+    enemy.hurt(1);
 }
 
 }  // namespace shapes_riot

@@ -18,6 +18,16 @@ gfx::DrawList Enemy::draw() const
     return draw_list;
 }
 
+Hitbox Enemy::hitbox() const
+{
+    return {pos_, 0.08};
+}
+
+bool Enemy::is_alive() const
+{
+    return hp_ > 0;
+}
+
 void Enemy::tick(double delta, utils::Vec2d target)
 {
     static constexpr double acceleration_ratio = 8.0;
@@ -29,6 +39,11 @@ void Enemy::tick(double delta, utils::Vec2d target)
     velocity_ += acceleration * acceleration_ratio * delta;
     pos_ += velocity_ * delta;
     velocity_ /= 1.0 + delta * acceleration_ratio;
+}
+
+void Enemy::hurt(int hp)
+{
+    hp_ = std::max(hp_ - hp, 0);
 }
 
 }  // namespace shapes_riot

@@ -18,6 +18,14 @@ void GameScreen::tick(double delta, const gfx::WindowState& state)
     enemy_manager_.tick(delta, camera_.view(), player_.position());
     bullet_manager_.tick(delta, camera_.view());
 
+    for (Bullet& bullet : bullet_manager_) {
+        for (Enemy& enemy : enemy_manager_) {
+            if (bullet.hitbox().is_colliding(enemy.hitbox())) {
+                bullet.on_collision(enemy);
+            }
+        }
+    }
+
     gfx::DrawList draw_list;
     draw_list += bullet_manager_.draw();
     draw_list += enemy_manager_.draw();

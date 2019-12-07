@@ -27,7 +27,6 @@ private:
     double angle_ = 0.0;
 
     int hp_ = 100;
-    HealthBar health_bar_;
 
     Weapon weapon_;
     bool is_shooting_ = false;

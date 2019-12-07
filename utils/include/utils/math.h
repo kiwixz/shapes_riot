@@ -4,6 +4,9 @@
 
 namespace utils {
 
+template <typename T>
+constexpr T pow2(T a);
+
 /// Only works with positive numbers.
 template <typename T>
 constexpr T ceil2(T a);
@@ -16,6 +19,12 @@ constexpr T div_ceil(T a, T b);
 template <typename T>
 constexpr T round_up(T a, T unit);
 
+
+template <typename T>
+constexpr T pow2(T a)
+{
+    return a * a;
+}
 
 template <typename T>
 constexpr T ceil2(T a)

@@ -2,6 +2,16 @@
 
 namespace shapes_riot {
 
+std::vector<Enemy>::iterator EnemyManager::begin()
+{
+    return enemies_.begin();
+}
+
+std::vector<Enemy>::iterator EnemyManager::end()
+{
+    return enemies_.end();
+}
+
 gfx::DrawList EnemyManager::draw() const
 {
     gfx::DrawList draw_list;
@@ -26,8 +36,16 @@ void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d playe
         enemies_.emplace_back(pos);
     }
 
-    for (Enemy& enemy : enemies_)
-        enemy.tick(delta, player_pos);
+    for (auto it = enemies_.begin(); it != enemies_.end();) {
+        Enemy& enemy = *it;
+        if (enemy.is_alive()) {
+            enemy.tick(delta, player_pos);
+            ++it;
+        }
+        else {
+            it = enemies_.erase(it);
+        }
+    }
 }
 
 }  // namespace shapes_riot

@@ -9,6 +9,9 @@
 namespace shapes_riot {
 
 struct BulletManager {
+    std::vector<Bullet>::iterator begin();
+    std::vector<Bullet>::iterator end();
+
     gfx::DrawList draw() const;
 
     void add(Bullet bullet);

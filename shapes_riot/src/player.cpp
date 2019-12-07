@@ -4,8 +4,7 @@
 
 namespace shapes_riot {
 
-Player::Player() :
-    health_bar_{100, 100}
+Player::Player()
 {}
 
 gfx::DrawList Player::draw() const

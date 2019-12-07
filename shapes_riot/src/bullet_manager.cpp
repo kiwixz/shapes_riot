@@ -3,6 +3,16 @@
 
 namespace shapes_riot {
 
+std::vector<Bullet>::iterator BulletManager::begin()
+{
+    return bullets_.begin();
+}
+
+std::vector<Bullet>::iterator BulletManager::end()
+{
+    return bullets_.end();
+}
+
 gfx::DrawList BulletManager::draw() const
 {
     gfx::DrawList draw_list;

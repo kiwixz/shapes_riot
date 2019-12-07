@@ -11,6 +11,7 @@ set(src
     enemy_manager
     game_screen
     health_bar
+    hitbox
     main_menu
     player
     screen_stack
