@@ -3,15 +3,20 @@
 
 namespace shapes_riot {
 
-Box Camera::view() const
-{
-    return {center_, half_size_};
-}
-
 utils::Matrix4f Camera::matrix() const
 {
     utils::Vec3f scale{utils::Vec2f{1.0 / half_size_}, 1.0f};
     return gfx::transformation(utils::Vec3f{utils::Vec2f{-center_}, 0.0f} * scale, scale, {});
+}
+
+double Camera::ratio() const
+{
+    return half_size_.x / half_size_.y;
+}
+
+Box Camera::view() const
+{
+    return {center_, half_size_};
 }
 
 void Camera::set_ratio(double ratio)
