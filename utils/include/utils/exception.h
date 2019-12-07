@@ -29,6 +29,9 @@ private:
 };
 
 
+void terminate();
+
+
 template <typename... Args>
 Exception::Exception(std::string from, std::string_view format, Args&&... args) :
     Exception{std::move(from), fmt::format(format, std::forward<Args>(args)...)}
