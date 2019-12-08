@@ -1,8 +1,8 @@
 #pragma once
 
-#include "box.h"
 #include "utils/matrix.h"
 #include "utils/vec.h"
+#include "box.h"
 
 namespace shapes_riot {
 

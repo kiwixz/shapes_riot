@@ -1,9 +1,9 @@
 #pragma once
 
-#include <fmt/format.h>
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <fmt/format.h>
 
 
 #define DETAIL_MAKE_EXCEPTION_XSTR(a) #a

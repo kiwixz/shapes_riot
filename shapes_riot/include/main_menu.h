@@ -2,8 +2,8 @@
 
 #include "gfx/drawer.h"
 #include "gfx/ui/vertical_layout.h"
-#include "screen_stack.h"
 #include "utils/resource_manager.h"
+#include "screen_stack.h"
 
 namespace shapes_riot {
 

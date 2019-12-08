@@ -1,11 +1,11 @@
 #pragma once
 
-#include "utils/exception.h"
-#include <fmt/format.h>
 #include <cstdlib>
 #include <filesystem>
 #include <type_traits>
 #include <unordered_map>
+#include <fmt/format.h>
+#include "utils/exception.h"
 
 namespace utils {
 

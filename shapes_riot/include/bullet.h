@@ -1,9 +1,9 @@
 #pragma once
 
-#include "enemy.h"
 #include "gfx/draw_list.h"
-#include "hitbox.h"
 #include "utils/vec.h"
+#include "enemy.h"
+#include "hitbox.h"
 
 namespace shapes_riot {
 

@@ -1,11 +1,11 @@
 #include "gfx/font.h"
+#include <cmath>
+#include <cstddef>
+#include <vector>
 #include "gfx/freetype.h"
 #include "gfx/transformation.h"
 #include "utils/exception.h"
 #include "utils/math.h"
-#include <cmath>
-#include <cstddef>
-#include <vector>
 
 namespace gfx {
 

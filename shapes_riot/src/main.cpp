@@ -1,13 +1,13 @@
+#include <chrono>
+#include <iostream>
+#include <fmt/printf.h>
 #include "gfx/window.h"
-#include "main_menu.h"
-#include "screen_stack.h"
 #include "utils/exception.h"
 #include "utils/logger.h"
 #include "utils/os.h"
 #include "utils/resource_manager.h"
-#include <fmt/printf.h>
-#include <chrono>
-#include <iostream>
+#include "main_menu.h"
+#include "screen_stack.h"
 
 int main(int /*argc*/, char** /*argv*/)
 {

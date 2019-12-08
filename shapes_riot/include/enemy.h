@@ -1,8 +1,8 @@
 #pragma once
 
 #include "gfx/draw_list.h"
-#include "hitbox.h"
 #include "utils/vec.h"
+#include "hitbox.h"
 
 namespace shapes_riot {
 

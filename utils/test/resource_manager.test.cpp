@@ -1,6 +1,6 @@
 #include "utils/resource_manager.h"
-#include <doctest/doctest.h>
 #include <functional>
+#include <doctest/doctest.h>
 
 namespace utils::test {
 

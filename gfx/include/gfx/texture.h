@@ -1,10 +1,10 @@
 #pragma once
 
+#include <glad/glad.h>
 #include "gfx/gl_object.h"
 #include "gfx/texture_view.h"
 #include "utils/scope_exit.h"
 #include "utils/vec.h"
-#include <glad/glad.h>
 
 namespace gfx {
 

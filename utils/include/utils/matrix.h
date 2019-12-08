@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utils/vec.h"
 #include <array>
+#include "utils/vec.h"
 
 namespace utils {
 

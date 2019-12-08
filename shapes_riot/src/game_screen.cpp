@@ -1,6 +1,6 @@
 #include "game_screen.h"
-#include "gfx/draw_list.h"
 #include <glad/glad.h>
+#include "gfx/draw_list.h"
 
 namespace shapes_riot {
 
@@ -20,9 +20,8 @@ void GameScreen::tick(double delta, const gfx::WindowState& state)
 
     for (Bullet& bullet : bullet_manager_) {
         for (Enemy& enemy : enemy_manager_) {
-            if (bullet.hitbox().is_colliding(enemy.hitbox())) {
+            if (bullet.hitbox().is_colliding(enemy.hitbox()))
                 bullet.on_collision(enemy);
-            }
         }
     }
 

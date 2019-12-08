@@ -1,10 +1,10 @@
 #pragma once
 
-#include "bullet_manager.h"
 #include "gfx/draw_list.h"
 #include "gfx/window_state.h"
-#include "health_bar.h"
 #include "utils/vec.h"
+#include "bullet_manager.h"
+#include "health_bar.h"
 #include "weapon.h"
 
 namespace shapes_riot {

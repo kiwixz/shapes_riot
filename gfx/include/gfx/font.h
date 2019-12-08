@@ -1,12 +1,12 @@
 #pragma once
 
+#include <cstddef>
+#include <string_view>
+#include <unordered_map>
 #include "gfx/draw_list.h"
 #include "gfx/texture.h"
 #include "utils/span.h"
 #include "utils/vec.h"
-#include <cstddef>
-#include <string_view>
-#include <unordered_map>
 
 namespace gfx {
 

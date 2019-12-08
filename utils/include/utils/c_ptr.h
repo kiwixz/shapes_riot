@@ -1,8 +1,8 @@
 #pragma once
 
+#include <memory>
 #include "utils/function_ref.h"
 #include "utils/static_function.h"
-#include <memory>
 
 namespace utils {
 

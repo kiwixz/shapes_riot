@@ -1,7 +1,7 @@
 #include "utils/exception.h"
-#include "utils/logger.h"
 #include <cstdlib>
 #include <exception>
+#include "utils/logger.h"
 
 namespace utils {
 

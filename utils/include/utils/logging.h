@@ -1,8 +1,8 @@
 #pragma once
 
-#include "utils/exception.h"
-#include <fmt/color.h>
 #include <string_view>
+#include <fmt/color.h>
+#include "utils/exception.h"
 
 namespace utils {
 

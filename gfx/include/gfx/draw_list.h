@@ -1,10 +1,10 @@
 #pragma once
 
+#include <vector>
 #include "gfx/texture.h"
 #include "gfx/vertex.h"
 #include "utils/matrix.h"
 #include "utils/span.h"
-#include <vector>
 
 namespace gfx {
 

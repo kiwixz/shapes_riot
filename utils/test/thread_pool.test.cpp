@@ -1,7 +1,7 @@
 #include "utils/thread_pool.h"
-#include <doctest/doctest.h>
 #include <atomic>
 #include <memory>
+#include <doctest/doctest.h>
 
 namespace utils::test {
 

@@ -1,9 +1,9 @@
 #include "utils/config.h"
-#include "utils/paths.h"
-#include <fmt/printf.h>
 #include <algorithm>
 #include <fstream>
 #include <vector>
+#include <fmt/printf.h>
+#include "utils/paths.h"
 
 namespace utils {
 namespace {

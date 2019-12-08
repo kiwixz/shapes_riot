@@ -1,10 +1,10 @@
 #pragma once
 
-#include "box.h"
-#include "bullet.h"
+#include <vector>
 #include "gfx/draw_list.h"
 #include "utils/rand.h"
-#include <vector>
+#include "box.h"
+#include "bullet.h"
 
 namespace shapes_riot {
 

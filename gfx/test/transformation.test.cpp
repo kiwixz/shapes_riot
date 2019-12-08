@@ -1,7 +1,7 @@
 #include "gfx/transformation.h"
+#include <doctest/doctest.h>
 #include "utils/matrix.h"
 #include "utils/vec.h"
-#include <doctest/doctest.h>
 
 namespace gfx::test {
 

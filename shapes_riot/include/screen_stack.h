@@ -1,9 +1,9 @@
 #pragma once
 
-#include "gfx/window.h"
-#include "screen.h"
 #include <memory>
 #include <stack>
+#include "gfx/window.h"
+#include "screen.h"
 
 namespace shapes_riot {
 

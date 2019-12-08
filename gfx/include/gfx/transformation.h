@@ -1,8 +1,8 @@
 #pragma once
 
+#include <cmath>
 #include "utils/matrix.h"
 #include "utils/vec.h"
-#include <cmath>
 
 namespace gfx {
 

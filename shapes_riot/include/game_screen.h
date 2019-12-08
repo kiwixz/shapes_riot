@@ -1,12 +1,12 @@
 #pragma once
 
+#include "gfx/drawer.h"
+#include "utils/resource_manager.h"
 #include "bullet_manager.h"
 #include "camera.h"
 #include "enemy_manager.h"
-#include "gfx/drawer.h"
 #include "player.h"
 #include "screen_stack.h"
-#include "utils/resource_manager.h"
 
 namespace shapes_riot {
 

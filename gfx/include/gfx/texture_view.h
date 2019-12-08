@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utils/scope_exit.h"
 #include <glad/glad.h>
+#include "utils/scope_exit.h"
 
 namespace gfx {
 
