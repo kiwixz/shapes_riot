@@ -122,7 +122,7 @@ std::filesystem::path app_directory(std::string_view app_name)
             throw MAKE_EXCEPTION("user has no home");
     }
 
-    std::filesystem::path path = std::filesystem::path{base} / "kiwixz" / app_name;
+    std::filesystem::path path = std::filesystem::path{base} / ".kiwixz" / app_name;
     std::filesystem::create_directories(path);
     return path;
 }
