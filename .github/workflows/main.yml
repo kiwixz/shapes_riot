@@ -50,7 +50,7 @@ jobs:
           UBSAN_OPTIONS: print_stacktrace=1
         run: |
           cd "build"
-          ctest --output-on-failure
+          ctest --verbose
 
 
   build_windows:
@@ -100,7 +100,7 @@ jobs:
           cd "build"
           if "${{ matrix.cxx }}"=="clang" (
             set "PATH=C:\\Program Files\\LLVM\\bin;%PATH%"
-            ctest --output-on-failure
+            ctest --verbose
           ) else (
-            ctest --output-on-failure -E "check_clang_.*"
+            ctest --verbose -E "check_clang_.*"
           )
