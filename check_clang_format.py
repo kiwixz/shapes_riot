@@ -8,7 +8,7 @@ import sys
 import _utils as utils
 
 
-def check(path, check_id):
+def check(path):
     with open(path) as f:
         original = f.read()
     formatted = subprocess.check_output(["clang-format", "-assume-filename", path],
@@ -19,8 +19,8 @@ def check(path, check_id):
                                 "formatted")
     diff_result = list(diff)
 
-    def result(nr_checks):
-        logging.info(f"[{check_id}/{nr_checks}] checked clang-format: {path}")
+    def result(progress):
+        logging.info(f"[{progress}] checked clang-format: {path}")
         if not diff_result:
             return True
         logging.warning("differences found:")
@@ -36,4 +36,4 @@ if __name__ == "__main__":
 
     def filter(path):
         return (path.endswith(".cpp") or path.endswith(".h")) and not path.startswith("cmake/")
-    utils.check_files(check, filter)
+    utils.foreach_file(check, filter)

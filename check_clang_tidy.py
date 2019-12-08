@@ -8,7 +8,7 @@ from pathlib import Path
 import _utils as utils
 
 
-def check(build_dir, path, check_id):
+def check(build_dir, path):
     errors = None
     try:
         subprocess.check_output(["clang-tidy", "-quiet", "-p", build_dir, "-warnings-as-errors", "*", path],
@@ -16,8 +16,8 @@ def check(build_dir, path, check_id):
     except subprocess.CalledProcessError as ex:
         errors = ex.output
 
-    def result(nr_checks):
-        logging.info(f"[{check_id}/{nr_checks}] checked clang-tidy: {path}")
+    def result(progress):
+        logging.info(f"[{progress}] checked clang-tidy: {path}")
         if not errors:
             return True
         logging.warning("errors found:")
@@ -35,5 +35,5 @@ if __name__ == "__main__":
         logging.critical("compile_commands.json not found, did you pass the correct build directory ?")
         exit(2)
 
-    utils.check_files(lambda path, check_id: check(build_dir, path, check_id),
-                      lambda path: path.endswith(".cpp"))
+    utils.foreach_file(lambda path: check(build_dir, path),
+                       lambda path: path.endswith(".cpp"))
