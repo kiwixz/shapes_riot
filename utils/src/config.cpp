@@ -6,7 +6,7 @@
 
 #include <fmt/printf.h>
 
-#include "utils/paths.h"
+#include "utils/os.h"
 
 namespace utils {
 namespace {
@@ -108,8 +108,8 @@ void Config::parse_global_config(std::string_view app_name, bool allow_unknown)
             parse_file(path, allow_unknown);
     };
 
-    constexpr std::string_view file_name = "config.ini";
-    parse_if_exists(utils::get_kiwixz_home(app_name) / file_name);
+    static constexpr std::string_view file_name = "config.ini";
+    parse_if_exists(utils::app_directory(app_name) / file_name);
     parse_if_exists(file_name);
 }
 

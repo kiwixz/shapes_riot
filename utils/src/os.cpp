@@ -4,11 +4,17 @@
 #include "utils/exception.h"
 
 #ifdef _WIN32
+#    include <ShlObj.h>
+
 #    define WIN32_LEAN_AND_MEAN
 #    define NOMINMAX
 #    include <Windows.h>
 #else
+#    include <cstdlib>
+#    include <vector>
+
 #    include <pthread.h>
+#    include <pwd.h>
 #    include <sys/syscall.h>
 #    include <unistd.h>
 #endif
@@ -24,6 +30,12 @@ void local_free(T native)
 {
     if (LocalFree(native))
         throw MAKE_EXCEPTION("could not free: {:#08x}", static_cast<unsigned>(GetLastError()));
+}
+
+template <typename T>
+void co_task_mem_free(T native)
+{
+    return CoTaskMemFree(native);
 }
 
 std::string from_native_string(std::wstring_view native)
@@ -56,6 +68,20 @@ std::wstring to_native_string(std::string_view native)
 
 }  // namespace
 
+
+std::filesystem::path app_directory(std::string_view app_name)
+{
+    auto base = utils::make_c_ptr<wchar_t[], &co_task_mem_free<PWSTR>>([&](PWSTR& ptr) {
+        HRESULT r = SHGetKnownFolderPath(FOLDERID_RoamingAppData, KF_FLAG_CREATE, nullptr, &ptr);
+        if (FAILED(r))
+            throw MAKE_EXCEPTION("could not get appdata: {:#08x}", static_cast<unsigned>(r));
+    });
+
+    std::filesystem::path path = std::filesystem::path{base.get()} / "kiwixz" / app_name;
+    std::filesystem::create_directories(path);
+    return path;
+}
+
 ThreadId thread_id()
 {
     thread_local const ThreadId id = GetCurrentThreadId();
@@ -78,6 +104,28 @@ void set_thread_name(const std::string& name)
 }
 
 #else
+
+std::filesystem::path app_directory(std::string_view app_name)
+{
+    const char* base = std::getenv("HOME");
+    std::vector<char> buffer;
+    if (!base) {
+        buffer.resize(4096);
+        passwd pw;
+        passwd* result;
+        while (getpwuid_r(getuid(), &pw, buffer.data(), buffer.size(), &result) == ERANGE)
+            buffer.resize(buffer.size() * 2);
+        if (!result)
+            throw MAKE_EXCEPTION("could not get home nor passwd of user");
+        base = result->pw_dir;  // pointee is in buffer
+        if (!base)
+            throw MAKE_EXCEPTION("user has no home");
+    }
+
+    std::filesystem::path path = std::filesystem::path{base} / "kiwixz" / app_name;
+    std::filesystem::create_directories(path);
+    return path;
+}
 
 ThreadId thread_id()
 {

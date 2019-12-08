@@ -9,7 +9,6 @@ set(src
     logger
     logging
     os
-    paths
     rand
     resource_manager
     scope_exit
