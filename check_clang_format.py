@@ -2,10 +2,10 @@
 
 import difflib
 import logging
-import os
 import subprocess
 import sys
-from concurrent.futures import ThreadPoolExecutor
+
+import _utils as utils
 
 
 def check(path, check_id):
@@ -32,28 +32,8 @@ def check(path, check_id):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(datefmt="%H:%M:%S",
-                        format="[%(asctime)s][%(levelname)s] %(message)s",
-                        level=logging.DEBUG,
-                        stream=sys.stderr)
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    utils.init()
 
-    git_files = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
-    with ThreadPoolExecutor(os.cpu_count()) as executor:
-        results = []
-        count = 0
-        for path in git_files:
-            if not (path.endswith(".cpp") or path.endswith(".h")):
-                continue
-            if path.startswith("cmake/"):
-                continue
-            results.append(executor.submit(check, path, count + 1))
-            count += 1
-
-        nr_checks = count
-        count = 0
-        exit_code = 0
-        for future in results:
-            if not future.result()(nr_checks):
-                exit_code = 1
-        exit(exit_code)
+    def filter(path):
+        return (path.endswith(".cpp") or path.endswith(".h")) and not path.startswith("cmake/")
+    utils.check_files(check, filter)
