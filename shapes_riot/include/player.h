@@ -3,6 +3,7 @@
 #include "gfx/draw_list.h"
 #include "gfx/window_state.h"
 #include "utils/vec.h"
+
 #include "bullet_manager.h"
 #include "health_bar.h"
 #include "weapon.h"

@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
+
 #include "gfx/draw_list.h"
 #include "utils/rand.h"
+
 #include "box.h"
 #include "bullet.h"
 

@@ -1,4 +1,5 @@
 #include "gfx/window.h"
+
 #include "utils/exception.h"
 
 namespace gfx {

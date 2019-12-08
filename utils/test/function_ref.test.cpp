@@ -1,4 +1,5 @@
 #include "utils/function_ref.h"
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

@@ -1,4 +1,5 @@
 #include "utils/static_function.h"
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

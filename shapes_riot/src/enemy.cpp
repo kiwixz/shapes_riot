@@ -1,4 +1,5 @@
 #include "enemy.h"
+
 #include "gfx/transformation.h"
 #include "utils/matrix.h"
 

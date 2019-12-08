@@ -1,7 +1,9 @@
 #pragma once
 
 #include <string_view>
+
 #include <fmt/format.h>
+
 #include "utils/logging.h"
 #include "utils/span.h"
 

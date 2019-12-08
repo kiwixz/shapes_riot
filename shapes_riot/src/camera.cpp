@@ -1,4 +1,5 @@
 #include "camera.h"
+
 #include "gfx/transformation.h"
 
 namespace shapes_riot {

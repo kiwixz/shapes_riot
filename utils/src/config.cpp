@@ -1,8 +1,11 @@
 #include "utils/config.h"
+
 #include <algorithm>
 #include <fstream>
 #include <vector>
+
 #include <fmt/printf.h>
+
 #include "utils/paths.h"
 
 namespace utils {

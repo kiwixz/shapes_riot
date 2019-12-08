@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+
 #include <glad/glad.h>
 
 namespace gfx {

@@ -1,4 +1,5 @@
 #include "utils/scope_exit.h"
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

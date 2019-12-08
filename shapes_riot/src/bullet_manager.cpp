@@ -1,4 +1,5 @@
 #include "bullet_manager.h"
+
 #include <cmath>
 
 namespace shapes_riot {

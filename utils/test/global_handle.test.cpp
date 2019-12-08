@@ -1,5 +1,7 @@
 #include "utils/global_handle.h"
+
 #include <utility>
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

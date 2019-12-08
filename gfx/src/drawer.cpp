@@ -1,5 +1,7 @@
 #include "gfx/drawer.h"
+
 #include <string_view>
+
 #include <glad/glad.h>
 
 namespace gfx {

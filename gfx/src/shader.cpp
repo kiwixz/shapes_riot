@@ -1,4 +1,5 @@
 #include "gfx/shader.h"
+
 #include "utils/exception.h"
 
 namespace gfx {

@@ -1,4 +1,5 @@
 #include "utils/matrix.h"
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

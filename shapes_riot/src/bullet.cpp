@@ -1,5 +1,7 @@
 #include "bullet.h"
+
 #include <cmath>
+
 #include "gfx/transformation.h"
 #include "utils/matrix.h"
 

@@ -1,5 +1,7 @@
 #include "game_screen.h"
+
 #include <glad/glad.h>
+
 #include "gfx/draw_list.h"
 
 namespace shapes_riot {

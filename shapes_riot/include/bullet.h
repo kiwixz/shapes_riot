@@ -2,6 +2,7 @@
 
 #include "gfx/draw_list.h"
 #include "utils/vec.h"
+
 #include "enemy.h"
 #include "hitbox.h"
 

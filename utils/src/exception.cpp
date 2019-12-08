@@ -1,6 +1,8 @@
 #include "utils/exception.h"
+
 #include <cstdlib>
 #include <exception>
+
 #include "utils/logger.h"
 
 namespace utils {

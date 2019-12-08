@@ -1,4 +1,5 @@
 #include "utils/paths.h"
+
 #include "utils/exception.h"
 #include "utils/scope_exit.h"
 
@@ -7,6 +8,7 @@
 #else
 #    include <cstdlib>
 #    include <vector>
+
 #    include <pwd.h>
 #    include <unistd.h>
 #endif

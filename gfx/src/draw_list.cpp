@@ -1,7 +1,9 @@
 #include "gfx/draw_list.h"
+
 #include <algorithm>
 #include <array>
 #include <string_view>
+
 #include <glad/glad.h>
 
 namespace gfx {

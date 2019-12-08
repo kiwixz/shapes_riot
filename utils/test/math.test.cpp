@@ -1,4 +1,5 @@
 #include "utils/math.h"
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

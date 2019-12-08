@@ -1,7 +1,9 @@
 #include "utils/make_array.h"
+
 #include <array>
 #include <string>
 #include <type_traits>
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

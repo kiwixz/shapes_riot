@@ -2,6 +2,7 @@
 
 #include "gfx/draw_list.h"
 #include "utils/vec.h"
+
 #include "hitbox.h"
 
 namespace shapes_riot {

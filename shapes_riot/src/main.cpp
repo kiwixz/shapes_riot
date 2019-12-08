@@ -1,11 +1,14 @@
 #include <chrono>
 #include <iostream>
+
 #include <fmt/printf.h>
+
 #include "gfx/window.h"
 #include "utils/exception.h"
 #include "utils/logger.h"
 #include "utils/os.h"
 #include "utils/resource_manager.h"
+
 #include "main_menu.h"
 #include "screen_stack.h"
 

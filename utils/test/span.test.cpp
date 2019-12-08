@@ -1,6 +1,8 @@
 #include "utils/span.h"
+
 #include <array>
 #include <vector>
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

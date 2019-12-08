@@ -1,4 +1,5 @@
 #include "utils/bind_front.h"
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

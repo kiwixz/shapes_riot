@@ -2,6 +2,7 @@
 
 #include "gfx/drawer.h"
 #include "utils/resource_manager.h"
+
 #include "bullet_manager.h"
 #include "camera.h"
 #include "enemy_manager.h"

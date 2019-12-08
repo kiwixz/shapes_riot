@@ -1,4 +1,5 @@
 #include "utils/guarded.h"
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

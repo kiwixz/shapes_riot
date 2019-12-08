@@ -1,4 +1,5 @@
 #include "utils/vec.h"
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

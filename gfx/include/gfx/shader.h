@@ -1,7 +1,9 @@
 #pragma once
 
 #include <string_view>
+
 #include <glad/glad.h>
+
 #include "gfx/gl_object.h"
 #include "utils/scope_exit.h"
 

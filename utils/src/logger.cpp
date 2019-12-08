@@ -1,8 +1,11 @@
 #include "utils/logger.h"
+
 #include <chrono>
 #include <iostream>
+
 #include <fmt/color.h>
 #include <fmt/format.h>
+
 #include "utils/os.h"
 
 

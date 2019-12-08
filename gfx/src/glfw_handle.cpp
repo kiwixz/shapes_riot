@@ -1,4 +1,5 @@
 #include "gfx/glfw_handle.h"
+
 #include "utils/exception.h"
 
 namespace gfx {

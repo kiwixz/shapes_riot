@@ -1,7 +1,9 @@
 #include "utils/config.h"
+
 #include <array>
 #include <forward_list>
 #include <iostream>
+
 #include <doctest/doctest.h>
 
 namespace utils::test {

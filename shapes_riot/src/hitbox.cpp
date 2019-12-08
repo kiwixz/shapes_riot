@@ -1,4 +1,5 @@
 #include "hitbox.h"
+
 #include "utils/math.h"
 
 namespace shapes_riot {

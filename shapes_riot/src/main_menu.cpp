@@ -1,7 +1,10 @@
 #include "main_menu.h"
+
 #include <glad/glad.h>
+
 #include "gfx/draw_list.h"
 #include "gfx/ui/button.h"
+
 #include "game_screen.h"
 
 namespace shapes_riot {
