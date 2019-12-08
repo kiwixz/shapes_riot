@@ -50,7 +50,7 @@ T Config::get(const std::string& key) const
     if constexpr (std::is_same_v<T, bool>) {
         if (value == "true" || value == "1")
             return true;
-        else if (value == "false" || value == "0")
+        if (value == "false" || value == "0")
             return false;
         throw MAKE_EXCEPTION("key '{}': expected boolean value, got '{}'", key, value);
     }

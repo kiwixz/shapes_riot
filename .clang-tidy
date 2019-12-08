@@ -6,7 +6,6 @@ Checks: "*  ,\
   -fuchsia-*  ,\
   \
   -bugprone-integer-division  ,\
-  -bugprone-macro-parentheses  ,\
   -bugprone-narrowing-conversions  ,\
   -bugprone-use-after-move  ,\
   \
@@ -14,17 +13,14 @@ Checks: "*  ,\
   -clang-diagnostic-unused-private-field  ,\
   \
   -cppcoreguidelines-avoid-magic-numbers  ,\
-  -cppcoreguidelines-c-copy-assignment-signature  ,\
   -cppcoreguidelines-macro-usage  ,\
   -cppcoreguidelines-narrowing-conversions  ,\
-  -cppcoreguidelines-pro-bounds-array-to-pointer-decay  ,\
   -cppcoreguidelines-pro-bounds-constant-array-index  ,\
   -cppcoreguidelines-pro-bounds-pointer-arithmetic  ,\
   -cppcoreguidelines-pro-type-const-cast  ,\
   -cppcoreguidelines-pro-type-member-init  ,\
   -cppcoreguidelines-pro-type-reinterpret-cast  ,\
   -cppcoreguidelines-pro-type-static-cast-downcast  ,\
-  -cppcoreguidelines-pro-type-vararg  ,\
   \
   -google-build-using-namespace  ,\
   -google-explicit-constructor  ,\
@@ -38,16 +34,12 @@ Checks: "*  ,\
   -hicpp-explicit-conversions  ,\
   -hicpp-invalid-access-moved  ,\
   -hicpp-member-init  ,\
-  -hicpp-no-array-decay  ,\
   -hicpp-signed-bitwise  ,\
   -hicpp-uppercase-literal-suffix  ,\
-  -hicpp-vararg  ,\
   \
   -llvm-header-guard  ,\
   -llvm-include-order  ,\
-  -llvm-namespace-comment  ,\
   \
-  -misc-unconventional-assign-operator  ,\
   -misc-unused-parameters  ,\
   \
   -modernize-avoid-bind  ,\
@@ -56,7 +48,6 @@ Checks: "*  ,\
   \
   -readability-braces-around-statements  ,\
   -readability-convert-member-functions-to-static  ,\
-  -readability-else-after-return  ,\
   -readability-implicit-bool-conversion  ,\
   -readability-magic-numbers  ,\
   -readability-static-accessed-through-instance  ,\
@@ -67,7 +58,12 @@ Checks: "*  ,\
   -bugprone-exception-escape  ,\
   -bugprone-forwarding-reference-overload  ,\
   -cppcoreguidelines-avoid-c-arrays  ,\
+  -cppcoreguidelines-c-copy-assignment-signature  ,\
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay  ,\
   -hicpp-avoid-c-arrays  ,\
+  -hicpp-no-array-decay  ,\
+  -llvm-namespace-comment  ,\
+  -misc-unconventional-assign-operator  ,\
   -modernize-avoid-c-arrays  ,\
   -performance-unnecessary-value-param  ,\
 "

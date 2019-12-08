@@ -146,7 +146,8 @@ void Config::parse_file_content(std::string_view content, bool allow_unknown)
                 ++ptr;
             continue;
         }
-        else if (*ptr == '[') {  // section header
+
+        if (*ptr == '[') {  // section header
             ++ptr;
             while (!is_endline(ptr) && is_blank(*ptr))  // skip blanks at beginning
                 ++ptr;
