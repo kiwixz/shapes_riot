@@ -9,11 +9,10 @@
 #include <chrono>
 #include <iostream>
 
-namespace shapes_riot {
-namespace {
-
 int main(int /*argc*/, char** /*argv*/)
 {
+    using namespace shapes_riot;
+
     std::set_terminate(&utils::terminate);
     utils::set_thread_name("main_thread");
 
@@ -61,13 +60,4 @@ int main(int /*argc*/, char** /*argv*/)
     }
 
     return 0;
-}
-
-}  // namespace
-}  // namespace shapes_riot
-
-
-int main(int argc, char** argv)
-{
-    return shapes_riot::main(argc, argv);
 }

@@ -10,8 +10,6 @@
 namespace shapes_riot {
 
 struct Player {
-    Player();
-
     gfx::DrawList draw() const;
     utils::Vec2d position() const;
 

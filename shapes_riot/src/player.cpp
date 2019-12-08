@@ -4,9 +4,6 @@
 
 namespace shapes_riot {
 
-Player::Player()
-{}
-
 gfx::DrawList Player::draw() const
 {
     gfx::DrawList draw_list;

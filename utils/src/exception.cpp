@@ -28,13 +28,16 @@ void terminate()
         if (ex)
             std::rethrow_exception(ex);
         else
-            logger(utils::LogLevel::critical, "terminating without an active exception");
+            logger(utils::LogLevel::critical, "no active exception");
     }
     catch (const utils::Exception& ex) {
         logger(utils::LogLevel::critical, "fatal exception: {}\nfrom: {}", ex.what(), ex.from());
     }
     catch (const std::exception& ex) {
         logger(utils::LogLevel::critical, "fatal exception: {}", ex.what());
+    }
+    catch (...) {
+        logger(utils::LogLevel::critical, "fatal exception of unknown type");
     }
 
     std::abort();
