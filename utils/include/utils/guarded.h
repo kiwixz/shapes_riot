@@ -33,8 +33,8 @@ struct Guarded {
     template <typename... Args>
     Guarded(Args&&... args);
 
-    Handle lock();
-    std::optional<Handle> try_lock();
+    Handle lock();                     ///< Thread-safe
+    std::optional<Handle> try_lock();  ///< Thread-safe
 
 private:
     Type native_;

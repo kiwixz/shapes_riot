@@ -15,12 +15,15 @@ struct ConsumeQueue {
     explicit ConsumeQueue(size_t max_size);
 
     /// Blocks until there is space to push element.
+    /// Thread-safe
     void push(Element element);
 
-    /// Make pop() non-blocking.
+    /// Make pop() non-blocking
+    /// Thread-safe
     void end();
 
-    /// Blocks until an element is available, or returns empty after end.
+    /// Blocks until an element is available, or returns empty after end
+    /// Thread-safe
     std::optional<Element> pop();
 
 private:
