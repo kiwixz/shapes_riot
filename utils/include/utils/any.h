@@ -10,7 +10,7 @@ namespace utils {
 struct Any {
     Any() = default;
 
-    template <typename T, std::enable_if_t<!std::is_same_v<T, Any>, int> = 0>
+    template <typename T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, Any>, int> = 0>
     Any(T&& value);
 
     ~Any();
@@ -32,7 +32,7 @@ private:
 };
 
 
-template <typename T, std::enable_if_t<!std::is_same_v<T, Any>, int>>
+template <typename T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, Any>, int>>
 Any::Any(T&& value)
 {
     using Type = std::decay_t<T>;

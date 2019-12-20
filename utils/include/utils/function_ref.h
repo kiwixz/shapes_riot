@@ -13,7 +13,7 @@ template <typename Result, typename... Args>
 struct FunctionRef<Result(Args...)> {
     FunctionRef() = default;
 
-    template <typename T, std::enable_if_t<!std::is_same_v<T, FunctionRef<Result(Args...)>> && !std::is_pointer_v<T>, int> = 0>
+    template <typename T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, FunctionRef<Result(Args...)>> && !std::is_pointer_v<T>, int> = 0>
     FunctionRef(T&& function);
 
     template <typename T>
@@ -34,7 +34,7 @@ private:
 
 
 template <typename Result, typename... Args>
-template <typename T, std::enable_if_t<!std::is_same_v<T, FunctionRef<Result(Args...)>> && !std::is_pointer_v<T>, int>>
+template <typename T, std::enable_if_t<!std::is_same_v<std::decay_t<T>, FunctionRef<Result(Args...)>> && !std::is_pointer_v<T>, int>>
 FunctionRef<Result(Args...)>::FunctionRef(T&& function) :
     native_{reinterpret_cast<void*>(&function)}
 {
