@@ -4,6 +4,7 @@ include("vcpkg")
 
 set(target "utils")
 set(src
+    any
     config
     exception
     logger
