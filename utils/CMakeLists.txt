@@ -16,6 +16,7 @@ set(src
     thread_pool
 )
 set(test
+    any
     bind_front
     config
     function_ref

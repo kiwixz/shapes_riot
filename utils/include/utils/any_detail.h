@@ -29,11 +29,11 @@ void proxy(ProxyOp op, Storage* a, Storage* b)
         a->reset();
         break;
     case ProxyOp::copy:
-        *b = make_c_ptr(operator new(sizeof(T)));
-        new (b->get()) T{*std::launder(reinterpret_cast<T*>(a->get()))};
+        set_c_ptr(*b, operator new(sizeof(T)));
+        new (b->get()) T{*std::launder(reinterpret_cast<const T*>(a->get()))};
         break;
     case ProxyOp::move:
-        *b = make_c_ptr(operator new(sizeof(T)));
+        set_c_ptr(*b, operator new(sizeof(T)));
         new (b->get()) T{std::move(*std::launder(reinterpret_cast<T*>(a->get())))};
         break;
     }
