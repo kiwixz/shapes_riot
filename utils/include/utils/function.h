@@ -18,7 +18,7 @@ struct FunctionImpl<Storage, Result(Args...)> {
         storage_{std::forward<T>(function)}
     {
         invoker_ = +[](const Storage& storage, Args... args) -> Result {
-            return std::invoke(storage.as<std::decay_t<T>>(),
+            return std::invoke(storage.template as<std::decay_t<T>>(),
                                std::forward<Args>(args)...);
         };
     }
