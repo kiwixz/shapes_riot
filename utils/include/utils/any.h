@@ -38,7 +38,7 @@ Any::Any(T&& value)
     using Type = std::decay_t<T>;
 
     set_c_ptr(storage_, operator new(sizeof(Type)));
-    new (storage_.get()) Type{std::move(value)};
+    new (storage_.get()) Type{std::forward<T>(value)};
     proxy_ = any_detail::proxy<Type>;
 }
 

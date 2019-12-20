@@ -14,10 +14,12 @@ Any::Any(const Any& other)
 
 Any& Any::operator=(const Any& other)
 {
-    destroy();
-    if (other) {
-        proxy_ = other.proxy_;
-        proxy_(any_detail::ProxyOp::copy, const_cast<any_detail::Storage*>(&other.storage_), &storage_);  // will not modify other.storage_
+    if (this != &other) {
+        destroy();
+        if (other) {
+            proxy_ = other.proxy_;
+            proxy_(any_detail::ProxyOp::copy, const_cast<any_detail::Storage*>(&other.storage_), &storage_);  // will not modify other.storage_
+        }
     }
     return *this;
 }
@@ -29,10 +31,12 @@ Any::Any(Any&& other) noexcept
 
 Any& Any::operator=(Any&& other) noexcept
 {
-    destroy();
-    if (other) {
-        proxy_ = other.proxy_;
-        proxy_(any_detail::ProxyOp::move, &other.storage_, &storage_);
+    if (this != &other) {
+        destroy();
+        if (other) {
+            proxy_ = other.proxy_;
+            proxy_(any_detail::ProxyOp::move, &other.storage_, &storage_);
+        }
     }
     return *this;
 }
