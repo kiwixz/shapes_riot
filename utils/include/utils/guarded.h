@@ -4,6 +4,8 @@
 #include <mutex>
 #include <optional>
 
+#include "utils/is_pack_same.h"
+
 namespace utils {
 
 template <typename TType, typename TMutex = std::mutex>
@@ -30,7 +32,7 @@ struct Guarded {
     Guarded(Self&&) noexcept = default;
     Self& operator=(Self&&) noexcept = default;
 
-    template <typename... Args>
+    template <typename... Args, std::enable_if_t<!is_pack_same<Self, Args...>, int> = 0>
     Guarded(Args&&... args);
 
     Handle lock();                     ///< Thread-safe
@@ -43,7 +45,7 @@ private:
 
 
 template <typename TType, typename TMutex>
-template <typename... Args>
+template <typename... Args, std::enable_if_t<!is_pack_same<Guarded<TType, TMutex>, Args...>, int>>
 Guarded<TType, TMutex>::Guarded(Args&&... args) :
     native_{std::forward<Args>(args)...}
 {}

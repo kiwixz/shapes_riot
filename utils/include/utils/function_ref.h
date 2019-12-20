@@ -29,7 +29,7 @@ struct FunctionRef<Result(Args...)> {
 
 private:
     void* native_;
-    Result (*invoker_)(void*, Args...);
+    Result (*invoker_)(void* native, Args...);
 };
 
 
