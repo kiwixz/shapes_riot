@@ -1,6 +1,5 @@
 #pragma once
 
-#include <exception>
 #include <type_traits>
 
 #include "utils/any_detail.h"

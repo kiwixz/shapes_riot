@@ -20,6 +20,7 @@ set(test
     any
     bind_front
     config
+    function
     function_ref
     guarded
     make_array

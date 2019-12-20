@@ -29,7 +29,6 @@ TEST_SUITE("function_ref")
         }
     }
 
-
 #if !defined(__GNUC__) || defined(__clang__)  // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83258
     TEST_CASE("function_pointers")
     {
