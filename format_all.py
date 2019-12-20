@@ -21,4 +21,4 @@ if __name__ == "__main__":
 
     def filter(path):
         return (path.endswith(".cpp") or path.endswith(".h")) and not path.startswith("cmake/")
-    utils.foreach_file(format, filter)
+    exit(utils.foreach_file(format, filter))

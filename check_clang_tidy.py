@@ -35,5 +35,5 @@ if __name__ == "__main__":
         logging.critical("compile_commands.json not found, did you pass the correct build directory ?")
         exit(2)
 
-    utils.foreach_file(lambda path: check(build_dir, path),
-                       lambda path: path.endswith(".cpp"))
+    exit(utils.foreach_file(lambda path: check(build_dir, path),
+                            lambda path: path.endswith(".cpp")))
