@@ -6,6 +6,7 @@
 #include <fmt/color.h>
 #include <fmt/format.h>
 
+#include "utils/exception.h"
 #include "utils/os.h"
 
 

@@ -7,11 +7,10 @@
 
 #include <fmt/format.h>
 
+#include "utils/pp.h"
 
-#define DETAIL_MAKE_EXCEPTION_XSTR(a) #a
-#define DETAIL_MAKE_EXCEPTION_STR(a) DETAIL_MAKE_EXCEPTION_XSTR(a)
-#define MAKE_EXCEPTION(...) utils::Exception(__FILE__ ":" DETAIL_MAKE_EXCEPTION_STR(__LINE__), __VA_ARGS__)
 
+#define MAKE_EXCEPTION(...) ::utils::Exception(SOURCE_LOCATION, __VA_ARGS__)
 #define NOT_IMPLEMENTED throw MAKE_EXCEPTION("not implemented");
 
 

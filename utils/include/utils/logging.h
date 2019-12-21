@@ -4,8 +4,6 @@
 
 #include <fmt/color.h>
 
-#include "utils/exception.h"
-
 namespace utils {
 
 enum class LogLevel {
