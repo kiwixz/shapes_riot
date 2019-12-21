@@ -7,6 +7,9 @@
 
 namespace shapes_riot {
 
+inline constexpr int max_enemy_hp = 2;
+
+
 struct Enemy {
     Enemy(utils::Vec2d pos);
 
@@ -21,7 +24,7 @@ private:
     utils::Vec2d pos_;
     utils::Vec2d velocity_;
     double angle_ = 0.0;
-    int hp_ = 1;
+    int hp_ = max_enemy_hp;
 };
 
 }  // namespace shapes_riot

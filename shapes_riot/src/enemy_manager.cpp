@@ -22,17 +22,22 @@ gfx::DrawList EnemyManager::draw() const
 
 void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d player_pos)
 {
-    if (rand_() < delta * 2) {
-        // generate random pos either [-1.0; -0.5[ or [0.5; 1.0]
-        utils::Vec2d pos{rand_(), rand_()};
-        if (pos.x < 0.5)
-            pos.x = -(pos.x + 0.5);
-        if (pos.y < 0.5)
-            pos.y = -(pos.y + 0.5);
+    if (rand_() < delta / 2) {
+        // generate random pos either [-1.2; -1.1[ or [1.1; 1.2]
+        utils::Vec2d pos{rand_() / 5, rand_() / 5};
+        if (pos.x < 0.1)
+            pos.x = -(pos.x + 1.1);
+        else
+            pos.x += 1.0;
+        if (pos.y < 0.1)
+            pos.y = -(pos.y + 1.1);
+        else
+            pos.y += 1.0;
 
         // place pos randomly out of camera view
-        pos = camera_view.center + pos * 3.0 * camera_view.half_size;
+        pos = camera_view.center + pos * camera_view.half_size;
 
+        logger_(utils::LogLevel::info, "spawning enemy at ({},{})", pos.x, pos.y);
         enemies_.emplace_back(pos);
     }
 

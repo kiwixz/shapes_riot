@@ -37,6 +37,11 @@ Hitbox Bullet::hitbox() const
     return {pos_, 0.01};
 }
 
+bool Bullet::is_alive() const
+{
+    return is_alive_;
+}
+
 void Bullet::tick(double delta)
 {
     pos_ += velocity_ * delta;
@@ -44,6 +49,7 @@ void Bullet::tick(double delta)
 
 void Bullet::on_collision(Enemy& enemy)
 {
+    is_alive_ = false;
     enemy.hurt(1);
 }
 

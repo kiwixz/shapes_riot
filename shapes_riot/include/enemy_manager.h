@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "gfx/draw_list.h"
+#include "utils/logger.h"
 #include "utils/rand.h"
 
 #include "box.h"
@@ -19,6 +20,7 @@ struct EnemyManager {
     void tick(double delta, const Box& camera_view, utils::Vec2d player_pos);
 
 private:
+    utils::Logger logger_{"EnemyManager"};
     utils::RandF rand_;
     std::vector<Enemy> enemies_;
 };

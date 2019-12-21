@@ -34,11 +34,12 @@ void BulletManager::tick(double delta, const Box& camera_view)
 
         // delete bullet if its too far away
         utils::Vec2d position_in_view = (it->position() - camera_view.center) / camera_view.half_size;
-        if (std::abs(position_in_view.x) > 3.0
-            || std::abs(position_in_view.y) > 3.0)
+        if (!it->is_alive() || std::abs(position_in_view.x) > 3.0 || std::abs(position_in_view.y) > 3.0) {
             it = bullets_.erase(it);
-        else
+        }
+        else {
             ++it;
+        }
     }
 }
 

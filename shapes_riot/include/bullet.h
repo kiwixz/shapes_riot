@@ -14,6 +14,7 @@ struct Bullet {
     gfx::DrawList draw() const;
     utils::Vec2d position() const;
     Hitbox hitbox() const;
+    bool is_alive() const;
 
     void tick(double delta);
     void on_collision(Enemy& enemy);
@@ -22,6 +23,7 @@ private:
     utils::Vec2d pos_;
     utils::Vec2d velocity_;
     double angle_ = 0.0;
+    bool is_alive_ = true;
 };
 
 }  // namespace shapes_riot
