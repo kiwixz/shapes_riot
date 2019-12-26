@@ -20,6 +20,11 @@ gfx::DrawList EnemyManager::draw() const
     return draw_list;
 }
 
+int EnemyManager::killed() const
+{
+    return killed_;
+}
+
 void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d player_pos)
 {
     if (rand_() < delta / 2) {
@@ -49,6 +54,7 @@ void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d playe
         }
         else {
             it = enemies_.erase(it);
+            ++killed_;
         }
     }
 }

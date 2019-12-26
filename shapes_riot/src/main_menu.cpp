@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 
+#include "embed/source_sans_pro.h"
 #include "gfx/draw_list.h"
 #include "gfx/ui/button.h"
 
@@ -13,9 +14,9 @@ MainMenu::MainMenu(ScreenStack& screens, utils::ResourceManager& resource_manage
     drawer_{resource_manager}
 {
     layout_.set_margin(0.7f, 0.7f, 0.7f, 0.7f);
-
+    auto font = std::make_shared<gfx::Font>(' ', '~' - ' ' + 1, embed::source_sans_pro(), 96);
     auto add_button = [&](std::string label, std::function<void()> on_click) {
-        auto button = std::make_unique<gfx::ui::Button>(resource_manager, std::move(label), std::move(on_click));
+        auto button = std::make_unique<gfx::ui::Button>(font, std::move(label), std::move(on_click));
         button->set_margin(0.05f, 0.0f, 0.05f, 0.0f);
         layout_.add_widget(std::move(button));
     };

@@ -1,16 +1,10 @@
 #include "gfx/ui/button.h"
 
-#include "embed/source_sans_pro.h"
-
 namespace gfx::ui {
 
-Button::Button(utils::ResourceManager& resource_manager, std::string label, std::function<void()> on_click) :
-    label_{std::move(label)}, on_click_{std::move(on_click)}
-{
-    resource_manager.get_to("gfx_button_font", font_, [] {
-        return std::make_shared<Font>(' ', '~' - ' ' + 1, embed::source_sans_pro(), 96);
-    });
-}
+Button::Button(utils::ResourceHandle<Font> font, std::string label, utils::Function<void()> on_click) :
+    font_{std::move(font)}, label_{std::move(label)}, on_click_{std::move(on_click)}
+{}
 
 void Button::on_key_impl(const WindowEvent::KeyEvent& event)
 {
