@@ -2,7 +2,7 @@
 
 namespace gfx::ui {
 
-void VerticalLayout::on_key(const WindowEvent::KeyEvent& event)
+void VerticalLayout::on_key_impl(const WindowEvent::KeyEvent& event)
 {
     if (focus_)
         focus_->on_key(event);

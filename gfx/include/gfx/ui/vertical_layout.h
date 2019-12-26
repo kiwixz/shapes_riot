@@ -9,8 +9,6 @@
 namespace gfx::ui {
 
 struct VerticalLayout : Widget {
-    void on_key(const WindowEvent::KeyEvent& event) override;
-
     void add_widget(std::unique_ptr<Widget>&& widget);
 
 private:
@@ -22,6 +20,7 @@ private:
     std::vector<Child> children_;
     Widget* focus_ = nullptr;
 
+    void on_key_impl(const WindowEvent::KeyEvent& event) override;
     void on_mouse_button_impl(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) override;
     DrawList draw_impl(double delta, double aspect_ratio) override;
 };

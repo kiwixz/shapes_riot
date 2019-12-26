@@ -12,7 +12,7 @@ Button::Button(utils::ResourceManager& resource_manager, std::string label, std:
     });
 }
 
-void Button::on_key(const WindowEvent::KeyEvent& event)
+void Button::on_key_impl(const WindowEvent::KeyEvent& event)
 {
     if (event.action == GLFW_RELEASE && event.mods == 0
         && (event.key == GLFW_KEY_ENTER || event.key == GLFW_KEY_SPACE))
