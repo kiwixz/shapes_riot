@@ -31,7 +31,7 @@ struct Vec2 : vec_detail::VecMeta<Vec2, TElement, 2> {
 
 
 template <typename TElement>
-struct Vec3 : vec_detail::VecMeta<Vec2, TElement, 3> {
+struct Vec3 : vec_detail::VecMeta<Vec3, TElement, 3> {
     using Self = Vec3<TElement>;
     using Element = TElement;
     static constexpr int size = 3;
