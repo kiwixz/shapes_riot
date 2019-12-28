@@ -19,3 +19,14 @@ function (system_include_dirs target)
         INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${inc}"
     )
 endfunction ()
+
+
+function (suppress_warnings target)
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        target_compile_options("${target}" PRIVATE "-Wno-everything")
+    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        target_compile_options("${target}" PRIVATE "-Wno-all -Wno-extra")
+    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+        target_compile_options("${target}" PRIVATE "/W0")
+    endif ()
+endfunction ()

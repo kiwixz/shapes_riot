@@ -3,3 +3,4 @@ include("third_party")
 
 third_party("fmt" "fmtlib/fmt" "6.0.0")
 system_include_dirs("fmt")
+suppress_warnings("fmt")
