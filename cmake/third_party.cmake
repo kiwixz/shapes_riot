@@ -13,6 +13,16 @@ function (third_party name repo ref)
 endfunction ()
 
 
+function (third_party_url name url)
+    FetchContent_Declare("${name}" URL "${url}")
+    FetchContent_GetProperties("${name}")
+    if (NOT "${name}_POPULATED")
+        FetchContent_Populate("${name}")
+        add_subdirectory("${${name}_SOURCE_DIR}" "${${name}_BINARY_DIR}")
+    endif()
+endfunction ()
+
+
 function (system_include_dirs target)
     get_target_property(inc "${target}" INTERFACE_INCLUDE_DIRECTORIES)
     set_target_properties("${target}" PROPERTIES

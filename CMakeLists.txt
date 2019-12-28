@@ -49,17 +49,9 @@ if (DOC_GENERATION)
 endif ()
 
 
-if (USE_VCPKG)
-    vcpkg_install(LIBS
-        "freetype"
-    )
-endif ()
-
-find_package("Freetype" CONFIG REQUIRED)
-
-
 add_subdirectory("third_party/doctest")
 add_subdirectory("third_party/fmt")
+add_subdirectory("third_party/freetype")
 add_subdirectory("third_party/glad")
 add_subdirectory("third_party/glfw")
 
