@@ -12,7 +12,7 @@ void Label::on_key_impl(const WindowEvent::KeyEvent& /*event*/)
 void Label::on_mouse_button_impl(const WindowEvent::MouseButtonEvent& /*event*/, utils::Vec3f /*pos*/)
 {}
 
-DrawList Label::draw_impl(double delta, double aspect_ratio)
+DrawList Label::draw_impl(double /*delta*/, double aspect_ratio)
 {
     float size = 0.05f;
     utils::Vec3f pen{-1.0f, 1 - size, 0.5f};
