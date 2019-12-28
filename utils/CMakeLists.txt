@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
 include("test_target_cpp")
-include("vcpkg")
 
 set(target "utils")
 set(src

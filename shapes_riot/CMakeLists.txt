@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.12)
 include("download")
 include("file_embed")
 include("test_target_cpp")
-include("vcpkg")
 
 set(target "shapes_riot")
 set(src

@@ -33,12 +33,7 @@ jobs:
           CXXFLAGS: -fdiagnostics-color=always
           LDFLAGS: -fdiagnostics-color=always
         run: |
-          ln -s "/opt/vcpkg"
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -S "." -B "build"
-
-      - name: Dump libraries versions
-        run: |
-          vcpkg list
 
       - name: Build
         run: |
