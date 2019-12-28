@@ -51,18 +51,17 @@ endif ()
 if (USE_VCPKG)
     vcpkg_install(LIBS
         "freetype"
-        "glad"
         "glfw3"
     )
 endif ()
 
 find_package("Freetype" CONFIG REQUIRED)
-find_package("glad" CONFIG REQUIRED)
 find_package("glfw3" CONFIG REQUIRED)
 
 
 add_subdirectory("third_party/doctest")
 add_subdirectory("third_party/fmt")
+add_subdirectory("third_party/glad")
 
 add_subdirectory("utils")
 add_subdirectory("gfx")

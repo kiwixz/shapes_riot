@@ -39,6 +39,6 @@ target_link_libraries("${target}"
     "utils"
 
     "freetype"
-    "glad::glad"
+    "glad"
     "glfw"
 )
