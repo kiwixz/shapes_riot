@@ -39,10 +39,8 @@ if (BUILD_TESTING)
 endif ()
 
 
-download_github("source_sans_pro" "adobe-fonts/source-sans-pro" "2.045R-ro/1.095R-it")
-file_embed("${target}" "source_sans_pro"
-    "${source_sans_pro_DIR}/OTF/SourceSansPro-Regular.otf"
-    DEPENDS "source_sans_pro")
+download_github("source_sans_pro" "adobe-fonts/source-sans-pro" "2.045R-ro/1.095R-it" "OTF/SourceSansPro-Regular.otf")
+file_embed("${target}" "source_sans_pro" "${source_sans_pro_PATH}")
 
 
 target_link_libraries("${target}_base"

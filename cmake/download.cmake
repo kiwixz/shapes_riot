@@ -1,20 +1,17 @@
 include(ExternalProject)
 
 function (download name url)
-    ExternalProject_Add("${name}"
-        SOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/${name}"
-        URL "${url}"
-        DOWNLOAD_NO_PROGRESS ON
-        CONFIGURE_COMMAND ""
-        BUILD_COMMAND ""
-        INSTALL_COMMAND ""
-        TEST_COMMAND ""
-    )
-    set(${name}_DIR "${CMAKE_CURRENT_BINARY_DIR}/${name}" PARENT_SCOPE)
+    set(dest "${CMAKE_CURRENT_BINARY_DIR}/${name}")
+    if (NOT EXISTS "${dest}")
+        message(STATUS "Downloading ${name}")
+        file(DOWNLOAD "${url}" "${dest}")
+        message(STATUS "Downloading ${name} - done")
+    endif ()
+    set(${name}_PATH "${dest}" PARENT_SCOPE)
 endfunction ()
 
 
-function (download_github name repo ref)
-    download("${name}" "https://github.com/${repo}/archive/${ref}.zip")
-    set(${name}_DIR "${${name}_DIR}" PARENT_SCOPE)
+function (download_github name repo ref file)
+    download("${name}" "https://raw.githubusercontent.com/${repo}/${ref}/${file}")
+    set(${name}_PATH "${${name}_PATH}" PARENT_SCOPE)
 endfunction ()
