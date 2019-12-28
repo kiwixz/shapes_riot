@@ -29,11 +29,6 @@ set_defaults_flags_cpp()
 
 if (BUILD_TESTING)
     enable_testing()
-
-    if (USE_VCPKG)
-        vcpkg_install(LIBS "doctest")
-    endif ()
-
     find_package("Python3" REQUIRED "Interpreter")
     add_test(NAME "check_clang_format"
         COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/check_clang_format.py"
@@ -44,21 +39,18 @@ if (BUILD_TESTING)
 endif ()
 
 
-add_subdirectory("third_party/fmt")
-
-
-set(subdirs
-    "gfx"
-    "utils"
-
-    "shapes_riot"
-)
-
-
 if (DOC_GENERATION)
-    doc_target(DIRS ${subdirs})
+    doc_target(DIRS
+        "gfx"
+        "utils"
+        "shapes_riot"
+    )
 endif ()
 
-foreach(dir ${subdirs})
-    add_subdirectory("${dir}")
-endforeach()
+
+add_subdirectory("third_party/doctest")
+add_subdirectory("third_party/fmt")
+
+add_subdirectory("utils")
+add_subdirectory("gfx")
+add_subdirectory("shapes_riot")
