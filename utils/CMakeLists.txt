@@ -48,14 +48,6 @@ if (BUILD_TESTING)
 endif ()
 
 
-if (USE_VCPKG)
-    vcpkg_install(LIBS
-        "fmt"
-    )
-endif ()
-
-find_package("fmt" CONFIG REQUIRED)
-
 target_link_libraries("${target}"
     "fmt::fmt"
 )

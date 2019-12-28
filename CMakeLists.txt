@@ -21,7 +21,8 @@ endif ()
 
 project("shapes_riot"
     VERSION 0.0.0
-    LANGUAGES C CXX ASM_NASM)
+    LANGUAGES C CXX ASM_NASM
+)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_defaults_flags_asm()
@@ -29,11 +30,6 @@ set_defaults_flags_cpp()
 
 if (BUILD_TESTING)
     enable_testing()
-
-    if (USE_VCPKG)
-        vcpkg_install(LIBS "doctest")
-    endif ()
-
     find_package("Python3" REQUIRED "Interpreter")
     add_test(NAME "check_clang_format"
         COMMAND "${Python3_EXECUTABLE}" "${PROJECT_SOURCE_DIR}/check_clang_format.py"
@@ -44,18 +40,30 @@ if (BUILD_TESTING)
 endif ()
 
 
-set(subdirs
-    "gfx"
-    "utils"
-
-    "shapes_riot"
-)
-
-
 if (DOC_GENERATION)
-    doc_target(DIRS ${subdirs})
+    doc_target(DIRS
+        "gfx"
+        "utils"
+        "shapes_riot"
+    )
 endif ()
 
-foreach(dir ${subdirs})
-    add_subdirectory("${dir}")
-endforeach()
+
+if (USE_VCPKG)
+    vcpkg_install(LIBS
+        "freetype"
+        "glfw3"
+    )
+endif ()
+
+find_package("Freetype" CONFIG REQUIRED)
+find_package("glfw3" CONFIG REQUIRED)
+
+
+add_subdirectory("third_party/doctest")
+add_subdirectory("third_party/fmt")
+add_subdirectory("third_party/glad")
+
+add_subdirectory("utils")
+add_subdirectory("gfx")
+add_subdirectory("shapes_riot")

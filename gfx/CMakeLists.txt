@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
 include("test_target_cpp")
-include("vcpkg")
 
 set(target "gfx")
 set(src
@@ -36,22 +35,10 @@ if (BUILD_TESTING)
 endif ()
 
 
-if (USE_VCPKG)
-    vcpkg_install(LIBS
-        "freetype"
-        "glad"
-        "glfw3"
-    )
-endif ()
-
-find_package("Freetype" CONFIG REQUIRED)
-find_package("glad" CONFIG REQUIRED)
-find_package("glfw3" CONFIG REQUIRED)
-
 target_link_libraries("${target}"
     "utils"
 
     "freetype"
-    "glad::glad"
+    "glad"
     "glfw"
 )
