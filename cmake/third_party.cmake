@@ -11,3 +11,11 @@ function (third_party name repo ref)
         add_subdirectory("${${name}_SOURCE_DIR}" "${${name}_BINARY_DIR}")
     endif()
 endfunction ()
+
+
+function (system_include_dirs target)
+    get_target_property(inc "${target}" INTERFACE_INCLUDE_DIRECTORIES)
+    set_target_properties("${target}" PROPERTIES
+        INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${inc}"
+    )
+endfunction ()
