@@ -71,7 +71,7 @@ Checks: "*  ,\
 "
 
 WarningsAsErrors: ""
-HeaderFilterRegex: "^(?!build\/).+$"
+HeaderFilterRegex: ".*"
 AnalyzeTemporaryDtors: false
 FormatStyle: none
 CheckOptions:
