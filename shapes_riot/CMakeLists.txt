@@ -45,14 +45,6 @@ file_embed("${target}" "source_sans_pro"
     DEPENDS "source_sans_pro")
 
 
-if (USE_VCPKG)
-    vcpkg_install(LIBS
-        "fmt"
-    )
-endif ()
-
-find_package("fmt" CONFIG REQUIRED)
-
 target_link_libraries("${target}_base"
     "gfx"
     "utils"

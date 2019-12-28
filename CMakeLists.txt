@@ -44,6 +44,9 @@ if (BUILD_TESTING)
 endif ()
 
 
+add_subdirectory("third_party/fmt")
+
+
 set(subdirs
     "gfx"
     "utils"
