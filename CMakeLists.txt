@@ -21,7 +21,8 @@ endif ()
 
 project("shapes_riot"
     VERSION 0.0.0
-    LANGUAGES C CXX ASM_NASM)
+    LANGUAGES C CXX ASM_NASM
+)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set_defaults_flags_asm()
