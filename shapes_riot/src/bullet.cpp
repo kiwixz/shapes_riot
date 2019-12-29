@@ -6,6 +6,12 @@
 #include "utils/matrix.h"
 
 namespace shapes_riot {
+namespace {
+
+constexpr utils::Vec2f size{0.05f, 0.02f};
+
+}
+
 
 Bullet::Bullet(utils::Vec2d pos, double velocity, double angle) :
     pos_{pos},
@@ -15,8 +21,7 @@ Bullet::Bullet(utils::Vec2d pos, double velocity, double angle) :
 
 gfx::DrawList Bullet::draw() const
 {
-    static constexpr utils::Vec2f size{0.02f, 0.005f};
-    static constexpr utils::Vec4f color{1.0f, 1.0f, 1.0f, 1.0f};
+    constexpr utils::Vec4f color{1.0f, 1.0f, 1.0f, 1.0f};
 
     gfx::DrawList draw_list;
     draw_list.push_quad({utils::Vec4f{-size, 0.0f}, color},
@@ -34,7 +39,7 @@ utils::Vec2d Bullet::position() const
 
 Hitbox Bullet::hitbox() const
 {
-    return {pos_, 0.01};
+    return {pos_, size.y};
 }
 
 bool Bullet::is_alive() const

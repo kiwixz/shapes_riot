@@ -4,8 +4,11 @@
 #include "utils/matrix.h"
 
 namespace shapes_riot {
+namespace {
 
 constexpr float size = 0.2f;
+
+}
 
 
 Enemy::Enemy(utils::Vec2d pos) :
