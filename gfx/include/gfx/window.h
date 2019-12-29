@@ -35,7 +35,7 @@ struct Window {
     void poll_events(T&& event_handler);
 
 private:
-    utils::Logger logger_{"window"};
+    utils::Logger logger_{"Window"};
     std::optional<GlfwHandle> glfw_handle_;
     utils::CPtr<GLFWwindow, glfwDestroyWindow> window_;
     utils::Guarded<std::vector<WindowEvent>> event_queue_;

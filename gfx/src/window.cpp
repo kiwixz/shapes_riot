@@ -8,7 +8,7 @@ Window::Window(std::string_view title, utils::Vec2i size)
 {
     logger_(utils::LogLevel::info, "initializing glfw");
     glfwSetErrorCallback([](int error, const char* description) {
-        utils::Logger{"glfw"}(utils::LogLevel::error, "error {:#x}: {}", error, description);
+        utils::Logger{"GLFW"}(utils::LogLevel::error, "error {:#x}: {}", error, description);
     });
     glfw_handle_.emplace();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);

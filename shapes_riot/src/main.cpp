@@ -25,7 +25,7 @@ int main(int /*argc*/, char** /*argv*/)
                           0, nullptr, GL_FALSE);
     glDebugMessageCallback([](GLenum source, GLenum type, GLuint id, GLenum severity,
                               GLsizei /*length*/, const GLchar* message, const void* /*userParam*/) {
-        utils::Logger{"opengl"}(utils::LogLevel::info, "source:{:#x} type:{:#x} id:{:#x} severity:{:#x}\n\t {}",
+        utils::Logger{"OpenGL"}(utils::LogLevel::info, "source:{:#x} type:{:#x} id:{:#x} severity:{:#x}\n\t {}",
                                 source, type, id, severity, message);
     },
                            nullptr);

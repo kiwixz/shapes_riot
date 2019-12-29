@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "gfx/draw_list.h"
+#include "utils/logger.h"
 #include "utils/rand.h"
 #include "utils/vec.h"
 
@@ -31,6 +32,7 @@ private:
         std::array<Block, chunk_size * chunk_size> blocks;
     };
 
+    utils::Logger logger_{"Map"};
     std::vector<Chunk> chunks_;
     utils::RandF rand_;
 };
