@@ -17,6 +17,7 @@ function (third_party name)
     FetchContent_GetProperties("${name}")
     if (NOT "${name}_POPULATED")
         FetchContent_Populate("${name}")
+        apply_patches("${${name}_SOURCE_DIR}" PATCHES ${ARG_PATCHES})
         add_subdirectory("${${name}_SOURCE_DIR}" "${${name}_BINARY_DIR}")
     endif()
 endfunction ()
@@ -38,4 +39,21 @@ function (suppress_warnings target)
     elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
         target_compile_options("${target}" PRIVATE "/W0")
     endif ()
+endfunction ()
+
+
+function (apply_patches dir)
+    cmake_parse_arguments(ARG "" "" "PATCHES" ${ARGN})
+
+    find_program(git_PATH git)
+    foreach (patch ${ARG_PATCHES})
+        get_filename_component(abs_patch "${patch}" ABSOLUTE)
+        execute_process(COMMAND "${git_PATH}" apply --ignore-whitespace "${abs_patch}"
+            WORKING_DIRECTORY "${dir}"
+            RESULT_VARIABLE exit_code
+        )
+        if (exit_code)
+            message(FATAL_ERROR "could not apply patch '${patch}'")
+        endif ()
+    endforeach ()
 endfunction ()
