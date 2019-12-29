@@ -29,10 +29,16 @@ jobs:
 
       - name: Configure
         env:
-          CXX: ${{ matrix.cxx }}
           CXXFLAGS: -fdiagnostics-color=always
           LDFLAGS: -fdiagnostics-color=always
         run: |
+          if [[ "${{ matrix.cxx }}" == "clang++" ]]; then
+            export "CC=clang"
+            export "CXX=clang++"
+          elif [[ "${{ matrix.cxx }}" == "g++" ]]; then
+            export "CC=gcc"
+            export "CXX=g++"
+          fi
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -S "." -B "build"
 
       - name: Build
