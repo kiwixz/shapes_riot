@@ -5,7 +5,6 @@
 #include "utils/vec.h"
 
 #include "bullet_manager.h"
-#include "health_bar.h"
 #include "weapon.h"
 
 namespace shapes_riot {

@@ -15,6 +15,7 @@ set(src
     hud
     hitbox
     main_menu
+    map
     player
     screen_stack
     weapon
