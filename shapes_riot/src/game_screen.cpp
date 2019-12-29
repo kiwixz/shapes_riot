@@ -17,6 +17,7 @@ void GameScreen::tick(double delta, const gfx::WindowState& state)
     player_.set_angle(std::atan2(state.mouse_pos.y, state.mouse_pos.x * camera_.ratio()));
     player_.tick(delta, bullet_manager_);
     camera_.center_on(player_.position());
+    map_.tick(delta, camera_.view());
     enemy_manager_.tick(delta, camera_.view(), player_.position());
     bullet_manager_.tick(delta, camera_.view());
 
@@ -28,6 +29,7 @@ void GameScreen::tick(double delta, const gfx::WindowState& state)
     }
 
     gfx::DrawList draw_list;
+    draw_list += map_.draw();
     draw_list += bullet_manager_.draw();
     draw_list += enemy_manager_.draw();
     draw_list += player_.draw();

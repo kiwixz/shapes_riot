@@ -7,6 +7,7 @@
 #include "camera.h"
 #include "enemy_manager.h"
 #include "hud.h"
+#include "map.h"
 #include "player.h"
 #include "screen_stack.h"
 
@@ -27,6 +28,7 @@ private:
     gfx::Drawer drawer_;
     Camera camera_;
     Hud hud_;
+    Map map_;
     Player player_;
     BulletManager bullet_manager_;
     EnemyManager enemy_manager_;
