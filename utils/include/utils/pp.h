@@ -16,7 +16,7 @@
         do {                                                                                                                                    \
             if (!(condition)) {                                                                                                                 \
                 ::utils::Logger{"assert"}(::utils::LogLevel::critical, "condition is false: " STRINGIFY(condition) "\nfrom: " SOURCE_LOCATION); \
-                ::std::abort();                                                                                                                 \
+                ::std::terminate();                                                                                                             \
             }                                                                                                                                   \
         } while (false)
 #else
