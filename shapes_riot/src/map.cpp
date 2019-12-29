@@ -56,10 +56,12 @@ void Map::tick(double /*delta*/, const Box& camera_view)
 Map::Chunk::Chunk(utils::Vec2i _position, utils::RandF& rand) :
     position{_position}
 {
+    constexpr double luminosity = 0.2;
+
     for (Block& block : blocks)
-        block.color = {static_cast<float>(rand()),
-                       static_cast<float>(rand()),
-                       static_cast<float>(rand())};
+        block.color = {static_cast<float>(rand() * luminosity),
+                       static_cast<float>(rand() * luminosity),
+                       static_cast<float>(rand() * luminosity)};
 }
 
 }  // namespace shapes_riot
