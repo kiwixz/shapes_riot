@@ -29,11 +29,9 @@ utils::Span<const Vertex::Index> SubDrawList::indexes() const
 
 void SubDrawList::push(utils::Span<const Vertex> vertices, utils::Span<const Vertex::Index> indexes)
 {
-    vertices_.reserve(vertices_.size() + vertices.size());
     std::copy(vertices.begin(), vertices.end(), std::back_inserter(vertices_));
 
     if (indexes.size() != 0) {
-        indexes_.reserve(indexes_.size() + indexes.size());
         Vertex::Index offset = next_index_;
         for (Vertex::Index idx : indexes) {
             idx += offset;
@@ -42,7 +40,6 @@ void SubDrawList::push(utils::Span<const Vertex> vertices, utils::Span<const Ver
         }
     }
     else {
-        indexes_.reserve(indexes_.size() + vertices.size());
         for (int i = 0; i < static_cast<int>(vertices.size()); ++i)
             indexes_.push_back(next_index_ + i);
         next_index_ += static_cast<int>(vertices.size());

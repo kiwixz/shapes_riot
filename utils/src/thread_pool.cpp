@@ -26,7 +26,6 @@ size_t ThreadPool::size() const
 
 void ThreadPool::extend(size_t nr_threads)
 {
-    workers_.reserve(workers_.size() + nr_threads);
     for (size_t i = 0; i < nr_threads; ++i)
         workers_.emplace_back([this] {
             while (true) {
