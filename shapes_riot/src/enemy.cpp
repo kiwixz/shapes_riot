@@ -5,6 +5,9 @@
 
 namespace shapes_riot {
 
+constexpr float size = 0.2f;
+
+
 Enemy::Enemy(utils::Vec2d pos) :
     pos_{pos}
 {}
@@ -14,16 +17,16 @@ gfx::DrawList Enemy::draw() const
     utils::Vec4f color{1.0f, 1.0f - static_cast<float>(hp_) / max_enemy_hp, 0.0f, 1.0f};
 
     gfx::DrawList draw_list;
-    draw_list.push_triangle({utils::Vec4f{-0.1f, 0.1f, 0.0f}, color},
-                            {utils::Vec4f{0.1f, 0.0f, 0.0f}, color},
-                            {utils::Vec4f{-0.1f, -0.1f, 0.0f}, color});
+    draw_list.push_triangle({utils::Vec4f{-size, size, 0.0f}, color},
+                            {utils::Vec4f{size, 0.0f, 0.0f}, color},
+                            {utils::Vec4f{-size, -size, 0.0f}, color});
     draw_list.transform(gfx::transformation<float>({utils::Vec2f{pos_}, 0.0f}, {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, static_cast<float>(-angle_)}));
     return draw_list;
 }
 
 Hitbox Enemy::hitbox() const
 {
-    return {pos_, 0.08};
+    return {pos_, size};
 }
 
 bool Enemy::is_alive() const

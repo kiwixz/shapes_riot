@@ -17,7 +17,7 @@ struct Camera {
 
 private:
     utils::Vec2d center_;
-    utils::Vec2d half_size_{5.0, 5.0};
+    utils::Vec2d half_size_{15.0, 15.0};
 };
 
 }  // namespace shapes_riot

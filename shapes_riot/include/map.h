@@ -11,7 +11,7 @@
 
 namespace shapes_riot {
 
-inline constexpr int chunk_size = 8;
+inline constexpr int chunk_size = 16;
 
 
 struct Map {
