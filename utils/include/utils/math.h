@@ -4,44 +4,47 @@
 
 namespace utils {
 
-template <typename T>
-constexpr T pow2(T a);
-
-/// Only works with positive numbers.
-template <typename T>
-constexpr T ceil2(T a);
-
-/// Only works with positive numbers.
-template <typename T>
-constexpr T div_ceil(T a, T b);
-
-/// Only works with positive numbers.
-template <typename T>
-constexpr T round_up(T a, T unit);
-
-
-template <typename T>
-constexpr T pow2(T a)
+template <typename Unit, typename Arg>
+constexpr Unit ceil(Arg a)
 {
-    return a * a;
+    Unit unit_a = static_cast<Unit>(a);
+    if (a == static_cast<Arg>(unit_a))
+        return unit_a;
+    return unit_a + (a > 0 ? 1 : 0);
+}
+
+/// Only works with positive numbers.
+template <typename T, typename Arg>
+constexpr T ceil(Arg a, T unit)
+{
+    return ceil_div(a, unit) * unit;
 }
 
 template <typename T>
 constexpr T ceil2(T a)
 {
+    if (a < 0)
+        return -ceil2(-a);
     return static_cast<T>(1u << static_cast<unsigned>(std::log2(a - 1) + 1));
 }
 
+/// Only works with positive numbers.
 template <typename T>
-constexpr T div_ceil(T a, T b)
+constexpr T ceil_div(T a, T unit)
 {
-    return (a + b - 1) / b;
+    return (a + unit - 1) / unit;
+}
+
+template <typename T, typename Arg>
+constexpr T floor(Arg a)
+{
+    return static_cast<T>(std::floor(a));
 }
 
 template <typename T>
-constexpr T round_up(T a, T unit)
+constexpr T pow2(T a)
 {
-    return div_ceil(a, unit) * unit;
+    return a * a;
 }
 
 }  // namespace utils
