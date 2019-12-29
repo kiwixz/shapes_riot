@@ -1,0 +1,13 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -131,8 +131,8 @@ else ()
+ endif ()
+
+
+-project(freetype C)
+-
++cmake_policy(SET CMP0048 NEW)
++project(freetype LANGUAGES C VERSION 2.10.1)
+ set(VERSION_MAJOR "2")
+ set(VERSION_MINOR "10")
+ set(VERSION_PATCH "1")
