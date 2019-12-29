@@ -2,20 +2,23 @@
 
 #include <cmath>
 
+#include "utils/pp.h"
+
 namespace utils {
 
 template <typename Unit, typename Arg>
 constexpr Unit ceil(Arg a)
 {
+    static_assert(std::is_integral_v<Unit> && std::is_floating_point_v<Arg>);
+
     Unit unit_a = static_cast<Unit>(a);
     if (a == static_cast<Arg>(unit_a))
         return unit_a;
     return unit_a + (a > 0 ? 1 : 0);
 }
 
-/// Only works with positive numbers.
-template <typename T, typename Arg>
-constexpr T ceil(Arg a, T unit)
+template <typename Unit, typename Arg>
+constexpr Unit ceil(Arg a, Unit unit)
 {
     return ceil_div(a, unit) * unit;
 }
@@ -23,15 +26,19 @@ constexpr T ceil(Arg a, T unit)
 template <typename T>
 constexpr T ceil2(T a)
 {
+    static_assert(std::is_integral_v<T>);
+
     if (a < 0)
         return -ceil2(-a);
     return static_cast<T>(1u << static_cast<unsigned>(std::log2(a - 1) + 1));
 }
 
-/// Only works with positive numbers.
 template <typename T>
-constexpr T ceil_div(T a, T unit)
+constexpr T div_ceil(T a, T unit)
 {
+    static_assert(std::is_integral_v<T>);
+    ASSERT(a >= 0 && unit > 0);
+
     return (a + unit - 1) / unit;
 }
 
