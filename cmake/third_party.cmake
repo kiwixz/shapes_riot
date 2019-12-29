@@ -1,20 +1,19 @@
 include(FetchContent)
 
-function (third_party name repo ref)
-    FetchContent_Declare("${name}"
-        GIT_REPOSITORY "https://github.com/${repo}"
-        GIT_TAG "${ref}"
-    )
-    FetchContent_GetProperties("${name}")
-    if (NOT "${name}_POPULATED")
-        FetchContent_Populate("${name}")
-        add_subdirectory("${${name}_SOURCE_DIR}" "${${name}_BINARY_DIR}")
+function (third_party name)
+    cmake_parse_arguments(ARG "" "REPO;TAG;URL" "PATCHES" ${ARGN})
+
+    if (ARG_REPO AND ARG_TAG AND NOT ARG_URL)
+        FetchContent_Declare("${name}"
+            GIT_REPOSITORY "https://github.com/${ARG_REPO}"
+            GIT_TAG "${ARG_TAG}"
+        )
+    elseif (ARG_URL AND NOT ARG_REPO AND NOT ARG_TAG)
+        FetchContent_Declare("${name}" URL "${ARG_URL}")
+    else ()
+        message(FATAL_ERROR "wrong arguments")
     endif()
-endfunction ()
 
-
-function (third_party_url name url)
-    FetchContent_Declare("${name}" URL "${url}")
     FetchContent_GetProperties("${name}")
     if (NOT "${name}_POPULATED")
         FetchContent_Populate("${name}")
