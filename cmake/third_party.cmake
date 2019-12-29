@@ -48,12 +48,24 @@ function (apply_patches dir)
     find_program(git_PATH git)
     foreach (patch ${ARG_PATCHES})
         get_filename_component(abs_patch "${patch}" ABSOLUTE)
-        execute_process(COMMAND "${git_PATH}" apply --ignore-whitespace "${abs_patch}"
+
+        execute_process(COMMAND "${git_PATH}" apply --ignore-whitespace --check --reverse "${abs_patch}"
             WORKING_DIRECTORY "${dir}"
             RESULT_VARIABLE exit_code
+            OUTPUT_QUIET
+            ERROR_QUIET
         )
         if (exit_code)
-            message(FATAL_ERROR "could not apply patch '${patch}'")
+            message(STATUS "applying patch '${patch}'")
+            execute_process(COMMAND "${git_PATH}" apply --ignore-whitespace "${abs_patch}"
+                WORKING_DIRECTORY "${dir}"
+                RESULT_VARIABLE exit_code
+            )
+            if (exit_code)
+                message(FATAL_ERROR "could not apply patch '${patch}'")
+            endif ()
+        else ()
+            message(STATUS "patch '${patch}' already applied")
         endif ()
     endforeach ()
 endfunction ()

@@ -1,0 +1,11 @@
+--- a/src/gzip/zutil.h
++++ b/src/gzip/zutil.h
+@@ -182,7 +182,7 @@ typedef unsigned long  ulg;
+ #endif
+
+ /* Diagnostic functions */
+-#ifdef DEBUG
++#ifdef ZLIB_DEBUG
+ #  include <stdio.h>
+    extern int z_verbose;
+    extern void z_error    OF((char *m));

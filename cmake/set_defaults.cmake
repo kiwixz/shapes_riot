@@ -61,7 +61,7 @@ macro (set_defaults_flags_cpp)
         set(CMAKE_STATIC_LINKER_FLAGS_DEBUG "")
         set(CMAKE_STATIC_LINKER_FLAGS_RELEASE "/LTCG")
 
-        set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /UDEBUG")
+        set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
         set(CMAKE_C_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
     endif ()
 
