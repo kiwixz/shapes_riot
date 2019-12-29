@@ -2,8 +2,8 @@
 +++ b/CMakeLists.txt
 @@ -131,8 +131,8 @@ else ()
  endif ()
-
-
+ 
+ 
 -project(freetype C)
 -
 +cmake_policy(SET CMP0048 NEW)
