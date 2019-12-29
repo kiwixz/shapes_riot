@@ -6,7 +6,25 @@ namespace shapes_riot {
 
 gfx::DrawList Map::draw() const
 {
-    return {};
+    gfx::DrawList draw_list;
+    for (const Chunk& chunk : chunks_) {
+        utils::Vec2f chunk_base{chunk.position() * chunk_size};
+
+        auto it = chunk.blocks.begin();
+        for (int y = 0; y < chunk_size; ++y) {
+            for (int x = 0; x < chunk_size; ++x) {
+                const Block& block = *it;
+
+                draw_list.push_quad({{chunk_base.x + x, chunk_base.y + y + 1, 0.0f}, block.color},
+                                    {{chunk_base.x + x + 1, chunk_base.y + y + 1, 0.0f}, block.color},
+                                    {{chunk_base.x + x + 1, chunk_base.y + y, 0.0f}, block.color},
+                                    {{chunk_base.x + x, chunk_base.y + y, 0.0f}, block.color});
+
+                ++it;
+            }
+        }
+    }
+    return draw_list;
 }
 
 void Map::tick(double /*delta*/, const Box& camera_view)
