@@ -12,7 +12,11 @@ endmacro ()
 macro (set_defaults_flags_cpp)
     if (NOT ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug"
         OR "${CMAKE_BUILD_TYPE}" STREQUAL "Release"))
-        message(WARNING "unknown build type '${CMAKE_BUILD_TYPE}'")
+        message(FATAL_ERROR "unknown build type '${CMAKE_BUILD_TYPE}'")
+    endif ()
+
+    if (NOT "${CMAKE_C_COMPILER_ID}" STREQUAL "${CMAKE_CXX_COMPILER_ID}")
+        message(FATAL_ERROR "C/CXX compilers mismatch (C='${CMAKE_C_COMPILER_ID}' CXX='${CMAKE_CXX_COMPILER_ID}')")
     endif ()
 
     set(CMAKE_CXX_EXTENSIONS OFF)
