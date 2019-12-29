@@ -48,6 +48,23 @@ TEST_SUITE("math")
         static_assert(div_ceil(4, 2) == 2);
         static_assert(div_ceil(5, 2) == 3);
     }
+
+    TEST_CASE("floor")
+    {
+        static_assert(0 == floor<int>(0.0));
+        static_assert(4 == floor<int>(4.f));
+        static_assert(4 == floor<char>(4.0));
+        static_assert(4 == floor<int>(4.5));
+        static_assert(4 == floor<int>(4.000'000'000'000'01));
+        static_assert(4 == floor<int>(4.999'999'999'999'99));
+
+        static_assert(0 == floor<int>(-0.0));
+        static_assert(-4 == floor<int>(-4.f));
+        static_assert(-4 == floor<char>(-4.0));
+        static_assert(-5 == floor<int>(-4.5));
+        static_assert(-5 == floor<int>(-4.000'000'000'000'01));
+        static_assert(-5 == floor<int>(-4.999'999'999'999'99));
+    }
 }
 
 }  // namespace utils::test
