@@ -27,7 +27,10 @@ int EnemyManager::killed() const
 
 void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d player_pos)
 {
-    if (rand_() < delta / 2) {
+    constexpr double spawn_delay = 3.0;
+    constexpr double kills_for_double_spawn = 100.0;
+
+    if (rand_() < delta / spawn_delay * (1.0 + killed_ / kills_for_double_spawn)) {
         // generate random pos either [-1.2; -1.1[ or [1.1; 1.2]
         utils::Vec2d pos{rand_() / 5, rand_() / 5};
         if (pos.x < 0.1)

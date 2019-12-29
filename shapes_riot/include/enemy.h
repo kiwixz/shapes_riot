@@ -24,6 +24,7 @@ private:
     utils::Vec2d pos_;
     utils::Vec2d velocity_;
     double angle_ = 0.0;
+    double speed_ = 1.0;
     int hp_ = max_enemy_hp;
 };
 

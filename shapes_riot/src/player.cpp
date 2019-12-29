@@ -40,7 +40,7 @@ void Player::set_is_shooting(bool is_shooting)
 void Player::tick(double delta, BulletManager& bullet_manager)
 {
     constexpr double acceleration_ratio = 100.0;
-    constexpr double deceleration_ratio = 15.0;
+    constexpr double deceleration_ratio = 20.0;
 
     double accel_speed = acceleration_.length();
     if (accel_speed > 0)

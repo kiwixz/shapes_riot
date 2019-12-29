@@ -17,7 +17,10 @@ Enemy::Enemy(utils::Vec2d pos) :
 
 gfx::DrawList Enemy::draw() const
 {
-    utils::Vec4f color{1.0f, 1.0f - static_cast<float>(hp_) / max_enemy_hp, 0.0f, 1.0f};
+    utils::Vec4f color{1.0f,
+                       1.0f - static_cast<float>(hp_) / max_enemy_hp,
+                       static_cast<float>(1.0 - 1.0 / speed_),
+                       1.0f};
 
     gfx::DrawList draw_list;
     draw_list.push_triangle({utils::Vec4f{-size, size, 0.0f}, color},
@@ -39,16 +42,18 @@ bool Enemy::is_alive() const
 
 void Enemy::tick(double delta, utils::Vec2d target)
 {
-    constexpr double acceleration_ratio = 120.0;
+    constexpr double acceleration_ratio = 100.0;
     constexpr double deceleration_ratio = 50.0;
+    constexpr double time_acceleration_ratio = 0.1;
 
     utils::Vec2d acceleration = target - pos_;  // go towards target
     acceleration.normalize();
     angle_ = std::atan2(acceleration.y, acceleration.x);
 
-    velocity_ += acceleration * acceleration_ratio * delta;
+    velocity_ += acceleration * acceleration_ratio * speed_ * delta;
     pos_ += velocity_ * delta;
     velocity_ /= 1.0 + delta * deceleration_ratio;
+    speed_ *= 1.0 + delta * time_acceleration_ratio;
 }
 
 void Enemy::hurt(int hp)
