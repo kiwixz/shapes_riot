@@ -36,11 +36,15 @@ void Map::tick(double /*delta*/, const Box& camera_view)
     utils::Vec2i max = cam_max.transform<int>([](double a) { return utils::ntrunc<int>(a / chunk_size); });
 
     // delete chunks too far
-    chunks_.erase(std::remove_if(chunks_.begin(), chunks_.end(), [&](const Chunk& chunk) {
-                      return chunk.position.x < min.x || chunk.position.x > max.x
-                             || chunk.position.y < min.y || chunk.position.y > max.y;
-                  }),
-                  chunks_.end());
+    auto it = std::remove_if(chunks_.begin(), chunks_.end(), [&](const Chunk& chunk) {
+        return chunk.position.x < min.x || chunk.position.x > max.x
+               || chunk.position.y < min.y || chunk.position.y > max.y;
+    });
+    size_t nr_chunks = std::distance(it, chunks_.end());
+    if (nr_chunks > 0) {
+        logger_(utils::LogLevel::info, "deleting {} chunks", nr_chunks);
+        chunks_.erase(it, chunks_.end());
+    }
 
     // generate missing chunks
     for (int x = max.x; x >= min.x; --x) {
@@ -49,6 +53,7 @@ void Map::tick(double /*delta*/, const Box& camera_view)
             if (!std::any_of(chunks_.begin(), chunks_.end(), [&](const Chunk& chunk) {
                     return chunk.position == pos;
                 })) {
+                logger_(utils::LogLevel::info, "creating chunk at ({};{})", x, y);
                 chunks_.emplace_back(pos, rand_);
             }
         }
