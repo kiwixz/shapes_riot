@@ -32,8 +32,8 @@ void Map::tick(double /*delta*/, const Box& camera_view)
     utils::Vec2d cam_min{camera_view.center - camera_view.half_size};
     utils::Vec2d cam_max{camera_view.center + camera_view.half_size};
 
-    utils::Vec2i min = cam_min.transform<int>([](double a) { return utils::ntrunc<int>(a / chunk_size); });
-    utils::Vec2i max = cam_max.transform<int>([](double a) { return utils::ntrunc<int>(a / chunk_size); });
+    utils::Vec2i min = cam_min.transform<int>([](double a) { return utils::floor<int>(a / chunk_size); });
+    utils::Vec2i max = cam_max.transform<int>([](double a) { return utils::ceil<int>(a / chunk_size); });
 
     // delete chunks too far
     auto it = std::remove_if(chunks_.begin(), chunks_.end(), [&](const Chunk& chunk) {
