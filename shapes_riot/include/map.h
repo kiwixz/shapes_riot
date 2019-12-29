@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "gfx/draw_list.h"
+#include "utils/rand.h"
 #include "utils/vec.h"
 
 #include "box.h"
@@ -20,14 +21,22 @@ struct Map {
 
 private:
     struct Block {
+        utils::Vec3f color;
     };
 
     struct Chunk {
-        utils::Vec2i position;
+        Chunk(utils::Vec2i position, utils::RandF& rand);
+
+        utils::Vec2i position() const;
+
         std::array<Block, chunk_size * chunk_size> blocks;
+
+    private:
+        utils::Vec2i position_;
     };
 
     std::vector<Chunk> chunks_;
+    utils::RandF rand_;
 };
 
 }  // namespace shapes_riot
