@@ -8,7 +8,7 @@ gfx::DrawList Map::draw() const
 {
     gfx::DrawList draw_list;
     for (const Chunk& chunk : chunks_) {
-        utils::Vec2f chunk_base{chunk.position() * chunk_size};
+        utils::Vec2f chunk_base{chunk.position * chunk_size};
 
         auto it = chunk.blocks.begin();
         for (int y = 0; y < chunk_size; ++y) {
@@ -34,8 +34,8 @@ void Map::tick(double /*delta*/, const Box& camera_view)
 
     // delete chunks too far
     chunks_.erase(std::remove_if(chunks_.begin(), chunks_.end(), [&](const Chunk& chunk) {
-                      return chunk.position().x < min.x || chunk.position().x > max.x
-                             || chunk.position().y < min.y || chunk.position().y > max.y;
+                      return chunk.position.x < min.x || chunk.position.x > max.x
+                             || chunk.position.y < min.y || chunk.position.y > max.y;
                   }),
                   chunks_.end());
 
@@ -44,7 +44,7 @@ void Map::tick(double /*delta*/, const Box& camera_view)
         for (int y = max.y; y >= min.y; --y) {
             utils::Vec2i pos{x, y};
             if (!std::any_of(chunks_.begin(), chunks_.end(), [&](const Chunk& chunk) {
-                    return chunk.position() == pos;
+                    return chunk.position == pos;
                 })) {
                 chunks_.emplace_back(pos, rand_);
             }
@@ -53,18 +53,13 @@ void Map::tick(double /*delta*/, const Box& camera_view)
 }
 
 
-Map::Chunk::Chunk(utils::Vec2i position, utils::RandF& rand) :
-    position_{position}
+Map::Chunk::Chunk(utils::Vec2i _position, utils::RandF& rand) :
+    position{_position}
 {
     for (Block& block : blocks)
         block.color = {static_cast<float>(rand()),
                        static_cast<float>(rand()),
                        static_cast<float>(rand())};
-}
-
-utils::Vec2i Map::Chunk::position() const
-{
-    return position_;
 }
 
 }  // namespace shapes_riot

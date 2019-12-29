@@ -11,7 +11,7 @@
 
 namespace shapes_riot {
 
-inline constexpr int chunk_size = 16;
+inline constexpr int chunk_size = 8;
 
 
 struct Map {
@@ -27,12 +27,8 @@ private:
     struct Chunk {
         Chunk(utils::Vec2i position, utils::RandF& rand);
 
-        utils::Vec2i position() const;
-
+        utils::Vec2i position;
         std::array<Block, chunk_size * chunk_size> blocks;
-
-    private:
-        utils::Vec2i position_;
     };
 
     std::vector<Chunk> chunks_;
