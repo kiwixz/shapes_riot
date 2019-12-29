@@ -39,7 +39,8 @@ bool Enemy::is_alive() const
 
 void Enemy::tick(double delta, utils::Vec2d target)
 {
-    static constexpr double acceleration_ratio = 8.0;
+    constexpr double acceleration_ratio = 120.0;
+    constexpr double deceleration_ratio = 50.0;
 
     utils::Vec2d acceleration = target - pos_;  // go towards target
     acceleration.normalize();
@@ -47,7 +48,7 @@ void Enemy::tick(double delta, utils::Vec2d target)
 
     velocity_ += acceleration * acceleration_ratio * delta;
     pos_ += velocity_ * delta;
-    velocity_ /= 1.0 + delta * acceleration_ratio;
+    velocity_ /= 1.0 + delta * deceleration_ratio;
 }
 
 void Enemy::hurt(int hp)

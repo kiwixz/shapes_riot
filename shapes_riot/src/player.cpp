@@ -39,11 +39,14 @@ void Player::set_is_shooting(bool is_shooting)
 
 void Player::tick(double delta, BulletManager& bullet_manager)
 {
-    static constexpr double acceleration_ratio = 8.0;
+    constexpr double acceleration_ratio = 100.0;
+    constexpr double deceleration_ratio = 15.0;
 
-    velocity_ += acceleration_ * acceleration_ratio * delta;
+    double accel_speed = acceleration_.length();
+    if (accel_speed > 0)
+        velocity_ += acceleration_ / accel_speed * acceleration_ratio * delta;
     pos_ += velocity_ * delta;
-    velocity_ /= 1.0 + delta * acceleration_ratio;
+    velocity_ /= 1.0 + delta * deceleration_ratio;
 
     if (is_shooting_) {
         weapon_.fire(pos_, angle_, bullet_manager);
