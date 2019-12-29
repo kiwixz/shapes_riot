@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <type_traits>
 
 #include "utils/pp.h"
 
@@ -45,6 +46,18 @@ constexpr Unit floor(Arg a)
     if (a == static_cast<Arg>(unit_a))
         return unit_a;
     return unit_a - (a < 0);
+}
+
+template <typename Unit, typename Arg>
+constexpr Unit trunc(Arg a)
+{
+    return a > 0 ? floor<Unit>(a) : ceil<Unit>(a);
+}
+
+template <typename Unit, typename Arg>
+constexpr Unit ntrunc(Arg a)
+{
+    return a > 0 ? ceil<Unit>(a) : floor<Unit>(a);
 }
 
 template <typename T>

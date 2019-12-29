@@ -4,6 +4,8 @@
 #include <cmath>
 #include <type_traits>
 
+#include "utils/function_ref.h"
+
 namespace utils::vec_detail {
 
 struct VecBase {};  // simplify sfinae
@@ -14,22 +16,31 @@ inline constexpr bool is_vec = std::is_base_of_v<VecBase, T>;
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
 struct VecMeta : VecBase {
-    using Vec = TVec<TElement>;
+    template <typename T>
+    using Vec = TVec<T>;
+
     using Element = TElement;
     static constexpr int size = Tsize;
+
+    using Self = Vec<Element>;
 
     constexpr Element& operator[](size_t idx);
     constexpr Element operator[](size_t idx) const;
 
-    constexpr Element dot(const Vec& other) const;
+    template <typename T>
+    constexpr Vec<T> transform(utils::FunctionRef<T(Element)> func);
+
+    constexpr Self transform(utils::FunctionRef<Element(Element)> func);
+
+    constexpr Element dot(const Self& other) const;
     constexpr Element length() const;
 
-    constexpr void clamp(Element min, Element max);
+    constexpr void apply(utils::FunctionRef<Element(Element)> func);
     constexpr void normalize();
 
 private:
-    constexpr Vec& self();
-    constexpr const Vec& self() const;
+    constexpr Self& self();
+    constexpr const Self& self() const;
 };
 
 
@@ -144,7 +155,23 @@ constexpr TElement VecMeta<TVec, TElement, Tsize>::operator[](size_t idx) const
 }
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
-constexpr TElement VecMeta<TVec, TElement, Tsize>::dot(const Vec& other) const
+template <typename T>
+constexpr TVec<T> VecMeta<TVec, TElement, Tsize>::transform(utils::FunctionRef<T(Element)> func)
+{
+    Vec<T> vec;
+    for (int i = 0; i < size; ++i)
+        vec[i] = func(self()[i]);
+    return vec;
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr TVec<TElement> VecMeta<TVec, TElement, Tsize>::transform(utils::FunctionRef<Element(Element)> func)
+{
+    return transform<Element>(func);
+}
+
+template <template <typename> typename TVec, typename TElement, int Tsize>
+constexpr TElement VecMeta<TVec, TElement, Tsize>::dot(const Self& other) const
 {
     Element r{};
     for (int i = 0; i < size; ++i)
@@ -159,10 +186,10 @@ constexpr TElement VecMeta<TVec, TElement, Tsize>::length() const
 }
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
-constexpr void VecMeta<TVec, TElement, Tsize>::clamp(Element min, Element max)
+constexpr void VecMeta<TVec, TElement, Tsize>::apply(utils::FunctionRef<Element(Element)> func)
 {
     for (int i = 0; i < size; ++i)
-        self()[i] = std::clamp(self()[i], min, max);
+        self()[i] = func(self()[i]);
 }
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
@@ -174,13 +201,13 @@ constexpr void VecMeta<TVec, TElement, Tsize>::normalize()
 template <template <typename> typename TVec, typename TElement, int Tsize>
 constexpr TVec<TElement>& VecMeta<TVec, TElement, Tsize>::self()
 {
-    return *reinterpret_cast<Vec*>(this);
+    return *reinterpret_cast<Self*>(this);
 }
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
 constexpr const TVec<TElement>& VecMeta<TVec, TElement, Tsize>::self() const
 {
-    return *reinterpret_cast<const Vec*>(this);
+    return *reinterpret_cast<const Self*>(this);
 }
 
 }  // namespace utils::vec_detail

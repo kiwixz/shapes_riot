@@ -29,8 +29,11 @@ gfx::DrawList Map::draw() const
 
 void Map::tick(double /*delta*/, const Box& camera_view)
 {
-    utils::Vec2i min = utils::Vec2i{camera_view.center - camera_view.half_size} / chunk_size;
-    utils::Vec2i max = utils::Vec2i{camera_view.center + camera_view.half_size} / chunk_size;
+    utils::Vec2d cam_min{camera_view.center - camera_view.half_size};
+    utils::Vec2d cam_max{camera_view.center + camera_view.half_size};
+
+    utils::Vec2i min = cam_min.transform<int>([](double a) { return utils::ntrunc<int>(a / chunk_size); });
+    utils::Vec2i max = cam_max.transform<int>([](double a) { return utils::ntrunc<int>(a / chunk_size); });
 
     // delete chunks too far
     chunks_.erase(std::remove_if(chunks_.begin(), chunks_.end(), [&](const Chunk& chunk) {
