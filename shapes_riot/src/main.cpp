@@ -10,6 +10,7 @@
 #include "utils/resource_manager.h"
 
 #include "main_menu.h"
+#include "perf.h"
 #include "screen_stack.h"
 
 int main(int /*argc*/, char** /*argv*/)
@@ -40,6 +41,9 @@ int main(int /*argc*/, char** /*argv*/)
     ScreenStack screens{window};
     screens.emplace<MainMenu>(resource_manager);
 
+    gfx::Drawer drawer{resource_manager};
+    Perf perf;
+
     using Clock = std::chrono::steady_clock;
     Clock::time_point last_frame = Clock::now();
 
@@ -58,6 +62,9 @@ int main(int /*argc*/, char** /*argv*/)
             break;
         glClear(GL_DEPTH_BUFFER_BIT);
         screens.top().tick(delta, state);
+
+        perf.tick(delta);
+        drawer.draw(perf.draw(delta, state));
 
         window.swap_buffers();
     }
