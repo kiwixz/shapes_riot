@@ -25,6 +25,10 @@ constexpr T ceil2(T a)
 
     if (a < 0)
         return -ceil2(-a);
+
+    if (a <= 1)
+        return 1;
+
     return static_cast<T>(1u << static_cast<unsigned>(std::log2(a - 1) + 1));
 }
 
