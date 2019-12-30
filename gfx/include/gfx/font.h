@@ -11,16 +11,6 @@
 
 namespace gfx {
 
-struct Glyph {
-    utils::Vec2f uv_offset;
-    utils::Vec2f uv_size;
-
-    utils::Vec2f size;
-    utils::Vec2f bearing;
-    float advance;
-};
-
-
 struct Font {
     using GlyphCode = uint32_t;
 
@@ -33,6 +23,15 @@ struct Font {
     const Texture& texture() const;
 
 private:
+    struct Glyph {
+        utils::Vec2f uv_offset;
+        utils::Vec2f uv_size;
+
+        utils::Vec2f size;
+        utils::Vec2f bearing;
+        float advance;
+    };
+
     Texture texture_;
     std::unordered_map<GlyphCode, Glyph> glyphs_;
 
