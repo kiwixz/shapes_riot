@@ -21,9 +21,10 @@ private:
     utils::Vec2d pos_;
     utils::Vec2d velocity_;
     double angle_ = 0.0;
-    double speed_ = 1.0;
-
+    double speed_;
     double hp_;
+
+    int get_armor() const;
 };
 
 }  // namespace shapes_riot
