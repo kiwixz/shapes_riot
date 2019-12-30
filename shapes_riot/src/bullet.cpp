@@ -55,7 +55,7 @@ void Bullet::tick(double delta)
 void Bullet::on_collision(Enemy& enemy)
 {
     is_alive_ = false;
-    enemy.hurt(1);
+    enemy.hurt(0.5);
 }
 
 }  // namespace shapes_riot

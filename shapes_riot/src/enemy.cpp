@@ -11,14 +11,14 @@ constexpr float size = 0.2f;
 }
 
 
-Enemy::Enemy(utils::Vec2d pos) :
-    pos_{pos}
+Enemy::Enemy(utils::Vec2d pos, int level) :
+    pos_{pos}, hp_{static_cast<double>(level)}
 {}
 
 gfx::DrawList Enemy::draw() const
 {
     utils::Vec4f color{1.0f,
-                       1.0f - static_cast<float>(hp_) / max_enemy_hp,
+                       1.0f - static_cast<float>(hp_),
                        static_cast<float>(1.0 - 1.0 / speed_),
                        1.0f};
 
@@ -56,9 +56,9 @@ void Enemy::tick(double delta, utils::Vec2d target)
     speed_ *= 1.0 + delta * time_acceleration_ratio;
 }
 
-void Enemy::hurt(int hp)
+void Enemy::hurt(double hp)
 {
-    hp_ = std::max(hp_ - hp, 0);
+    hp_ = std::max(hp_ - hp, 0.0);
 }
 
 }  // namespace shapes_riot

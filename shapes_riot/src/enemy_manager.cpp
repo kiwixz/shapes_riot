@@ -46,7 +46,7 @@ void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d playe
         pos = camera_view.center + pos * camera_view.half_size;
 
         logger_(utils::LogLevel::info, "spawning enemy at ({},{})", pos.x, pos.y);
-        enemies_.emplace_back(pos);
+        enemies_.emplace_back(pos, 1);
     }
 
     for (auto it = enemies_.begin(); it != enemies_.end();) {
