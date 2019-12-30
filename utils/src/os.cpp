@@ -110,6 +110,15 @@ std::vector<std::string> stacktrace()
 
 #else
 
+namespace {
+
+void free_charpp(char** ptr)
+{
+    return free(ptr);
+}
+
+}  // namespace
+
 std::filesystem::path app_directory(std::string_view app_name)
 {
     const char* base = std::getenv("HOME");
@@ -157,8 +166,7 @@ std::vector<std::string> stacktrace()
     std::array<void*, 100> pointers;
     int nr_frames = backtrace(pointers.data(), pointers.size());
 
-    auto free_charss = [](char** ptr) { return free(ptr); };
-    auto frames = utils::make_c_ptr<char*, free_charss>(backtrace_symbols(pointers.data(), nr_frames));
+    auto frames = utils::make_c_ptr<char*, free_charpp>(backtrace_symbols(pointers.data(), nr_frames));
     if (!frames)
         throw MAKE_EXCEPTION("could not get stacktrace symbols");
 
