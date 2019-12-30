@@ -66,6 +66,7 @@ Checks: "*  ,\
   -cppcoreguidelines-pro-bounds-array-to-pointer-decay  ,\
   -hicpp-avoid-c-arrays  ,\
   -hicpp-no-array-decay  ,\
+  -hicpp-no-malloc  ,\
   -llvm-namespace-comment  ,\
   -misc-unconventional-assign-operator  ,\
   -modernize-avoid-c-arrays  ,\
