@@ -15,6 +15,7 @@ Checks: "*  ,\
   -cppcoreguidelines-avoid-magic-numbers  ,\
   -cppcoreguidelines-macro-usage  ,\
   -cppcoreguidelines-narrowing-conversions  ,\
+  -cppcoreguidelines-owning-memory  ,\
   -cppcoreguidelines-pro-bounds-constant-array-index  ,\
   -cppcoreguidelines-pro-bounds-pointer-arithmetic  ,\
   -cppcoreguidelines-pro-type-const-cast  ,\
@@ -61,6 +62,7 @@ Checks: "*  ,\
   -bugprone-forwarding-reference-overload  ,\
   -cppcoreguidelines-avoid-c-arrays  ,\
   -cppcoreguidelines-c-copy-assignment-signature  ,\
+  -cppcoreguidelines-no-malloc  ,\
   -cppcoreguidelines-pro-bounds-array-to-pointer-decay  ,\
   -hicpp-avoid-c-arrays  ,\
   -hicpp-no-array-decay  ,\
