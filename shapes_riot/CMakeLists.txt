@@ -16,6 +16,7 @@ set(src
     hitbox
     main_menu
     map
+    perf
     player
     screen_stack
     weapon
