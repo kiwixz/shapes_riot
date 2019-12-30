@@ -77,7 +77,8 @@ void Enemy::tick(double delta, utils::Vec2d target)
 
 void Enemy::hurt(double hp)
 {
-    hp_ = std::max(hp_ - hp, 0.0);
+    double after_armor = hp / std::pow(2, get_armor() + 1);
+    hp_ = std::max(hp_ - after_armor, 0.0);
 }
 
 int Enemy::get_armor() const
