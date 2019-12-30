@@ -1,5 +1,14 @@
 function (test_target_cpp target)
-    add_executable("${target}_test" "${PROJECT_SOURCE_DIR}/cmake/test_target_cpp_main.cpp" "${ARGN}")
-    target_link_libraries("${target}_test" "${target}" "doctest::doctest")
-    add_test(NAME "${target}_test" COMMAND "${target}_test")
+    set(test_target "${target}_test")
+
+    add_executable("${test_target}" "${PROJECT_SOURCE_DIR}/cmake/test_target_cpp_main.cpp" "${ARGN}")
+    target_link_libraries("${test_target}" "${target}" "doctest::doctest")
+
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        target_compile_options("${test_target}" PRIVATE "-fno-sanitize-recover=all")
+    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        target_compile_options("${test_target}" PRIVATE "-fno-sanitize-recover=all")
+    endif ()
+
+    add_test(NAME "${test_target}" COMMAND "${test_target}")
 endfunction ()
