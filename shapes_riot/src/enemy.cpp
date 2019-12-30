@@ -14,7 +14,7 @@ constexpr float outer_layer_size = 0.3f;
 
 
 Enemy::Enemy(utils::Vec2d pos, int level) :
-    pos_{pos}, speed_{1.0 / (level + 1)}, hp_{static_cast<double>(level + 1)}
+    pos_{pos}, hp_{static_cast<double>(level + 1)}
 {}
 
 gfx::DrawList Enemy::draw() const
@@ -63,13 +63,13 @@ void Enemy::tick(double delta, utils::Vec2d target)
 {
     constexpr double acceleration_ratio = 100.0;
     constexpr double deceleration_ratio = 50.0;
-    constexpr double time_acceleration_ratio = 0.1;
+    constexpr double time_acceleration_ratio = 0.05;
 
     utils::Vec2d acceleration = target - pos_;  // go towards target
     acceleration.normalize();
     angle_ = std::atan2(acceleration.y, acceleration.x);
 
-    velocity_ += acceleration * acceleration_ratio * speed_ * delta;
+    velocity_ += acceleration * acceleration_ratio * speed_ / (get_armor() + 1.0) * delta;
     pos_ += velocity_ * delta;
     velocity_ /= 1.0 + delta * deceleration_ratio;
     speed_ *= 1.0 + delta * time_acceleration_ratio;
