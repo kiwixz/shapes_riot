@@ -11,8 +11,8 @@
 #    include <Windows.h>
 #else
 #    include <cstdlib>
-#    include <vector>
 
+#    include <execinfo.h>
 #    include <pthread.h>
 #    include <pwd.h>
 #    include <sys/syscall.h>
@@ -103,6 +103,11 @@ void set_thread_name(const std::string& name)
     SetThreadDescription(GetCurrentThread(), to_native_string(name).c_str());
 }
 
+std::vector<std::string> stacktrace()
+{
+    return {};
+}
+
 #else
 
 std::filesystem::path app_directory(std::string_view app_name)
@@ -145,6 +150,23 @@ std::string thread_name()
 void set_thread_name(const std::string& name)
 {
     pthread_setname_np(pthread_self(), name.c_str());
+}
+
+std::vector<std::string> stacktrace()
+{
+    std::array<void*, 100> pointers;
+    int nr_frames = backtrace(pointers.data(), pointers.size());
+
+    auto free_charss = [](char** ptr) { return free(ptr); };
+    auto frames = utils::make_c_ptr<char*, free_charss>(backtrace_symbols(pointers.data(), nr_frames));
+    if (!frames)
+        throw MAKE_EXCEPTION("could not get stacktrace symbols");
+
+    std::vector<std::string> r;
+    r.resize(nr_frames);
+    for (int i = 0; i < nr_frames; ++i)
+        r[i] = frames.get()[i];
+    return r;
 }
 
 #endif

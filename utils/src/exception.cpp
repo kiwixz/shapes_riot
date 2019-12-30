@@ -4,6 +4,7 @@
 #include <exception>
 
 #include "utils/logger.h"
+#include "utils/os.h"
 
 namespace utils {
 
@@ -37,6 +38,12 @@ void terminate()
     catch (...) {
         logger(utils::LogLevel::critical, "fatal exception of unknown type");
     }
+
+    std::string trace = "stacktrace:";
+    std::vector<std::string> frames = stacktrace();
+    for (size_t i = 0; i < frames.size(); ++i)
+        trace += fmt::format("\n#{:02d}  {}", i, frames[i]);
+    logger(utils::LogLevel::critical, trace);
 
     std::abort();
 }

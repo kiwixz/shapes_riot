@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <string>
 #include <string_view>
+#include <vector>
 
 namespace utils {
 
@@ -14,5 +15,7 @@ ThreadId thread_id();
 
 std::string thread_name();
 void set_thread_name(const std::string& name);
+
+std::vector<std::string> stacktrace();
 
 }  // namespace utils
