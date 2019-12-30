@@ -28,7 +28,8 @@ int EnemyManager::killed() const
 void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d player_pos)
 {
     constexpr double spawn_delay = 3.0;
-    constexpr double kills_for_double_spawn = 100.0;
+    constexpr double kills_for_double_spawn = 1000.0;
+    constexpr int kills_armor_scale = 8;
 
     if (rand_() < delta / spawn_delay * (1.0 + killed_ / kills_for_double_spawn)) {
         // generate random pos either [-1.2; -1.1[ or [1.1; 1.2]
@@ -45,8 +46,9 @@ void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d playe
         // place pos randomly out of camera view
         pos = camera_view.center + pos * camera_view.half_size;
 
-        logger_(utils::LogLevel::info, "spawning enemy at ({},{})", pos.x, pos.y);
-        enemies_.emplace_back(pos, 1);
+        int level = static_cast<int>(std::sqrt(rand_() * killed_ / kills_armor_scale + 1.0) - 1.0);
+        logger_(utils::LogLevel::info, "spawning enemy level {} at ({},{})", level, pos.x, pos.y);
+        enemies_.emplace_back(pos, level);
     }
 
     for (auto it = enemies_.begin(); it != enemies_.end();) {

@@ -14,7 +14,7 @@ constexpr float outer_layer_size = 0.3f;
 
 
 Enemy::Enemy(utils::Vec2d pos, int level) :
-    pos_{pos}, speed_{1.0 / level}, hp_{static_cast<double>(level)}
+    pos_{pos}, speed_{1.0 / (level + 1)}, hp_{static_cast<double>(level + 1)}
 {}
 
 gfx::DrawList Enemy::draw() const
