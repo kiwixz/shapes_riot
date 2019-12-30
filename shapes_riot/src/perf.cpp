@@ -23,7 +23,7 @@ void Perf::tick(double delta)
     time_ += delta;
     if (time_ > 1.0) {
         time_ -= std::trunc(time_);
-        last_fps_ = second_deltas_.size();
+        last_fps_ = static_cast<int>(second_deltas_.size());
         second_deltas_.clear();
     }
     second_deltas_.push_back(delta);
