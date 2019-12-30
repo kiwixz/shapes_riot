@@ -83,10 +83,7 @@ void Enemy::hurt(double hp)
 int Enemy::get_armor() const
 {
     int armor = static_cast<int>(hp_);
-    if (armor == hp_)  // we are max hp
-        return armor - 1;
-    else
-        return armor;
+    return armor - (armor == hp_);  // substract one if we are at max hp of current armor
 }
 
 }  // namespace shapes_riot
