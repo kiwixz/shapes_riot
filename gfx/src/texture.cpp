@@ -2,9 +2,9 @@
 
 namespace gfx {
 
-Texture::Texture(utils::Vec2i size, GLenum format)
+Texture::Texture(utils::Vec2i size, int levels, GLenum format)
 {
-    resize(size, format);
+    resize(size, levels, format);
 }
 
 Texture::operator TextureView() const
@@ -23,13 +23,13 @@ utils::ScopeExit Texture::bind() const
     return utils::ScopeExit{std::bind(glBindTexture, GL_TEXTURE_2D, 0)};
 }
 
-void Texture::resize(utils::Vec2i size, GLenum format)
+void Texture::resize(utils::Vec2i size, int levels, GLenum format)
 {
     if (texture_[0])  // already allocated
         texture_ = {};
     size_ = size;
     glCreateTextures(GL_TEXTURE_2D, 1, texture_.ptr());
-    glTextureStorage2D(texture_[0], 1, format, size_.x, size_.y);
+    glTextureStorage2D(texture_[0], levels, format, size_.x, size_.y);
 }
 
 }  // namespace gfx

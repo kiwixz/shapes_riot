@@ -100,8 +100,8 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
         glyph.uv_size /= utils::Vec2f{texture_size};
     }
 
-    texture_.resize(texture_size, GL_RGBA8);
-    texture_.update(texture_pixels.data(), GL_BGRA);
+    texture_.resize(texture_size, 1, GL_RGBA8);
+    texture_.update(texture_pixels.data(), 0, GL_BGRA);
 }
 
 DrawList Font::draw_glyph(GlyphCode code, utils::Vec3f pen, utils::Vec2f size) const
