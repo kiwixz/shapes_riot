@@ -2,6 +2,7 @@
 
 #include "gfx/draw_list.h"
 #include "gfx/font.h"
+#include "gfx/ui/label.h"
 #include "gfx/window_state.h"
 #include "utils/resource_manager.h"
 
@@ -10,15 +11,14 @@ namespace shapes_riot {
 struct Perf {
     Perf();
 
-    gfx::DrawList draw(double delta, const gfx::WindowState& state) const;
+    gfx::DrawList draw(double delta, const gfx::WindowState& state);
 
     void tick(double delta);
 
 private:
-    utils::ResourceHandle<gfx::Font> font_;
+    gfx::ui::Label fps_label_;
     double time_ = 0.0;
     std::vector<double> second_deltas_;
-    int last_fps_ = 0;
 };
 
 }  // namespace shapes_riot

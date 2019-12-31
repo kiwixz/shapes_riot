@@ -2,9 +2,18 @@
 
 namespace gfx::ui {
 
-Label::Label(utils::ResourceHandle<Font> font, std::string label) :
-    font_{std::move(font)}, label_{std::move(label)}
+Label::Label(utils::ResourceHandle<Font> font, float size, Anchor anchor) :
+    Label{"", std::move(font), size, anchor}
 {}
+
+Label::Label(std::string text, utils::ResourceHandle<Font> font, float size, Anchor anchor) :
+    font_{std::move(font)}, text_{std::move(text)}, size_{size}, anchor_{anchor}
+{}
+
+void Label::set_text(std::string&& text)
+{
+    text_ = std::move(text);
+}
 
 void Label::on_key_impl(const WindowEvent::KeyEvent& /*event*/)
 {}
@@ -14,11 +23,19 @@ void Label::on_mouse_button_impl(const WindowEvent::MouseButtonEvent& /*event*/,
 
 DrawList Label::draw_impl(double /*delta*/, double aspect_ratio)
 {
-    float size = 0.05f;
-    utils::Vec3f pen{-1.0f, 1 - size, 0.5f};
-    DrawList draw_list;
-    draw_list += font_->draw_text_linear(label_, pen, {static_cast<float>(size / aspect_ratio), size});
-    return draw_list;
+    utils::Vec3f origin;
+
+    if (anchor_ & Anchor::left)
+        origin.x = -1.0f;
+    else if (anchor_ & Anchor::right)
+        origin.x = 1.0f;
+
+    if (anchor_ & Anchor::top)
+        origin.y = 1.0f;
+    else if (anchor_ & Anchor::bottom)
+        origin.y = -1.0f;
+
+    return font_->draw_text(text_, origin, {static_cast<float>(size_ / aspect_ratio), size_}, anchor_);
 }
 
 }  // namespace gfx::ui

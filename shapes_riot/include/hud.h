@@ -2,6 +2,7 @@
 
 #include "gfx/draw_list.h"
 #include "gfx/font.h"
+#include "gfx/ui/label.h"
 #include "gfx/window_state.h"
 #include "utils/resource_manager.h"
 
@@ -12,10 +13,10 @@ namespace shapes_riot {
 struct Hud {
     Hud();
 
-    gfx::DrawList draw(double delta, const gfx::WindowState& state, const EnemyManager& enemy_manager) const;
+    gfx::DrawList draw(double delta, const gfx::WindowState& state, const EnemyManager& enemy_manager);
 
 private:
-    utils::ResourceHandle<gfx::Font> font_;
+    gfx::ui::Label score_label_;
 };
 
 }  // namespace shapes_riot
