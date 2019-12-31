@@ -137,7 +137,6 @@ DrawList Font::draw_text(std::string_view text, utils::Vec3f origin, utils::Vec2
     else
         trans.y -= (y_max - -y_min) / 2;
 
-    //draw_list.transform(translation(utils::Vec3f{origin.x - pen.x / 2, origin.y - (y_max + y_min) / 2, 0.0f}));
     draw_list.transform(translation(trans));
     return draw_list;
 }
