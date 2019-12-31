@@ -32,7 +32,7 @@ void GameScreen::tick(double delta, const gfx::WindowState& state)
     draw_list += enemy_manager_.draw();
     draw_list += player_.draw();
     draw_list.transform(camera_.matrix());
-    draw_list += hud_.draw(delta, state, enemy_manager_);
+    draw_list += hud_.draw(state, enemy_manager_);
     drawer_.draw(draw_list);
 }
 

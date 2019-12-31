@@ -27,7 +27,7 @@ MainMenu::MainMenu(ScreenStack& screens, utils::ResourceManager& resource_manage
     add_button("Quit", [screens_ = &screens] { screens_->pop(); });
 }
 
-void MainMenu::tick(double delta, const gfx::WindowState& state)
+void MainMenu::tick(double /*delta*/, const gfx::WindowState& state)
 {
     glClearColor(0.4f, 0.0f, 0.0f, 1.0f);
 

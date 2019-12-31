@@ -11,7 +11,7 @@ namespace shapes_riot {
 struct Perf {
     Perf();
 
-    gfx::DrawList draw(double delta, const gfx::WindowState& state);
+    gfx::DrawList draw(const gfx::WindowState& state);
 
     void tick(double delta);
 

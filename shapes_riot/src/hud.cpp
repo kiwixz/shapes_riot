@@ -11,7 +11,7 @@ Hud::Hud()
     score_label_.set_margin(0.02f, 0.0f, 0.0f, 0.01f);
 }
 
-gfx::DrawList Hud::draw(double delta, const gfx::WindowState& state, const EnemyManager& enemy_manager)
+gfx::DrawList Hud::draw(const gfx::WindowState& state, const EnemyManager& enemy_manager)
 {
     score_label_.set_text(fmt::format("Score: {}", enemy_manager.killed()));
 

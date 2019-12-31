@@ -65,7 +65,7 @@ int main(int /*argc*/, char** /*argv*/)
         screens.top().tick(delta, state);
 
         perf.tick(delta);
-        drawer.draw(perf.draw(delta, state));
+        drawer.draw(perf.draw(state));
 
         window.swap_buffers();
     }
