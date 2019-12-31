@@ -13,7 +13,9 @@ namespace shapes_riot {
 struct Hud {
     Hud();
 
-    gfx::DrawList draw(const gfx::WindowState& state, const EnemyManager& enemy_manager);
+    gfx::DrawList draw(const gfx::WindowState& state) const;
+
+    void tick(const EnemyManager& enemy_manager);
 
 private:
     gfx::ui::Label score_label_;

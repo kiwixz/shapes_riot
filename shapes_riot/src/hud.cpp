@@ -11,13 +11,16 @@ Hud::Hud()
     score_label_.set_margin(0.02f, 0.0f, 0.0f, 0.01f);
 }
 
-gfx::DrawList Hud::draw(const gfx::WindowState& state, const EnemyManager& enemy_manager)
+gfx::DrawList Hud::draw(const gfx::WindowState& state) const
 {
-    score_label_.set_text(fmt::format("Score: {}", enemy_manager.killed()));
-
     gfx::DrawList draw_list;
     draw_list += score_label_.draw(static_cast<double>(state.framebuffer_size.x) / state.framebuffer_size.y);
     return draw_list;
+}
+
+void Hud::tick(const EnemyManager& enemy_manager)
+{
+    score_label_.set_text(fmt::format("Score: {}", enemy_manager.killed()));
 }
 
 }  // namespace shapes_riot
