@@ -29,7 +29,8 @@ DrawList Button::draw_impl(double /*delta*/, double aspect_ratio)
                         {{1.0f, 1.0f, 0.0f}, color},
                         {{1.0f, -1.0f, 0.0f}, color});
     draw_list += font_->draw_text(label_, {0.0f, 0.0f, 0.5f},
-                                  {static_cast<float>(0.8f / aspect_ratio), 0.8f});
+                                  {static_cast<float>(0.8f / aspect_ratio), 0.8f},
+                                  Anchor::center);
     return draw_list;
 }
 

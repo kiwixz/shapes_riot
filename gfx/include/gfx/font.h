@@ -4,6 +4,7 @@
 #include <string_view>
 #include <unordered_map>
 
+#include "gfx/anchor.h"
 #include "gfx/draw_list.h"
 #include "gfx/texture.h"
 #include "utils/span.h"
@@ -18,7 +19,7 @@ struct Font {
          utils::Span<const std::byte> file, int size_px);
 
     DrawList draw_glyph(GlyphCode code, utils::Vec3f pen, utils::Vec2f size) const;
-    DrawList draw_text(std::string_view text, utils::Vec3f center, utils::Vec2f size) const;
+    DrawList draw_text(std::string_view text, utils::Vec3f origin, utils::Vec2f size, Anchor anchor) const;
     DrawList draw_text_linear(std::string_view text, utils::Vec3f& pen, utils::Vec2f size) const;
     const Texture& texture() const;
 

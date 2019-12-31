@@ -109,7 +109,7 @@ DrawList Font::draw_glyph(GlyphCode code, utils::Vec3f pen, utils::Vec2f size) c
     return draw_glyph(glyphs_.at(code), pen, size);
 }
 
-DrawList Font::draw_text(std::string_view text, utils::Vec3f center, utils::Vec2f size) const
+DrawList Font::draw_text(std::string_view text, utils::Vec3f origin, utils::Vec2f size, Anchor anchor) const
 {
     DrawList draw_list;
     utils::Vec3f pen;
@@ -122,9 +122,23 @@ DrawList Font::draw_text(std::string_view text, utils::Vec3f center, utils::Vec2
         y_min = std::min(y_min, glyph.bearing.y - glyph.size.y);
         y_max = std::max(y_max, glyph.bearing.y);
     }
-    draw_list.transform(translation(utils::Vec3f{center.x - pen.x / 2,
-                                                 center.y - (y_max + y_min) / 2,
-                                                 0.0f}));
+
+    utils::Vec3f trans = origin;
+
+    if (anchor & Anchor::right)
+        trans.x -= pen.x;
+    else if (!(anchor & Anchor::left))
+        trans.x -= pen.x / 2;
+
+    if (anchor & Anchor::top)
+        trans.y -= y_max;
+    else if (anchor & Anchor::bottom)
+        trans.y += -y_min;
+    else
+        trans.y -= (y_max - -y_min) / 2;
+
+    //draw_list.transform(translation(utils::Vec3f{origin.x - pen.x / 2, origin.y - (y_max + y_min) / 2, 0.0f}));
+    draw_list.transform(translation(trans));
     return draw_list;
 }
 
