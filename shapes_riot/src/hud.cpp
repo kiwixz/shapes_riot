@@ -8,6 +8,7 @@ Hud::Hud()
 {
     auto font = std::make_shared<gfx::Font>(' ', '~' - ' ' + 1, embed::source_sans_pro(), 32);
     score_label_ = {font, 0.05f, gfx::Anchor::top_left};
+    score_label_.set_margin(0.02f, 0.0f, 0.0f, 0.01f);
 }
 
 gfx::DrawList Hud::draw(double delta, const gfx::WindowState& state, const EnemyManager& enemy_manager)

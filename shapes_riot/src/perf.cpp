@@ -8,6 +8,7 @@ Perf::Perf()
 {
     auto font = std::make_shared<gfx::Font>(' ', '~' - ' ' + 1, embed::source_sans_pro(), 32);
     fps_label_ = {font, 0.03f, gfx::Anchor::bottom_left};
+    fps_label_.set_margin(0.0f, 0.0f, 0.01f, 0.005f);
 }
 
 gfx::DrawList Perf::draw(double delta, const gfx::WindowState& state)
