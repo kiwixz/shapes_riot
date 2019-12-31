@@ -16,7 +16,7 @@ gfx::DrawList Hud::draw(double delta, const gfx::WindowState& state, const Enemy
     score_label_.set_text(fmt::format("Score: {}", enemy_manager.killed()));
 
     gfx::DrawList draw_list;
-    draw_list += score_label_.draw(delta, static_cast<double>(state.framebuffer_size.x) / state.framebuffer_size.y);
+    draw_list += score_label_.draw(static_cast<double>(state.framebuffer_size.x) / state.framebuffer_size.y);
     return draw_list;
 }
 

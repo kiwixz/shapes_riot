@@ -14,7 +14,7 @@ Perf::Perf()
 gfx::DrawList Perf::draw(double delta, const gfx::WindowState& state)
 {
     gfx::DrawList draw_list;
-    draw_list += fps_label_.draw(delta, static_cast<double>(state.framebuffer_size.x) / state.framebuffer_size.y);
+    draw_list += fps_label_.draw(static_cast<double>(state.framebuffer_size.x) / state.framebuffer_size.y);
     return draw_list;
 }
 

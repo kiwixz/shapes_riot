@@ -35,7 +35,7 @@ void MainMenu::tick(double delta, const gfx::WindowState& state)
     draw_list.push_triangle({{-0.9f, -0.9f, -0.9f}, {1.0f, 0.0f, 0.0f, 1.0f}},
                             {{0.0f, 0.9f, -0.9f}, {0.0f, 1.0f, 0.0f, 1.0f}},
                             {{0.9f, -0.9f, -0.9f}, {0.0f, 0.0f, 1.0f, 1.0f}});
-    draw_list += layout_.draw(delta, static_cast<double>(state.framebuffer_size.x) / state.framebuffer_size.y);
+    draw_list += layout_.draw(static_cast<double>(state.framebuffer_size.x) / state.framebuffer_size.y);
     drawer_.draw(draw_list);
 }
 

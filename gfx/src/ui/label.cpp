@@ -21,7 +21,7 @@ void Label::on_key_impl(const WindowEvent::KeyEvent& /*event*/)
 void Label::on_mouse_button_impl(const WindowEvent::MouseButtonEvent& /*event*/, utils::Vec3f /*pos*/)
 {}
 
-DrawList Label::draw_impl(double /*delta*/, double aspect_ratio)
+DrawList Label::draw_impl(double aspect_ratio) const
 {
     utils::Vec3f origin;
 

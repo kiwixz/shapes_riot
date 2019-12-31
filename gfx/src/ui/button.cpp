@@ -19,7 +19,7 @@ void Button::on_mouse_button_impl(const WindowEvent::MouseButtonEvent& event, ut
         on_click_();
 }
 
-DrawList Button::draw_impl(double /*delta*/, double aspect_ratio)
+DrawList Button::draw_impl(double aspect_ratio) const
 {
     static constexpr utils::Vec4f color = {0.0f, 0.0f, 0.0f, 0.85f};
 

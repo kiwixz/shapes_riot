@@ -33,11 +33,11 @@ void VerticalLayout::on_mouse_button_impl(const WindowEvent::MouseButtonEvent& e
     }
 }
 
-DrawList VerticalLayout::draw_impl(double delta, double aspect_ratio)
+DrawList VerticalLayout::draw_impl(double aspect_ratio) const
 {
     DrawList draw_list;
     for (const Child& child : children_) {
-        DrawList child_draw_list = child.widget->draw(delta, aspect_ratio * child.transform.scale.x / child.transform.scale.y);
+        DrawList child_draw_list = child.widget->draw(aspect_ratio * child.transform.scale.x / child.transform.scale.y);
         child_draw_list.transform(child.transform.matrix());
         draw_list.push(child_draw_list);
     }

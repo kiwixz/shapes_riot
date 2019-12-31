@@ -19,7 +19,7 @@ private:
 
     void on_key_impl(const WindowEvent::KeyEvent& event) override;
     void on_mouse_button_impl(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) override;
-    DrawList draw_impl(double delta, double aspect_ratio) override;
+    DrawList draw_impl(double aspect_ratio) const override;
 };
 
 }  // namespace gfx::ui

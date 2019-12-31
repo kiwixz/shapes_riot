@@ -7,9 +7,9 @@ const Transform3f& Widget::margin_transform() const
     return margin_tranform_;
 }
 
-DrawList Widget::draw(double delta, double aspect_ratio)
+DrawList Widget::draw(double aspect_ratio) const
 {
-    DrawList draw_list = draw_impl(delta, aspect_ratio * margin_tranform_.scale.x / margin_tranform_.scale.y);
+    DrawList draw_list = draw_impl(aspect_ratio * margin_tranform_.scale.x / margin_tranform_.scale.y);
     draw_list.transform(margin_tranform_.matrix());
     return draw_list;
 }

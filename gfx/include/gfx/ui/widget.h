@@ -13,7 +13,7 @@ struct Widget {
 
     const Transform3f& margin_transform() const;
 
-    DrawList draw(double delta, double aspect_ratio);
+    DrawList draw(double aspect_ratio) const;
     void set_margin(float top, float right, float bottom, float left);
 
     void on_key(const WindowEvent::KeyEvent& event);
@@ -32,7 +32,7 @@ private:
 
     virtual void on_key_impl(const WindowEvent::KeyEvent& event) = 0;
     virtual void on_mouse_button_impl(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos) = 0;
-    virtual DrawList draw_impl(double delta, double aspect_ratio) = 0;
+    virtual DrawList draw_impl(double aspect_ratio) const = 0;
 };
 
 }  // namespace gfx::ui
