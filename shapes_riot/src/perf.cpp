@@ -6,7 +6,7 @@ namespace shapes_riot {
 
 Perf::Perf()
 {
-    auto font = std::make_shared<gfx::Font>(' ', '~' - ' ' + 1, embed::source_sans_pro(), 32);
+    auto font = std::make_shared<gfx::Font>(' ', '~' - ' ' + 1, embed::source_sans_pro(), 64);
     fps_label_ = {font, 0.03f, gfx::Anchor::bottom_left};
     fps_label_.set_margin(0.0f, 0.0f, 0.01f, 0.005f);
 }

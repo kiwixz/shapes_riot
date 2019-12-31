@@ -6,7 +6,7 @@ namespace shapes_riot {
 
 Hud::Hud()
 {
-    auto font = std::make_shared<gfx::Font>(' ', '~' - ' ' + 1, embed::source_sans_pro(), 32);
+    auto font = std::make_shared<gfx::Font>(' ', '~' - ' ' + 1, embed::source_sans_pro(), 64);
     score_label_ = {font, 0.05f, gfx::Anchor::top_left};
     score_label_.set_margin(0.02f, 0.0f, 0.0f, 0.01f);
 }
