@@ -19,6 +19,7 @@ struct Texture {
 
     [[nodiscard]] utils::ScopeExit bind() const;
     void resize(utils::Vec2i size, int levels = 1, GLenum format = GL_RGB8);
+    void generate_mipmaps();
 
     template <typename T>
     void update(const T* pixels, utils::Vec2i offset, utils::Vec2i size, int level = 0,

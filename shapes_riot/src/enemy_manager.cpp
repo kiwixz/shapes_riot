@@ -60,6 +60,7 @@ void EnemyManager::tick(double delta, const Box& camera_view, utils::Vec2d playe
         else {
             it = enemies_.erase(it);
             ++killed_;
+            logger_(utils::LogLevel::info, "killed one enemy, total: {}", killed_);
         }
     }
 }

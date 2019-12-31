@@ -32,4 +32,9 @@ void Texture::resize(utils::Vec2i size, int levels, GLenum format)
     glTextureStorage2D(texture_[0], levels, format, size_.x, size_.y);
 }
 
+void Texture::generate_mipmaps()
+{
+    glGenerateTextureMipmap(texture_[0]);
+}
+
 }  // namespace gfx

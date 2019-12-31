@@ -33,6 +33,7 @@ int main(int /*argc*/, char** /*argv*/)
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
+
     glClearDepth(-1.0f);
     glDepthFunc(GL_GEQUAL);
     glEnable(GL_DEPTH_TEST);

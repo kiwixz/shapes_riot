@@ -14,6 +14,8 @@ namespace gfx {
 Font::Font(GlyphCode first_glyph, int nr_glyphs,
            utils::Span<const std::byte> file, int size_px)
 {
+    static constexpr int texture_width = 8192;
+
     // load font
     FT_Library freetype;
     if (FT_Error error = FT_Init_FreeType(&freetype))
@@ -63,7 +65,6 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
     std::sort(glyphs.begin(), glyphs.end(), [](const GlyphBitmap& a, const GlyphBitmap& b) {
         return a.size.y > b.size.y;
     });
-    static constexpr int texture_width = 8192;
     std::vector<uint32_t> texture_pixels;
 
     utils::Vec2i next_offset{1, 1};
@@ -100,8 +101,9 @@ Font::Font(GlyphCode first_glyph, int nr_glyphs,
         glyph.uv_size /= utils::Vec2f{texture_size};
     }
 
-    texture_.resize(texture_size, 1, GL_RGBA8);
+    texture_.resize(texture_size, static_cast<int>(std::log2(size_px)) - 1, GL_RGBA8);
     texture_.update(texture_pixels.data(), 0, GL_BGRA);
+    texture_.generate_mipmaps();
 }
 
 DrawList Font::draw_glyph(GlyphCode code, utils::Vec3f pen, utils::Vec2f size) const
