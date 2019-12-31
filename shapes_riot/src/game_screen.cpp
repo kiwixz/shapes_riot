@@ -12,8 +12,6 @@ GameScreen::GameScreen(ScreenStack& screens, utils::ResourceManager& resource_ma
 
 void GameScreen::tick(double delta, const gfx::WindowState& state)
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-
     player_.set_angle(std::atan2(state.mouse_pos.y, state.mouse_pos.x * camera_.ratio()));
     player_.tick(delta, bullet_manager_);
     camera_.center_on(player_.position());

@@ -30,7 +30,6 @@ MainMenu::MainMenu(ScreenStack& screens, utils::ResourceManager& resource_manage
 void MainMenu::tick(double delta, const gfx::WindowState& state)
 {
     glClearColor(0.4f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
 
     gfx::DrawList draw_list;
     draw_list.push_triangle({{-0.9f, -0.9f, -0.9f}, {1.0f, 0.0f, 0.0f, 1.0f}},

@@ -60,7 +60,7 @@ int main(int /*argc*/, char** /*argv*/)
         });
         if (screens.empty())
             break;
-        glClear(GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         screens.top().tick(delta, state);
 
         perf.tick(delta);
