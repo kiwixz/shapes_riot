@@ -1,10 +1,10 @@
 #pragma once
 
+#include <vector>
+
 #include "gfx/draw_list.h"
-#include "gfx/font.h"
 #include "gfx/ui/label.h"
 #include "gfx/window_state.h"
-#include "utils/resource_manager.h"
 
 namespace shapes_riot {
 

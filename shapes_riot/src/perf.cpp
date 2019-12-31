@@ -1,6 +1,10 @@
 #include "perf.h"
 
+#include <numeric>
+#include <ratio>
+
 #include "embed/source_sans_pro.h"
+#include "utils/math.h"
 
 namespace shapes_riot {
 
@@ -20,12 +24,29 @@ gfx::DrawList Perf::draw(const gfx::WindowState& state) const
 
 void Perf::tick(double delta)
 {
+    constexpr int nr_frames = 128;
+    constexpr double label_update_delay = 0.2;
+
     time_ += delta;
-    if (time_ > 1.0) {
-        time_ -= std::trunc(time_);
-        fps_label_.set_text(fmt::format("{} fps", second_deltas_.size()));
-        second_deltas_.clear();
+    if (time_ > label_update_delay) {
+        time_ = 0;
+
+        double sum = std::accumulate(second_deltas_.begin(), second_deltas_.end(), 0.0);
+        double mean = sum / second_deltas_.size();
+
+        double accum = std::accumulate(second_deltas_.begin(), second_deltas_.end(), 0.0,
+                                       [&](double current, double a) {
+                                           return current + utils::pow2(a - mean);
+                                       });
+
+        double dev = std::sqrt(accum / (second_deltas_.size() - 1));
+        double fps = 1.0 / mean;
+        fps_label_.set_text(fmt::format("{:.2f} fps  ({:.4f}ms ~{:.4f})", fps, mean * std::milli::den, dev * std::milli::den));
     }
+
+    if (second_deltas_.size() >= nr_frames)
+        second_deltas_.erase(second_deltas_.begin());  // TODO circular buffer
+
     second_deltas_.push_back(delta);
 }
 
