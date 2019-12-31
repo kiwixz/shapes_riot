@@ -12,7 +12,7 @@ namespace gfx::ui {
 struct Label : Widget {
     Label() = default;
     Label(utils::ResourceHandle<Font> font, float size, Anchor anchor);
-    Label(std::string label, utils::ResourceHandle<Font> font, float size, Anchor anchor);
+    Label(std::string text, utils::ResourceHandle<Font> font, float size, Anchor anchor);
 
     void set_text(std::string&& text);
 

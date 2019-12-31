@@ -20,6 +20,13 @@ struct Widget {
     void on_mouse_button(const WindowEvent::MouseButtonEvent& event, utils::Vec3f pos);
     void on_window_event(const WindowEvent& event, const WindowState& state);
 
+protected:
+    Widget() = default;
+    Widget(const Widget&) = default;
+    Widget& operator=(const Widget&) = default;
+    Widget(Widget&&) = default;
+    Widget& operator=(Widget&&) = default;
+
 private:
     Transform3f margin_tranform_{};
 
