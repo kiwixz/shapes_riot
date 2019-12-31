@@ -6,6 +6,7 @@ Checks: "*  ,\
   -fuchsia-*  ,\
   \
   -bugprone-integer-division  ,\
+  -bugprone-macro-parentheses  ,\
   -bugprone-narrowing-conversions  ,\
   -bugprone-use-after-move  ,\
   \
