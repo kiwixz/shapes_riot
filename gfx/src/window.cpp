@@ -54,7 +54,7 @@ bool Window::is_closed() const
 
 WindowState Window::state() const
 {
-    return WindowState{window_.get()};
+    return WindowState{*window_};
 }
 
 void Window::swap_buffers()

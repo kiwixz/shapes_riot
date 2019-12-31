@@ -6,7 +6,7 @@
 namespace gfx {
 
 struct WindowState {
-    explicit WindowState(GLFWwindow* window);
+    explicit WindowState(GLFWwindow& window);
 
     bool iconified;
     utils::Vec2i window_size;
