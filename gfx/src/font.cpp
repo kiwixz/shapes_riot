@@ -123,6 +123,9 @@ DrawList Font::draw_text(std::string_view text, utils::Vec3f origin, utils::Vec2
         y_max = std::max(y_max, glyph.bearing.y);
     }
 
+    y_min *= size.y;
+    y_max *= size.y;
+
     utils::Vec3f trans = origin;
 
     if (anchor & Anchor::right)
