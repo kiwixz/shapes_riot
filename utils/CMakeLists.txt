@@ -18,6 +18,7 @@ set(src
 set(test
     any
     bind_front
+    circular
     config
     function
     function_ref
