@@ -24,7 +24,6 @@ gfx::DrawList Perf::draw(const gfx::WindowState& state) const
 
 void Perf::tick(double delta)
 {
-    constexpr int nr_frames = 128;
     constexpr double label_update_delay = 0.2;
 
     time_ += delta;
@@ -43,9 +42,6 @@ void Perf::tick(double delta)
         double fps = 1.0 / mean;
         fps_label_.set_text(fmt::format("{:.2f} fps  ({:.4f}ms ~{:.4f})", fps, mean * std::milli::den, dev * std::milli::den));
     }
-
-    if (second_deltas_.size() >= nr_frames)
-        second_deltas_.erase(second_deltas_.begin());  // TODO circular buffer
 
     second_deltas_.push_back(delta);
 }

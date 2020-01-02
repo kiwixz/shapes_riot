@@ -11,22 +11,22 @@ TEST_SUITE("circular")
         Circular<int, 3> c;
         CHECK(c.max_size() == 3);
 
-        auto eq = [& cont = c](const std::initializer_list<int>& list) {
-            const Circular<int, 3>& c = cont;
+        auto eq = [&](const std::initializer_list<int>& list) {
+            const Circular<int, 3>& const_c = c;
 
             if (list.size() == 0) {
-                CHECK(c.empty());
-                CHECK(c.size() == 0);
+                CHECK(const_c.empty());
+                CHECK(const_c.size() == 0);
                 return;
             }
 
-            CHECK(!c.empty());
-            CHECK(c.size() == list.size());
-            CHECK(c.front() == *list.begin());
-            CHECK(c.back() == *(list.end() - 1));
+            CHECK(!const_c.empty());
+            CHECK(const_c.size() == list.size());
+            CHECK(const_c.front() == *list.begin());
+            CHECK(const_c.back() == *(list.end() - 1));
 
             auto it = list.begin();
-            for (int i : c) {
+            for (int i : const_c) {
                 CHECK(i == *it);
                 ++it;
             }

@@ -13,7 +13,7 @@ struct CircularIterator {
 
     CircularIterator() = default;
 
-    CircularIterator(Element* element, const Element* begin, const Element* end) :
+    CircularIterator(Element* element, Element* begin, Element* end) :
         element_{element}, begin_{begin}, end_{end}
     {}
 
@@ -71,8 +71,8 @@ struct CircularIterator {
 
 private:
     Element* element_ = nullptr;
-    const Element* begin_;
-    const Element* end_;
+    Element* begin_;
+    Element* end_;
 };
 
 
@@ -85,20 +85,20 @@ struct Circular {
 
     Iterator begin()
     {
-        return make_iterator<Iterator>(begin_);
+        return {storage_.data() + begin_, storage_.data(), storage_.data() + storage_.size()};
     }
     ConstIterator begin() const
     {
-        return make_iterator<ConstIterator>(begin_);
+        return {storage_.data() + begin_, storage_.data(), storage_.data() + storage_.size()};
     }
 
     Iterator end()
     {
-        return make_iterator<Iterator>(end_);
+        return {storage_.data() + end_, storage_.data(), storage_.data() + storage_.size()};
     }
     ConstIterator end() const
     {
-        return make_iterator<ConstIterator>(end_);
+        return {storage_.data() + end_, storage_.data(), storage_.data() + storage_.size()};
     }
 
     bool empty() const
@@ -149,7 +149,7 @@ struct Circular {
         begin_ = increment(begin_);
     }
 
-    void push_back(Element&& element)
+    void push_back(Element element)
     {
         if (size() == max_size())
             pop_front();
@@ -158,7 +158,7 @@ struct Circular {
         end_ = increment(end_);
     }
 
-    void push_front(Element&& element)
+    void push_front(Element element)
     {
         if (size() == max_size())
             pop_back();
@@ -172,12 +172,6 @@ private:
     std::array<Element, Tsize + 1> storage_;
     size_t begin_ = 0;
     size_t end_ = 0;
-
-    template <typename T>
-    T make_iterator(size_t index) const
-    {
-        return T{storage_.data() + index, storage_.data(), storage_.data() + storage_.size()};
-    }
 
     size_t increment(size_t index) const
     {

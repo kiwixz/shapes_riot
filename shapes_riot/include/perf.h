@@ -1,10 +1,9 @@
 #pragma once
 
-#include <vector>
-
 #include "gfx/draw_list.h"
 #include "gfx/ui/label.h"
 #include "gfx/window_state.h"
+#include "utils/circular.h"
 
 namespace shapes_riot {
 
@@ -18,7 +17,7 @@ struct Perf {
 private:
     gfx::ui::Label fps_label_;
     double time_ = 0.0;
-    std::vector<double> second_deltas_;
+    utils::Circular<double, 128> second_deltas_;
 };
 
 }  // namespace shapes_riot
