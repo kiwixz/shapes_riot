@@ -16,18 +16,20 @@ struct TaskImpl<Function, Result(Args...)> {
 
     TaskImpl(Function function)
     {
-        function_ = [this, function = std::move(function)](Args... args) {
+        std::promise<Result> promise;
+        future_ = promise.get_future();
+        function_ = [promise = std::move(promise), function = std::move(function)](Args... args) mutable {
             try {
                 if constexpr (std::is_same_v<Result, void>) {
                     function(std::forward<Args>(args)...);
-                    promise_.set_value();
+                    promise.set_value();
                 }
                 else {
-                    promise_.set_value(function(std::forward<Args>(args)...));
+                    promise.set_value(function(std::forward<Args>(args)...));
                 }
             }
             catch (...) {
-                promise_.set_exception(std::current_exception());
+                promise.set_exception(std::current_exception());
             }
         };
     }
@@ -37,9 +39,10 @@ struct TaskImpl<Function, Result(Args...)> {
         return function_;
     }
 
-    std::future<Result> get_future()
+    std::future<Result> future()
     {
-        return promise_.get_future();
+        ASSERT(future_.valid());
+        return std::move(future_);
     }
 
     void operator()(Args... args) const
@@ -48,7 +51,7 @@ struct TaskImpl<Function, Result(Args...)> {
     }
 
 private:
-    std::promise<Result> promise_;
+    std::future<Result> future_;
     Function function_;
 };
 

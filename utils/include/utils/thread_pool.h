@@ -45,7 +45,7 @@ std::future<std::invoke_result_t<T, Args...>> ThreadPool::submit(T&& callable, A
     using ReturnType = std::invoke_result_t<T, Args...>;
 
     utils::UniqueTask<ReturnType()> task{std::bind(std::forward<T>(callable), std::forward<Args>(args)...)};
-    std::future<ReturnType> future = task.get_future();
+    std::future<ReturnType> future = task.future();
 
     {
         std::lock_guard lock{tasks_mutex_};
