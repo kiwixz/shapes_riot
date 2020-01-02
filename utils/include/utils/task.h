@@ -42,9 +42,9 @@ struct TaskImpl<Function, Result(Args...)> {
         return promise_.get_future();
     }
 
-    Result operator()(Args... args) const
+    void operator()(Args... args) const
     {
-        return function_(std::forward<Args>(args)...);
+        function_(std::forward<Args>(args)...);
     }
 
 private:

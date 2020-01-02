@@ -51,6 +51,7 @@ std::future<std::invoke_result_t<T, Args...>> ThreadPool::submit(T&& callable, A
         std::lock_guard lock{tasks_mutex_};
         if (stopping_)
             throw MAKE_EXCEPTION("trying to add work on stopping thread pool");
+
         tasks_.emplace([task = std::move(task)] {
             task();
         });
