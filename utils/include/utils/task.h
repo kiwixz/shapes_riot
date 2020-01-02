@@ -39,10 +39,9 @@ struct TaskImpl<Function, Result(Args...)> {
         return function_;
     }
 
-    std::future<Result> future()
+    std::future<Result>& future()
     {
-        ASSERT(future_.valid());
-        return std::move(future_);
+        return future_;
     }
 
     void operator()(Args... args) const
