@@ -36,7 +36,7 @@ void ThreadPool::extend(size_t nr_threads)
                 if (stopping_ && tasks_.empty())
                     return;
 
-                std::function<void()> task = std::move(tasks_.front());
+                utils::UniqueFunction<void()> task = std::move(tasks_.front());
                 tasks_.pop();
                 lock.unlock();
 
