@@ -36,7 +36,7 @@ struct CircularIterator {
         element_ = (element_ == end_ - 1 ? begin_ : element_ + 1);
         return *this;
     }
-    const CircularIterator<Element> operator++(int)
+    CircularIterator<Element> operator++(int)
     {
         CircularIterator<Element> r = *this;
         ++*this;
@@ -48,7 +48,7 @@ struct CircularIterator {
         element_ = (element_ == 0 ? end_ - 1 : element_ - 1);
         return *this;
     }
-    const CircularIterator<Element> operator--(int)
+    CircularIterator<Element> operator--(int)
     {
         CircularIterator<Element> r = *this;
         --*this;

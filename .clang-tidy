@@ -61,6 +61,7 @@ Checks: "*  ,\
   -bugprone-branch-clone  ,\
   -bugprone-exception-escape  ,\
   -bugprone-forwarding-reference-overload  ,\
+  -cert-dcl21-cpp  ,\
   -cppcoreguidelines-avoid-c-arrays  ,\
   -cppcoreguidelines-c-copy-assignment-signature  ,\
   -cppcoreguidelines-no-malloc  ,\
