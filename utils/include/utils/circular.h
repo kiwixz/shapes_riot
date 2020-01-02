@@ -7,50 +7,98 @@
 
 namespace utils {
 
+template <typename TElement>
+struct CircularIterator {
+    using Element = TElement;
+
+    CircularIterator() = default;
+
+    CircularIterator(Element* element, const Element* begin, const Element* end) :
+        element_{element}, begin_{begin}, end_{end}
+    {}
+
+    template <typename T, typename std::enable_if_t<std::is_same_v<const T, Element>, int> = 0>
+    CircularIterator(const CircularIterator<T>& other) :
+        CircularIterator{other.element_, other.begin_, other.end_}
+    {}
+
+    Element& operator*() const
+    {
+        return *element_;
+    }
+    Element* operator->() const
+    {
+        return element_;
+    }
+
+    CircularIterator<Element>& operator++()
+    {
+        element_ = (element_ == end_ - 1 ? begin_ : element_ + 1);
+        return *this;
+    }
+    CircularIterator<Element> operator++(int)
+    {
+        CircularIterator<Element> r = *this;
+        ++*this;
+        return r;
+    }
+
+    CircularIterator<Element>& operator--()
+    {
+        element_ = (element_ == 0 ? end_ - 1 : element_ - 1);
+        return *this;
+    }
+    CircularIterator<Element> operator--(int)
+    {
+        CircularIterator<Element> r = *this;
+        --*this;
+        return r;
+    }
+
+#define DEF_OP(op)                                           \
+    bool operator op(const CircularIterator<Element>& other) \
+    {                                                        \
+        return element_ op other.element_;                   \
+    }
+
+    DEF_OP(==)
+    DEF_OP(!=)
+    DEF_OP(<)
+    DEF_OP(>)
+    DEF_OP(<=)
+    DEF_OP(>=)
+#undef DEF_OP
+
+private:
+    Element* element_ = nullptr;
+    const Element* begin_;
+    const Element* end_;
+};
+
+
 template <typename TElement, size_t Tsize>
 struct Circular {
     using Element = TElement;
 
-    template <typename TElement>
-    struct IteratorImpl {
-        using Element = TElement;
-
-        IteratorImpl() = default;
-
-        IteratorImpl(Element* element, const Element* begin, const Element* end) :
-            element_{element}, begin_{begin}, end_{end}
-        {}
-
-        template <typename T, typename std::enable_if_t<std::is_same_v<const T, Element>, int> = 0>
-        IteratorImpl(const IteratorImpl<T>& other) :
-            IteratorImpl{other.element_, other.begin_, other.end_}
-        {}
-
-    private:
-        Element* element_ = nullptr;
-        const Element* begin_;
-        const Element* end_;
-    };
-
-    using ConstIterator = IteratorImpl<const Element>;
-    using Iterator = IteratorImpl<Element>;
+    using ConstIterator = CircularIterator<const Element>;
+    using Iterator = CircularIterator<Element>;
 
     Iterator begin()
     {
-        return Iterator{storage_.data() + begin_};
+        return make_iterator<Iterator>(begin_);
     }
     ConstIterator begin() const
     {
-        return ConstIterator{storage_.data() + begin_};
+        return make_iterator<ConstIterator>(begin_);
     }
 
     Iterator end()
     {
-        return Iterator{storage_.data() + end_};
+        return make_iterator<Iterator>(end_);
     }
     ConstIterator end() const
     {
-        return ConstIterator{storage_.data() + end_};
+        return make_iterator<ConstIterator>(end_);
     }
 
     bool empty() const
@@ -125,12 +173,18 @@ private:
     size_t begin_ = 0;
     size_t end_ = 0;
 
-    size_t increment(size_t index)
+    template <typename T>
+    T make_iterator(size_t index) const
+    {
+        return T{storage_.data() + index, storage_.data(), storage_.data() + storage_.size()};
+    }
+
+    size_t increment(size_t index) const
     {
         return index == storage_.size() - 1 ? 0 : index + 1;
     }
 
-    size_t decrement(size_t index)
+    size_t decrement(size_t index) const
     {
         return index == 0 ? storage_.size() - 1 : index - 1;
     }
