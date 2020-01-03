@@ -1,6 +1,5 @@
 # clang-format 9
 
----
 Language: Cpp
 # BasedOnStyle: LLVM
 AccessModifierOffset: -4
@@ -125,4 +124,3 @@ Standard: Cpp11
 StatementMacros: []
 TabWidth: 4
 UseTab: Never
-...
