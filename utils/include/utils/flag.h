@@ -22,16 +22,21 @@ struct Flag {
         native_{native}
     {}
 
-    Flag(Underlying underlying) :
+    explicit Flag(Underlying underlying) :
         native_{static_cast<Native>(underlying)}
     {}
+
+    explicit operator bool()
+    {
+        return static_cast<Underlying>(native_) != 0;
+    }
 
     operator Native()
     {
         return native_;
     }
 
-    operator Underlying()
+    explicit operator Underlying()
     {
         return static_cast<Underlying>(native_);
     }
@@ -63,7 +68,7 @@ utils::Flag<T> operator~(T a)
     utils::Flag<T> operator op(T a, T b)                                                     \
     {                                                                                        \
         using Underlying = std::underlying_type_t<T>;                                        \
-        return static_cast<Underlying>(a) op static_cast<Underlying>(b);                     \
+        return utils::Flag<T>{static_cast<Underlying>(a) op static_cast<Underlying>(b)};     \
     }
 
 DEF_OP(&)
