@@ -12,10 +12,9 @@
 
 namespace shapes_riot {
 
-inline constexpr int chunk_size = 16;
-
-
 struct Map {
+    static constexpr int chunk_size = 16;
+
     gfx::DrawList draw() const;
 
     void tick(double delta, const Box& camera_view);
