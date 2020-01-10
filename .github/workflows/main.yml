@@ -78,6 +78,10 @@ jobs:
           git clone "https://github.com/${{ github.repository }}" "."
           git checkout "${{ github.sha }}"
 
+      - name: Patch
+        run: |
+          (gc "cmake/set_defaults.cmake") -replace "-flto=thin", "-flto" | sc "cmake/set_defaults.cmake"
+
       - name: Configure
         shell: cmd
         run: |
