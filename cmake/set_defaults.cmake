@@ -35,7 +35,6 @@ macro (set_defaults_flags_cpp)
         set(CMAKE_CXX_FLAGS_RELEASE "-D NDEBUG -O3 -flto=thin")
 
         if (WIN32)
-            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fms-compatibility")
             set(CMAKE_CXX_FLAGS_DEBUG "-D _DEBUG")
             if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
                 link_libraries("libcmtd.lib" "libcpmtd.lib")
@@ -60,10 +59,10 @@ macro (set_defaults_flags_cpp)
     
         set(CMAKE_STATIC_LINKER_FLAGS_DEBUG "")
         set(CMAKE_STATIC_LINKER_FLAGS_RELEASE "/LTCG")
-
-        set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
-        set(CMAKE_C_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
     endif ()
+
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 
     if (WIN32)
         link_libraries("onecore.lib")
