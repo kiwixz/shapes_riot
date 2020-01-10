@@ -7,7 +7,7 @@
 namespace shapes_riot {
 
 GameScreen::GameScreen(ScreenStack& screens, utils::ResourceManager& resource_manager) :
-    screens_{&screens}, drawer_{resource_manager}
+    drawer_{resource_manager}
 {}
 
 void GameScreen::tick(double delta, const gfx::WindowState& state)

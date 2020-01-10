@@ -23,8 +23,6 @@ struct GameScreen : Screen {
     void on_window_event(const gfx::WindowEvent& event, const gfx::WindowState& state) override;
 
 private:
-    ScreenStack* screens_;
-
     gfx::Drawer drawer_;
     Camera camera_;
     Hud hud_;
