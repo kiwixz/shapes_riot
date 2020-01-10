@@ -32,28 +32,6 @@ function (system_include_dirs target)
 endfunction ()
 
 
-macro (_suppress_warnings_cpp)
-    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-everything")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-everything")
-    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-all -Wno-extra")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-all -Wno-extra")
-    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        string(REGEX REPLACE "/W([0-4]|all)" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W0")
-
-        string(REGEX REPLACE "/W([0-4]|all)" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W0")
-    endif ()
-
-    if (WIN32)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /D_CRT_SECURE_NO_WARNINGS")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /D_CRT_SECURE_NO_WARNINGS")
-    endif ()
-endmacro ()
-
-
 function (_apply_patches dir)
     cmake_parse_arguments(ARG "" "" "PATCHES" ${ARGN})
 
@@ -81,3 +59,25 @@ function (_apply_patches dir)
         endif ()
     endforeach ()
 endfunction ()
+
+
+macro (_suppress_warnings_cpp)
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-everything")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-everything")
+    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-all -Wno-extra")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-all -Wno-extra")
+    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+        string(REGEX REPLACE "/W([0-4]|all)" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W0")
+
+        string(REGEX REPLACE "/W([0-4]|all)" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W0")
+    endif ()
+
+    if (WIN32)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /D_CRT_SECURE_NO_WARNINGS")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /D_CRT_SECURE_NO_WARNINGS")
+    endif ()
+endmacro ()
