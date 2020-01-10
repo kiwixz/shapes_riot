@@ -19,7 +19,7 @@ const std::string& Exception::from() const
 }
 
 
-void terminate()
+void terminate() noexcept
 {
     utils::Logger logger{"terminate"};
     try {

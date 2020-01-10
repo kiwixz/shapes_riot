@@ -7,7 +7,7 @@ namespace gfx {
 Window::Window(std::string_view title, utils::Vec2i size)
 {
     logger_(utils::LogLevel::info, "initializing glfw");
-    glfwSetErrorCallback([](int error, const char* description) {
+    glfwSetErrorCallback([](int error, const char* description) noexcept {
         utils::Logger{"GLFW"}(utils::LogLevel::error, "error {:#x}: {}", error, description);
     });
     glfw_handle_.emplace();
@@ -26,22 +26,22 @@ Window::Window(std::string_view title, utils::Vec2i size)
 
     logger_(utils::LogLevel::info, "loading gl");
     glfwMakeContextCurrent(window_.get());
-    if (!gladLoadGLLoader([](const char* name) { return reinterpret_cast<void*>(glfwGetProcAddress(name)); }))
+    if (!gladLoadGLLoader([](const char* name) noexcept { return reinterpret_cast<void*>(glfwGetProcAddress(name)); }))
         throw MAKE_EXCEPTION("could not load opengl");
     logger_(utils::LogLevel::info, "got gl context with version: {}", glGetString(GL_VERSION));
 
     logger_(utils::LogLevel::info, "setting up window");
     glfwSwapInterval(1);
     glfwSetWindowUserPointer(window_.get(), this);
-    glfwSetFramebufferSizeCallback(window_.get(), [](GLFWwindow* glfw_window, int width, int height) {
+    glfwSetFramebufferSizeCallback(window_.get(), [](GLFWwindow* glfw_window, int width, int height) noexcept {
         Window& self = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
         self.event_queue_.lock()->emplace_back(WindowEvent::FramebufferResize{width, height});
     });
-    glfwSetKeyCallback(window_.get(), [](GLFWwindow* glfw_window, int key, int scancode, int action, int mods) {
+    glfwSetKeyCallback(window_.get(), [](GLFWwindow* glfw_window, int key, int scancode, int action, int mods) noexcept {
         Window& self = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
         self.event_queue_.lock()->emplace_back(WindowEvent::KeyEvent{key, scancode, action, mods});
     });
-    glfwSetMouseButtonCallback(window_.get(), [](GLFWwindow* glfw_window, int button, int action, int mods) {
+    glfwSetMouseButtonCallback(window_.get(), [](GLFWwindow* glfw_window, int button, int action, int mods) noexcept {
         Window& self = *reinterpret_cast<Window*>(glfwGetWindowUserPointer(glfw_window));
         self.event_queue_.lock()->emplace_back(WindowEvent::MouseButtonEvent{button, action, mods});
     });

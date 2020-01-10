@@ -201,13 +201,13 @@ constexpr void VecMeta<TVec, TElement, Tsize>::normalize()
 template <template <typename> typename TVec, typename TElement, int Tsize>
 constexpr TVec<TElement>& VecMeta<TVec, TElement, Tsize>::self()
 {
-    return *reinterpret_cast<Self*>(this);
+    return *static_cast<Self*>(this);
 }
 
 template <template <typename> typename TVec, typename TElement, int Tsize>
 constexpr const TVec<TElement>& VecMeta<TVec, TElement, Tsize>::self() const
 {
-    return *reinterpret_cast<const Self*>(this);
+    return *static_cast<const Self*>(this);
 }
 
 }  // namespace utils::vec_detail

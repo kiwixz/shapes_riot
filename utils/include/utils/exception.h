@@ -29,7 +29,7 @@ private:
 };
 
 
-[[noreturn]] void terminate();
+[[noreturn]] void terminate() noexcept;
 
 
 template <typename... Args>

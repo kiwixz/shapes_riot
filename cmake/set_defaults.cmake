@@ -47,7 +47,10 @@ macro (set_defaults_flags_cpp)
         set(CMAKE_CXX_FLAGS_DEBUG "-D DEBUG -Og -g -fno-omit-frame-pointer -fsanitize=address,undefined")
         set(CMAKE_CXX_FLAGS_RELEASE "-D NDEBUG -O3 -flto")
     elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /nologo /diagnostics:caret /bigobj /MP /permissive- /EHsc /W4")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /nologo /diagnostics:caret /bigobj /MP /permissive- /EHsc /Wall  \
+            /wd4365 /wd4514 /wd4571 /wd4625 /wd4626 /wd4800 /wd4820 /wd5045  \
+            /wd4868"
+        )
         set(CMAKE_CXX_FLAGS_DEBUG "/DDEBUG /MTd /GF /Oi /JMC /RTC1 /ZI")
         set(CMAKE_CXX_FLAGS_RELEASE "/DNDEBUG /MT /O2 /GL /Gw")
 
@@ -59,6 +62,9 @@ macro (set_defaults_flags_cpp)
     
         set(CMAKE_STATIC_LINKER_FLAGS_DEBUG "")
         set(CMAKE_STATIC_LINKER_FLAGS_RELEASE "/LTCG")
+
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /experimental:external /external:W0 /external:env:INCLUDE")
+        set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "/external:I")
     endif ()
 
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
