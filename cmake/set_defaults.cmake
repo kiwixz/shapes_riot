@@ -27,9 +27,10 @@ macro (set_defaults_flags_cpp)
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
         set(CMAKE_CXX_FLAGS
             "${CMAKE_CXX_FLAGS} -pedantic -Weverything  \
-            -Wno-c++98-compat-pedantic -Wno-ctad-maybe-unsupported -Wno-disabled-macro-expansion  \
-            -Wno-double-promotion -Wno-exit-time-destructors -Wno-float-equal -Wno-padded  \
-            -Wno-return-std-move-in-c++11 -Wno-sign-conversion -Wno-weak-vtables"
+            -Wno-c++98-compat-pedantic -Wno-ctad-maybe-unsupported -Wno-double-promotion -Wno-exit-time-destructors  \
+            -Wno-float-equal -Wno-padded -Wno-sign-conversion -Wno-weak-vtables  \
+            \
+            -Wno-unused-macros"
         )
         set(CMAKE_CXX_FLAGS_DEBUG "-D DEBUG -Og -g -fno-omit-frame-pointer -fsanitize=address,undefined")
         set(CMAKE_CXX_FLAGS_RELEASE "-D NDEBUG -O3 -flto=thin")
@@ -49,6 +50,7 @@ macro (set_defaults_flags_cpp)
     elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /nologo /diagnostics:caret /bigobj /MP /permissive- /EHsc /Wall  \
             /wd4365 /wd4514 /wd4571 /wd4625 /wd4626 /wd4800 /wd4820 /wd5045  \
+            \
             /wd4868"
         )
         set(CMAKE_CXX_FLAGS_DEBUG "/DDEBUG /MTd /GF /Oi /JMC /RTC1 /ZI")
