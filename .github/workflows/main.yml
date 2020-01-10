@@ -9,7 +9,7 @@ jobs:
         cxx: ["clang++", "g++"]
     runs-on: ubuntu-latest
     container:
-      image: kiwixz/ci-cpp:2019-12-29
+      image: kiwixz/ci-cpp:2020-01-05
     steps:
       - name: Install system dependencies
         run: |
