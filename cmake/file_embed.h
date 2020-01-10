@@ -1,7 +1,8 @@
 #pragma once
 
-#include "utils/span.h"
 #include <cstddef>
+
+#include "utils/span.h"
 
 namespace @prefix@::embed
 {
@@ -19,8 +20,8 @@ extern "C"
 
 
 inline utils::Span<const std::byte> @name@() {
-    static utils::Span<const std::byte> span{detail::@prefix@_embed_@name@_begin,
-                                             detail::@prefix@_embed_@name@_size};
+    static const utils::Span<const std::byte> span{detail::@prefix@_embed_@name@_begin,
+                                                   detail::@prefix@_embed_@name@_size};
     return span;
 }
 
