@@ -38,7 +38,7 @@ struct Impl {
     template <typename T>
     T& as() const
     {
-        return *std::launder(reinterpret_cast<T*>(storage_.get()));
+        return *reinterpret_cast<T*>(storage_.get());
     }
 
     void destroy();
@@ -53,16 +53,16 @@ void proxy(ProxyOp op, Storage* a, Storage* b)
 {
     switch (op) {
     case ProxyOp::destroy:
-        std::launder(reinterpret_cast<T*>(a->get()))->~T();
+        reinterpret_cast<T*>(a->get())->~T();
         a->reset();
         break;
     case ProxyOp::copy:
         set_c_ptr(*b, operator new(sizeof(T)));
-        new (b->get()) T{*std::launder(reinterpret_cast<const T*>(a->get()))};
+        new (b->get()) T{*reinterpret_cast<const T*>(a->get())};
         break;
     case ProxyOp::move:
         set_c_ptr(*b, operator new(sizeof(T)));
-        new (b->get()) T{std::move(*std::launder(reinterpret_cast<T*>(a->get())))};
+        new (b->get()) T{std::move(*reinterpret_cast<T*>(a->get()))};
         break;
     }
 }
@@ -79,7 +79,7 @@ void proxy_unique(ProxyOp op, Storage* a, Storage* b)
         std::terminate();
     case ProxyOp::move:
         set_c_ptr(*b, operator new(sizeof(T)));
-        new (b->get()) T{std::move(*std::launder(reinterpret_cast<T*>(a->get())))};
+        new (b->get()) T{std::move(*reinterpret_cast<T*>(a->get()))};
         break;
     }
 }
