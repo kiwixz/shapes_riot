@@ -8,4 +8,3 @@ third_party("freetype" URL "https://download-mirror.savannah.gnu.org/releases/fr
         "zlib_debug.patch"
 )
 system_include_dirs("freetype")
-suppress_warnings("freetype")
