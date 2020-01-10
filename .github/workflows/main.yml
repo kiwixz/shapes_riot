@@ -80,7 +80,7 @@ jobs:
 
       - name: Patch
         run: |
-          (Get-Content "cmake/set_defaults.cmake") -replace "-flto=thin", "-flto" | Set-Content "cmake/set_defaults.cmake"
+          (Get-Content "cmake/set_defaults.cmake") -replace "-flto=thin", "" | Set-Content "cmake/set_defaults.cmake"
 
       - name: Configure
         shell: cmd
