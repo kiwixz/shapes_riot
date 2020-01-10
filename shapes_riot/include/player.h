@@ -24,8 +24,6 @@ private:
     utils::Vec2d acceleration_;
     double angle_ = 0.0;
 
-    int hp_ = 100;
-
     Weapon weapon_;
     bool is_shooting_ = false;
 };

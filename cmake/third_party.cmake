@@ -39,6 +39,10 @@ function (suppress_warnings target)
     elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
         target_compile_options("${target}" PRIVATE "/W0")
     endif ()
+
+    if (WIN32)
+        target_compile_definitions("${target}" PRIVATE _CRT_SECURE_NO_WARNINGS)
+    endif ()
 endfunction ()
 
 

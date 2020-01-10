@@ -11,7 +11,6 @@ set(src
     enemy
     enemy_manager
     game_screen
-    health_bar
     hud
     hitbox
     main_menu

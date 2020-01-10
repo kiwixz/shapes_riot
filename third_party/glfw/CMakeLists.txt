@@ -7,3 +7,4 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
 
 third_party("glfw" REPO "glfw/glfw" TAG "3.3")
 system_include_dirs("glfw")
+suppress_warnings("glfw")
