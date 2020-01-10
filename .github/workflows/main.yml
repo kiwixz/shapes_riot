@@ -6,10 +6,10 @@ jobs:
       fail-fast: false
       matrix:
         build_type: ["Debug", "Release"]
-        cxx: ["g++", "clang++"]
+        cxx: ["clang++", "g++"]
     runs-on: ubuntu-latest
     container:
-      image: kiwixz/ci-cpp:2019-12-29
+      image: kiwixz/ci-cpp:2020-01-05
     steps:
       - name: Install system dependencies
         run: |
@@ -59,23 +59,33 @@ jobs:
       fail-fast: false
       matrix:
         build_type: ["Debug", "Release"]
-        cxx: ["cl"]
+        cxx: ["cl", "clang"]
     runs-on: windows-latest
     env:
       VCVARS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat"
     steps:
       - name: Install system dependencies
+        shell: cmd
         run: |
-          choco install llvm nasm
+          choco install nasm
+          if "${{ matrix.cxx }}"=="clang" (
+            choco install llvm
+          )
 
       - name: Checkout
+        shell: cmd
         run: |
           git clone "https://github.com/${{ github.repository }}" "."
           git checkout "${{ github.sha }}"
 
+      - name: Patch
+        run: |
+          (Get-Content "cmake/set_defaults.cmake") -replace "-flto=thin", "" | Set-Content "cmake/set_defaults.cmake"
+
       - name: Configure
         shell: cmd
         run: |
+          call "%VCVARS%"
           if "${{ matrix.cxx }}"=="cl" (
             set "CC=cl"
             set "CXX=cl"
@@ -85,7 +95,6 @@ jobs:
             set "CC=clang"
             set "CXX=clang++"
           )
-          call "%VCVARS%"
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -S "." -B "build"
 
       - name: Build
