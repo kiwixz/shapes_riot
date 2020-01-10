@@ -2,49 +2,14 @@ cmake_minimum_required(VERSION 3.12)
 include("test_target_cpp")
 
 set(target "utils")
-set(src
-    any
-    any_detail
-    config
-    exception
-    logger
-    logging
-    os
-    rand
-    resource_manager
-    scope_exit
-    thread_pool
-)
-set(test
-    any
-    bind_front
-    circular
-    config
-    function
-    function_ref
-    guarded
-    make_array
-    math
-    matrix
-    resource_manager
-    scope_exit
-    global_handle
-    span
-    static_function
-    thread_pool
-    vec
-)
 
-
-list(TRANSFORM src PREPEND "src/")
-list(TRANSFORM src APPEND ".cpp")
+file(GLOB_RECURSE src CONFIGURE_DEPENDS "src/*.cpp")
 add_library("${target}" STATIC ${src})
 target_include_directories("${target}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 if (BUILD_TESTING)
-    list(TRANSFORM test PREPEND "test/")
-    list(TRANSFORM test APPEND ".test.cpp")
-    test_target_cpp("${target}" ${test})
+    file(GLOB_RECURSE test_src CONFIGURE_DEPENDS "test/*.cpp")
+    test_target_cpp("${target}" ${test_src})
 endif ()
 
 
