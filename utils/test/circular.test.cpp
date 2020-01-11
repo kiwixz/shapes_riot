@@ -1,5 +1,7 @@
 #include "utils/circular.h"
 
+#include <mutex>
+
 #include <doctest/doctest.h>
 
 #include "utils/scope_exit.h"
@@ -110,6 +112,90 @@ TEST_SUITE("circular")
         CHECK(r == 2 + 4 + 8 + 16);
         c.pop_back();
         CHECK(r == 2 + 4 + 8 + 16 + 32);
+    }
+
+    TEST_CASE("move_copy")
+    {
+        auto eq = [](const Circular<int, 3>& circular, const std::initializer_list<int>& list) {
+            CHECK(circular.size() == list.size());
+            auto it = list.begin();
+            for (int i : circular) {
+                CHECK(i == *it);
+                ++it;
+            }
+        };
+
+        auto eqp = [](const Circular<std::unique_ptr<int>, 3>& circular, const std::initializer_list<int>& list) {
+            CHECK(circular.size() == list.size());
+            auto it = list.begin();
+            for (const std::unique_ptr<int>& i : circular) {
+                CHECK(*i == *it);
+                ++it;
+            }
+        };
+
+        Circular<int, 3> c;
+        eq(c, {});
+        c.push_back(1);
+        eq(c, {1});
+        c.push_back(2);
+        eq(c, {1, 2});
+        c.push_back(3);
+        eq(c, {1, 2, 3});
+
+        Circular<int, 3> c2 = c;
+        eq(c2, {1, 2, 3});
+
+        Circular<int, 3> c3 = std::move(c2);
+        eq(c3, { 1, 2, 3 });
+
+        Circular<std::unique_ptr<int>, 3> cp;
+        eqp(cp, {});
+        cp.push_back(std::make_unique<int>(1));
+        eqp(cp, { 1 });
+        cp.push_back(std::make_unique<int>(2));
+        eqp(cp, { 1, 2 });
+        cp.push_back(std::make_unique<int>(3));
+        eqp(cp, { 1, 2, 3 });
+
+        //static_assert(!std::is_copy_constructible_v<Circular<std::unique_ptr<int>, 3>>);
+
+        Circular<std::unique_ptr<int>, 3> cp2 = std::move(cp);
+        eqp(cp2, { 1, 2, 3 });
+    }
+
+    TEST_CASE("leaks")
+    {
+        int r = 0;
+
+        {
+            Circular<ScopeExit, 3> c;
+            c.push_back(ScopeExit{[&] { ++r; }});
+            CHECK(r == 0);
+            c.push_back(ScopeExit{[&] { ++r; }});
+            CHECK(r == 0);
+            c.push_back(ScopeExit{[&] { ++r; }});
+            CHECK(r == 0);
+            c.push_back(ScopeExit{[&] { ++r; }});
+            CHECK(r == 1);
+            c.push_back(ScopeExit{[&] { ++r; }});
+            CHECK(r == 2);
+        }
+
+        CHECK(r == 5);
+    }
+
+    TEST_CASE("unmovable_objects")
+    {
+        Circular<std::mutex, 3> c;
+
+        c.emplace_back();
+        c.emplace_front();
+        c.emplace_back();
+        c.emplace_back();
+        c.emplace_back();
+        c.pop_back();
+        c.pop_back();
     }
 }
 

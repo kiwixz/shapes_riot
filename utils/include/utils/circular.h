@@ -91,6 +91,39 @@ struct Circular {
     using ConstIterator = CircularIterator<const Element>;
     using Iterator = CircularIterator<Element>;
 
+    Circular() = default;
+
+    ~Circular()
+    {
+        clear();
+    }
+
+    Circular(const Circular& other)
+    {
+        *this = other;
+    }
+
+    Circular& operator=(const Circular& other)
+    {
+        clear();
+        for (const Element& element : other)
+            emplace_back(element);
+        return *this;
+    }
+
+    Circular(Circular&& other) noexcept
+    {
+        *this = std::move(other);
+    }
+
+    Circular& operator=(Circular&& other) noexcept
+    {
+        clear();
+        for (Element& element : other)
+            emplace_back(std::move(element));
+        return *this;
+    }
+
     Iterator begin()
     {
         return {storage_.data() + begin_, storage_.data(), storage_.data() + storage_.size()};
@@ -121,6 +154,12 @@ struct Circular {
     size_t max_size() const
     {
         return Tsize;
+    }
+
+    void clear()
+    {
+        while (!empty())
+            pop_front();
     }
 
     Element& front()
