@@ -14,16 +14,16 @@ TEST_SUITE("uninitialized")
         struct S {
             S() = default;
 
-            S(int i_) :
-                i{i_}
+            S(int i) :
+                i_{i}
             {}
 
             S(Function<void()> f) :
-                f_{f}
+                f_{std::move(f)}
             {}
 
             S(Function<void()> f, FunctionRef<void()> f2) :
-                f_{f}
+                f_{std::move(f)}
             {
                 f2();
             }
@@ -40,9 +40,13 @@ TEST_SUITE("uninitialized")
             noexcept = delete;
             S& operator=(S&&) noexcept = delete;
 
-            int i = 42;
+            int i()
+            {
+                return i_;
+            }
 
         private:
+            int i_ = 42;
             Function<void()> f_;
         };
 
@@ -51,13 +55,13 @@ TEST_SUITE("uninitialized")
         Uninitialized<S> s;
 
         s.emplace();
-        CHECK((*s).i == 42);
-        CHECK(s->i == 42);
+        CHECK((*s).i() == 42);
+        CHECK(s->i() == 42);
         s.destroy();
 
         s.emplace(64);
-        CHECK((*s).i == 64);
-        CHECK(s->i == 64);
+        CHECK((*s).i() == 64);
+        CHECK(s->i() == 64);
         s.destroy();
 
         s.emplace([&] { c = 1; });
