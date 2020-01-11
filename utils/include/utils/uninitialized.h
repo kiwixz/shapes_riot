@@ -1,23 +1,29 @@
 #pragma once
 
 #include <new>
+#include <optional>
 #include <type_traits>
 
 #include "utils/pp.h"
-
 namespace utils {
 
 /// Allow custom lifetime management.  You have to manually destroy objects you create.
+/// You probably should rather use std::optional in most cases (especially when size is not a constraint).
 template <typename TElement>
 struct Uninitialized {
     using Element = TElement;
 
-#ifdef DEBUG
+    Uninitialized() = default;
+
     ~Uninitialized()
     {
         ASSERT(!init_);
     }
-#endif
+
+    Uninitialized(const Uninitialized&) = delete;
+    Uninitialized& operator=(const Uninitialized&) = delete;
+    Uninitialized(Uninitialized&&) noexcept = delete;
+    Uninitialized& operator=(Uninitialized&&) noexcept = delete;
 
     const Element& operator*() const
     {
