@@ -8,7 +8,6 @@ namespace utils {
 
 template <typename TElement, int Tdim>
 struct Matrix {
-    using Self = Matrix<TElement, Tdim>;
     using Element = TElement;
     static constexpr int dim = Tdim;
     static constexpr int size = dim * dim;
@@ -16,16 +15,16 @@ struct Matrix {
     constexpr Matrix() = default;
     constexpr Matrix(std::array<Element, size> data);
     ~Matrix() = default;
-    constexpr Matrix(const Self&) = default;
-    constexpr Self& operator=(const Self&) = default;
-    constexpr Matrix(Self&&) noexcept = default;
-    constexpr Self& operator=(Self&&) noexcept = default;
+    constexpr Matrix(const Matrix&) = default;
+    constexpr Matrix& operator=(const Matrix&) = default;
+    constexpr Matrix(Matrix&&) noexcept = default;
+    constexpr Matrix& operator=(Matrix&&) noexcept = default;
 
     template <typename T>
     constexpr explicit Matrix(const Matrix<T, dim>& other);
 
     template <typename T>
-    constexpr Self& operator=(const Matrix<T, dim>& other);
+    constexpr Matrix& operator=(const Matrix<T, dim>& other);
 
     constexpr Element& operator()(size_t row, size_t col);
     constexpr Element operator()(size_t row, size_t col) const;

@@ -10,7 +10,6 @@ namespace utils {
 
 template <typename TType, typename TMutex = std::mutex>
 struct Guarded {
-    using Self = Guarded<TType, TMutex>;
     using Type = TType;
     using Mutex = TMutex;
 
@@ -27,12 +26,12 @@ struct Guarded {
     };
 
     ~Guarded() = default;
-    Guarded(const Self&) = delete;
-    Self& operator=(const Self&) = delete;
-    Guarded(Self&&) noexcept = default;
-    Self& operator=(Self&&) noexcept = default;
+    Guarded(const Guarded&) = delete;
+    Guarded& operator=(const Guarded&) = delete;
+    Guarded(Guarded&&) noexcept = default;
+    Guarded& operator=(Guarded&&) noexcept = default;
 
-    template <typename... Args, std::enable_if_t<!is_pack_same<Self, Args...>, int> = 0>
+    template <typename... Args, std::enable_if_t<!is_pack_same<Guarded, Args...>, int> = 0>
     Guarded(Args&&... args);
 
     Handle lock();                     ///< Thread-safe
