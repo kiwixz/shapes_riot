@@ -25,7 +25,7 @@ struct FunctionImpl<Storage, Result(Args...)> {
 
     explicit operator bool() const
     {
-        return storage_;
+        return static_cast<bool>(storage_);
     }
 
     Result operator()(Args... args) const

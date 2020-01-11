@@ -4,13 +4,13 @@ namespace utils {
 
 Any::operator bool() const
 {
-    return impl_.operator bool();
+    return static_cast<bool>(impl_);
 }
 
 
 UniqueAny::operator bool() const
 {
-    return impl_.operator bool();
+    return static_cast<bool>(impl_);
 }
 
 }  // namespace utils
