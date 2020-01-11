@@ -105,11 +105,12 @@ struct Circular {
 
     Circular& operator=(const Circular& other)
     {
-        if (this != &other) {
-            clear();
-            for (const Element& element : other)
-                emplace_back(element);
-        }
+        if (this == &other)
+            return *this;
+
+        clear();
+        for (const Element& element : other)
+            emplace_back(element);
         return *this;
     }
 
@@ -120,11 +121,12 @@ struct Circular {
 
     Circular& operator=(Circular&& other) noexcept
     {
-        if (this != &other) {
-            clear();
-            for (Element& element : other)
-                emplace_back(std::move(element));
-        }
+        if (this == &other)
+            return *this;
+
+        clear();
+        for (Element& element : other)
+            emplace_back(std::move(element));
         return *this;
     }
 
