@@ -2,6 +2,8 @@
 
 #include <doctest/doctest.h>
 
+#include "utils/scope_exit.h"
+
 namespace utils::test {
 
 TEST_SUITE("circular")
@@ -81,6 +83,33 @@ TEST_SUITE("circular")
         eq({8});
         c.pop_front();
         eq({});
+    }
+
+    TEST_CASE("strict_lifetime")
+    {
+        int r = 42;
+        Circular<ScopeExit, 3> c;
+
+        c.push_back(ScopeExit{[&] { r = 0; }});
+        c.pop_back();
+        CHECK(r == 0);
+
+        c.push_back(ScopeExit{[&] { r += 8; }});
+        CHECK(r == 0);
+        c.push_front(ScopeExit{[&] { r += 4; }});
+        CHECK(r == 0);
+        c.push_front(ScopeExit{[&] { r += 2; }});
+        CHECK(r == 0);
+        c.push_back(ScopeExit{[&] { r += 32; }});
+        CHECK(r == 2);
+        c.push_back(ScopeExit{[&] { r += 16; }});
+        CHECK(r == 2 + 4);
+        c.pop_front();
+        CHECK(r == 2 + 4 + 8);
+        c.pop_back();
+        CHECK(r == 2 + 4 + 8 + 16);
+        c.pop_back();
+        CHECK(r == 2 + 4 + 8 + 16 + 32);
     }
 }
 
