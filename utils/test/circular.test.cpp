@@ -147,21 +147,19 @@ TEST_SUITE("circular")
         eq(c2, {1, 2, 3});
 
         Circular<int, 3> c3 = std::move(c2);
-        eq(c3, { 1, 2, 3 });
+        eq(c3, {1, 2, 3});
 
         Circular<std::unique_ptr<int>, 3> cp;
         eqp(cp, {});
         cp.push_back(std::make_unique<int>(1));
-        eqp(cp, { 1 });
+        eqp(cp, {1});
         cp.push_back(std::make_unique<int>(2));
-        eqp(cp, { 1, 2 });
+        eqp(cp, {1, 2});
         cp.push_back(std::make_unique<int>(3));
-        eqp(cp, { 1, 2, 3 });
-
-        //static_assert(!std::is_copy_constructible_v<Circular<std::unique_ptr<int>, 3>>);
+        eqp(cp, {1, 2, 3});
 
         Circular<std::unique_ptr<int>, 3> cp2 = std::move(cp);
-        eqp(cp2, { 1, 2, 3 });
+        eqp(cp2, {1, 2, 3});
     }
 
     TEST_CASE("leaks")
