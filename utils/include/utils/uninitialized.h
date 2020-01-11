@@ -19,41 +19,46 @@ struct Uninitialized {
     }
 #endif
 
-    Element& operator*() const
+    const Element& operator*() const
     {
+        ASSERT(init_);
         return *std::launder(reinterpret_cast<const Element*>(&storage_));
     }
     Element& operator*()
     {
+        ASSERT(init_);
         return *std::launder(reinterpret_cast<Element*>(&storage_));
     }
 
-    Element* operator->() const
+    const Element* operator->() const
     {
+        ASSERT(init_);
         return std::launder(reinterpret_cast<const Element*>(&storage_));
     }
     Element* operator->()
     {
+        ASSERT(init_);
         return std::launder(reinterpret_cast<Element*>(&storage_));
     }
 
     template <typename... Args>
     void emplace(Args&&... args)
     {
+        ASSERT(!init_);
+        new (&storage_) Element{std::forward<Args>(args)...};
 #ifdef DEBUG
         ASSERT(!init_);
         init_ = true;
 #endif
-        new (&storage_) Element{std::forward<Args>(args)...};
     }
 
     void destroy() noexcept
     {
-#ifdef DEBUG
         ASSERT(init_);
+        (**this).~Element();
+#ifdef DEBUG
         init_ = false;
 #endif
-        (*this)->~Element();
     }
 
 private:

@@ -4,6 +4,7 @@
 #include <type_traits>
 
 #include "utils/pp.h"
+#include "utils/uninitialized.h"
 
 namespace utils {
 
@@ -11,10 +12,17 @@ template <typename TElement>
 struct CircularIterator {
     using Element = TElement;
 
+    using Native = std::conditional_t<std::is_const_v<Element>,
+                                      const Uninitialized<std::remove_const_t<Element>>,
+                                      Uninitialized<Element>>;
+
     CircularIterator() = default;
 
-    CircularIterator(Element* element, Element* begin, Element* end) :
-        element_{element}, begin_{begin}, end_{end}
+    CircularIterator(Native* element,
+                     Native* begin,
+                     Native* end) :
+        element_{element},
+        begin_{begin}, end_{end}
     {}
 
     template <typename T, typename std::enable_if_t<std::is_same_v<const T, Element>, int> = 0>
@@ -24,7 +32,7 @@ struct CircularIterator {
 
     Element& operator*() const
     {
-        return *element_;
+        return **element_;
     }
     Element* operator->() const
     {
@@ -70,9 +78,9 @@ struct CircularIterator {
 #undef DEF_OP
 
 private:
-    Element* element_ = nullptr;
-    Element* begin_;
-    Element* end_;
+    Native* element_ = nullptr;
+    Native* begin_;
+    Native* end_;
 };
 
 
@@ -118,58 +126,72 @@ struct Circular {
     Element& front()
     {
         ASSERT(size() > 0);
-        return storage_[begin_];
+        return *storage_[begin_];
     }
     const Element& front() const
     {
         ASSERT(size() > 0);
-        return storage_[begin_];
+        return *storage_[begin_];
     }
 
     Element& back()
     {
         ASSERT(size() > 0);
-        return storage_[decrement(end_)];
+        return *storage_[decrement(end_)];
     }
     const Element& back() const
     {
         ASSERT(size() > 0);
-        return storage_[decrement(end_)];
+        return *storage_[decrement(end_)];
+    }
+
+    template <typename... Args>
+    void emplace_back(Args&&... args)
+    {
+        if (size() == max_size())
+            pop_front();
+
+        storage_[end_].emplace(std::forward<Args>(args)...);
+        end_ = increment(end_);
+    }
+
+    template <typename... Args>
+    void emplace_front(Args&&... args)
+    {
+        if (size() == max_size())
+            pop_back();
+
+        begin_ = decrement(begin_);
+        storage_[begin_].emplace(std::forward<Args>(args)...);
     }
 
     void pop_back()
     {
         ASSERT(size() > 0);
         end_ = decrement(end_);
+        storage_[end_].destroy();
     }
 
     void pop_front()
     {
         ASSERT(size() > 0);
+        storage_[begin_].destroy();
         begin_ = increment(begin_);
     }
 
     void push_back(Element element)
     {
-        if (size() == max_size())
-            pop_front();
-
-        storage_[end_] = std::move(element);
-        end_ = increment(end_);
+        return emplace_back(std::move(element));
     }
 
     void push_front(Element element)
     {
-        if (size() == max_size())
-            pop_back();
-
-        begin_ = decrement(begin_);
-        storage_[begin_] = std::move(element);
+        return emplace_front(std::move(element));
     }
 
 private:
     // we need Tsize+1 to ensure that begin_!=end_ when full
-    std::array<Element, Tsize + 1> storage_;
+    std::array<Uninitialized<Element>, Tsize + 1> storage_;
     size_t begin_ = 0;
     size_t end_ = 0;
 
