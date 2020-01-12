@@ -27,23 +27,23 @@ void terminate() noexcept
         if (ex)
             std::rethrow_exception(ex);
         else
-            logger(utils::LogLevel::critical, "no active exception");
+            logger(utils::LogLevel::fatal, "no active exception");
     }
     catch (const utils::Exception& ex) {
-        logger(utils::LogLevel::critical, "fatal exception: {}\nfrom: {}", ex.what(), ex.from());
+        logger(utils::LogLevel::fatal, "fatal exception: {}\nfrom: {}", ex.what(), ex.from());
     }
     catch (const std::exception& ex) {
-        logger(utils::LogLevel::critical, "fatal exception: {}", ex.what());
+        logger(utils::LogLevel::fatal, "fatal exception: {}", ex.what());
     }
     catch (...) {
-        logger(utils::LogLevel::critical, "fatal exception of unknown type");
+        logger(utils::LogLevel::fatal, "fatal exception of unknown type");
     }
 
     std::string trace = "stacktrace:";
     std::vector<std::string> frames = stacktrace();
     for (size_t i = 0; i < frames.size(); ++i)
         trace += fmt::format("\n#{:02d}  {}", i, frames[i]);
-    logger(utils::LogLevel::critical, trace);
+    logger(utils::LogLevel::fatal, trace);
 
     std::abort();
 }

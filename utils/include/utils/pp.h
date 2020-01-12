@@ -15,7 +15,7 @@
 #    define ASSERT(condition)                                                                                                                   \
         do {                                                                                                                                    \
             if (!(condition)) {                                                                                                                 \
-                ::utils::Logger{"assert"}(::utils::LogLevel::critical, "condition is false: " STRINGIFY(condition) "\nfrom: " SOURCE_LOCATION); \
+                ::utils::Logger{"assert"}(::utils::LogLevel::fatal, "condition is false: " STRINGIFY(condition) "\nfrom: " SOURCE_LOCATION); \
                 ::std::terminate();                                                                                                             \
             }                                                                                                                                   \
         } while (false)

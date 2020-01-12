@@ -11,7 +11,7 @@ enum class LogLevel {
     info,
     warning,
     error,
-    critical,
+    fatal,
     none,
 
 #ifdef DEBUG
