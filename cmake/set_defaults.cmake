@@ -26,7 +26,7 @@ macro (set_defaults_flags_cpp)
 
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
         set(CMAKE_CXX_FLAGS
-            "${CMAKE_CXX_FLAGS} -Weverything  \
+            "${CMAKE_CXX_FLAGS} -march=haswell -Weverything  \
             -Wno-c++98-compat-pedantic -Wno-ctad-maybe-unsupported -Wno-double-promotion -Wno-exit-time-destructors  \
             -Wno-float-equal -Wno-padded -Wno-sign-conversion -Wno-weak-vtables  \
             \
@@ -44,11 +44,11 @@ macro (set_defaults_flags_cpp)
             endif ()
         endif ()
     elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=haswell -pedantic -Wall -Wextra")
         set(CMAKE_CXX_FLAGS_DEBUG "-D DEBUG -Og -g -fno-omit-frame-pointer -fsanitize=address,undefined")
         set(CMAKE_CXX_FLAGS_RELEASE "-D NDEBUG -O3 -flto")
     elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /nologo /diagnostics:caret /bigobj /MP /permissive- /EHsc /Wall  \
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /nologo /diagnostics:caret /bigobj /MP /EHsc /arch:AVX2 /permissive- /Wall  \
             /wd4365 /wd4514 /wd4571 /wd4625 /wd4626 /wd4710 /wd4711 /wd4800 /wd4820 /wd5026 /wd5027 /wd5045  \
             \
             /wd4868"
@@ -69,6 +69,7 @@ macro (set_defaults_flags_cpp)
         set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "/external:I")
     endif ()
 
+    set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS}")
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
     set(CMAKE_C_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
 
