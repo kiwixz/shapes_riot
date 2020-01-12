@@ -8,7 +8,7 @@
 namespace shapes_riot {
 namespace {
 
-constexpr utils::Vec2f size{0.05f, 0.02f};
+constexpr utils::Vec2f size{0.1f, 0.01f};
 
 }
 
