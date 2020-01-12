@@ -12,12 +12,12 @@
 
 
 #ifdef DEBUG
-#    define ASSERT(condition)                                                                                                                   \
-        do {                                                                                                                                    \
-            if (!(condition)) {                                                                                                                 \
+#    define ASSERT(condition)                                                                                                                \
+        do {                                                                                                                                 \
+            if (!(condition)) {                                                                                                              \
                 ::utils::Logger{"assert"}(::utils::LogLevel::fatal, "condition is false: " STRINGIFY(condition) "\nfrom: " SOURCE_LOCATION); \
-                ::std::terminate();                                                                                                             \
-            }                                                                                                                                   \
+                ::std::terminate();                                                                                                          \
+            }                                                                                                                                \
         } while (false)
 #else
 #    define ASSERT(condition) ((void)0)
