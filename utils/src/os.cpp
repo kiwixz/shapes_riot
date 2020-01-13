@@ -259,19 +259,19 @@ void set_thread_name(const std::string& name)
     pthread_setname_np(pthread_self(), name.c_str());
 }
 
-std::vector<std::string> stacktrace()
+std::vector<StackFrame> stacktrace()
 {
     std::array<void*, 100> pointers;
     int nr_frames = backtrace(pointers.data(), pointers.size());
 
-    auto r = utils::make_c_ptr<char*, free_charpp>(backtrace_symbols(pointers.data(), nr_frames));
-    if (!r)
+    auto symbols = utils::make_c_ptr<char*, free_charpp>(backtrace_symbols(pointers.data(), nr_frames));
+    if (!symbols)
         throw MAKE_EXCEPTION("could not get stacktrace symbols");
 
-    std::vector<std::string> r;
+    std::vector<StackFrame> r;
     r.resize(nr_frames);
     for (int i = 0; i < nr_frames; ++i)
-        r[i] = r.get()[i];
+        r[i].function = symbols.get()[i];
     return r;
 }
 
