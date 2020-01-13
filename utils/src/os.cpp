@@ -110,8 +110,6 @@ void set_thread_name(const std::string& name)
 
 std::vector<StackFrame> stacktrace()
 {
-#    if 1
-
     struct DbgHandle {
         DbgHandle()
         {
@@ -137,12 +135,11 @@ std::vector<StackFrame> stacktrace()
 
     std::lock_guard lock{dbg_handle.mutex};
 
-
-    CONTEXT context = {};
+    CONTEXT context;
     context.ContextFlags = CONTEXT_FULL;
     RtlCaptureContext(&context);
 
-    bool first = true;
+    int frames_to_skip = 1;
     std::vector<StackFrame> r;
 
     HANDLE process = GetCurrentProcess();
@@ -158,6 +155,11 @@ std::vector<StackFrame> stacktrace()
 
     while (StackWalk(IMAGE_FILE_MACHINE_AMD64, process, thread, &frame, &context,
                      nullptr, SymFunctionTableAccess, SymGetModuleBase, nullptr)) {
+        if (frames_to_skip > 0) {
+            --frames_to_skip;
+            continue;
+        }
+
         StackFrame f;
         f.address = bit_cast<void*>(frame.AddrPC.Offset);
 
@@ -177,43 +179,31 @@ std::vector<StackFrame> stacktrace()
             return std::string{idx == std::string_view::npos ? module_path : module_path.substr(idx + 1)};
         }();
 
-        DWORD64 offset = 0;
 
-        char symbolBuffer[sizeof(IMAGEHLP_SYMBOL) + 255];
-        PIMAGEHLP_SYMBOL symbol = (PIMAGEHLP_SYMBOL)symbolBuffer;
-        symbol->SizeOfStruct = (sizeof IMAGEHLP_SYMBOL) + 255;
-        symbol->MaxNameLength = 254;
+        f.function = [&] {
+            DWORD64 offset = 0;
+            std::aligned_storage_t<sizeof(SYMBOL_INFO) + MAX_SYM_NAME - 1, alignof(SYMBOL_INFO)> buf;
+            SYMBOL_INFO* symbol = new (&buf) SYMBOL_INFO;
+            symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
+            symbol->MaxNameLen = MAX_SYM_NAME;
+            if (!SymFromAddr(process, frame.AddrPC.Offset, &offset, symbol))
+                return fmt::format("?unknown_function{}", GetLastError());
+            else
+                return std::string{symbol->Name};
+        }();
 
-        if (SymGetSymFromAddr(process, frame.AddrPC.Offset, &offset, symbol)) {
-            f.function = symbol->Name;
-        }
-        else {
-            DWORD error = GetLastError();
-            f.function = fmt::format("?unknown_function{}", error);
-        }
-
-        IMAGEHLP_LINE line;
-        line.SizeOfStruct = sizeof(IMAGEHLP_LINE);
-
-        DWORD offset_ln = 0;
-        if (SymGetLineFromAddr(process, frame.AddrPC.Offset, &offset_ln, &line)) {
+        DWORD offset = 0;
+        IMAGEHLP_LINE64 line;
+        line.SizeOfStruct = sizeof(IMAGEHLP_LINE64);
+        if (SymGetLineFromAddr64(process, frame.AddrPC.Offset, &offset, &line)) {
             f.file = line.FileName;
             f.line = line.LineNumber;
         }
-        else {
-            f.line = 0;
-        }
 
-        if (!first) {
-            r.push_back(f);
-        }
-        first = false;
+        r.push_back(std::move(f));
     }
 
     return r;
-
-#    endif
-    return {};
 }
 
 #else

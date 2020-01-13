@@ -43,7 +43,12 @@ void terminate() noexcept
     std::vector<StackFrame> frames = stacktrace();
     for (size_t i = 0; i < frames.size(); ++i) {
         const StackFrame& f = frames[i];
-        trace += fmt::format("\n#{:02d}  {}  {}  {}  {}:{}", i, f.module, f.function, f.address, f.file, f.line);
+        trace += fmt::format("\n#{:02d}  {}  {} ({})", i, f.module, f.function, f.address);
+        if (!f.file.empty()) {
+            trace += fmt::format("  {}", f.file);
+            if (f.line)
+                trace += fmt::format(":{}", f.line);
+        }
     }
     logger(utils::LogLevel::fatal, trace);
 
