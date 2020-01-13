@@ -174,7 +174,6 @@ std::vector<StackFrame> stacktrace()
                 return fmt::format("?unknown_module_file{}", GetLastError());
 
             std::string_view module_path{buf.data(), path_size};
-
             size_t idx = module_path.rfind('\\');
             return std::string{idx == std::string_view::npos ? module_path : module_path.substr(idx + 1)};
         }();
@@ -189,7 +188,7 @@ std::vector<StackFrame> stacktrace()
             if (!SymFromAddr(process, frame.AddrPC.Offset, &offset, symbol))
                 return fmt::format("?unknown_function{}", GetLastError());
             else
-                return std::string{symbol->Name};
+                return std::string{symbol->Name, symbol->NameLen};
         }();
 
         DWORD offset = 0;
