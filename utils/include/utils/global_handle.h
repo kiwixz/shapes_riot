@@ -1,5 +1,7 @@
 #pragma once
 
+#include <atomic>
+
 namespace utils {
 
 template <auto Tinit, auto Tdestroy>
@@ -15,26 +17,24 @@ struct GlobalHandle {
     GlobalHandle& operator=(GlobalHandle&& other) noexcept = default;
 
 private:
-    static int& counter();
+    static std::atomic<int>& counter();
 };
 
 
 template <auto Tinit, auto Tdestroy>
 GlobalHandle<Tinit, Tdestroy>::GlobalHandle()
 {
-    int& c = counter();
-    if (c == 0)
-        Tinit();  // msvc doesnt like init();
-    ++c;
+    std::atomic<int>& c = counter();
+    if (c.fetch_add(1) == 0)  // was the first
+        Tinit();              // msvc doesnt like init();
 }
 
 template <auto Tinit, auto Tdestroy>
 GlobalHandle<Tinit, Tdestroy>::~GlobalHandle()
 {
-    int& c = counter();
-    --c;
-    if (c == 0)
-        Tdestroy();  // msvc doesnt like destroy();
+    std::atomic<int>& c = counter();
+    if (c.fetch_sub(1) == 1)  // was the last
+        Tdestroy();           // msvc doesnt like destroy();
 }
 
 template <auto Tinit, auto Tdestroy>
@@ -48,10 +48,9 @@ GlobalHandle<Tinit, Tdestroy>::GlobalHandle(GlobalHandle&& /*other*/) noexcept :
 {}
 
 template <auto Tinit, auto Tdestroy>
-int& GlobalHandle<Tinit, Tdestroy>::counter()
+std::atomic<int>& GlobalHandle<Tinit, Tdestroy>::counter()
 {
-    // TODO thread-safety
-    static int counter;
+    static std::atomic<int> counter = 0;
     return counter;
 }
 
