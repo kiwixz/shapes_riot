@@ -20,6 +20,8 @@ int main(int /*argc*/, char** /*argv*/)
     std::set_terminate(&utils::terminate);
     utils::set_thread_name("main_thread");
 
+    std::terminate();
+
     gfx::Window window{"Shapes Riot", {1600, 900}};
 
     glDebugMessageControl(GL_DONT_CARE, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION,

@@ -1,17 +1,22 @@
 #include "utils/os.h"
 
+#include <array>
+#include <cstdlib>
+#include <mutex>
+
+#include "utils/bit_cast.h"
 #include "utils/c_ptr.h"
 #include "utils/exception.h"
+#include "utils/global_handle.h"
 
 #ifdef _WIN32
 #    include <ShlObj.h>
+#    include <dbghelp.h>
 
 #    define WIN32_LEAN_AND_MEAN
 #    define NOMINMAX
 #    include <Windows.h>
 #else
-#    include <cstdlib>
-
 #    include <execinfo.h>
 #    include <pthread.h>
 #    include <pwd.h>
@@ -103,8 +108,111 @@ void set_thread_name(const std::string& name)
     SetThreadDescription(GetCurrentThread(), to_native_string(name).c_str());
 }
 
-std::vector<std::string> stacktrace()
+std::vector<StackFrame> stacktrace()
 {
+#    if 1
+
+    struct DbgHandle {
+        DbgHandle()
+        {
+            SymSetOptions(SYMOPT_DEFERRED_LOADS | SYMOPT_LOAD_LINES);
+            if (!SymInitialize(GetCurrentProcess(), nullptr, true))
+                throw MAKE_EXCEPTION("could not initialize dbghelp");
+        };
+
+        ~DbgHandle()
+        {
+            SymCleanup(GetCurrentProcess());
+        };
+
+        DbgHandle(const DbgHandle&) = delete;
+        DbgHandle& operator=(const DbgHandle&) = delete;
+        DbgHandle(DbgHandle&&) noexcept = delete;
+        DbgHandle& operator=(DbgHandle&&) noexcept = delete;
+
+        std::mutex mutex;
+    };
+
+    static DbgHandle dbg_handle;
+
+    std::lock_guard lock{dbg_handle.mutex};
+
+
+    CONTEXT context = {};
+    context.ContextFlags = CONTEXT_FULL;
+    RtlCaptureContext(&context);
+
+    bool first = true;
+    std::vector<StackFrame> r;
+
+    HANDLE process = GetCurrentProcess();
+    HANDLE thread = GetCurrentThread();
+
+    STACKFRAME frame = {};
+    frame.AddrPC.Offset = context.Rip;
+    frame.AddrPC.Mode = AddrModeFlat;
+    frame.AddrFrame.Offset = context.Rbp;
+    frame.AddrFrame.Mode = AddrModeFlat;
+    frame.AddrStack.Offset = context.Rsp;
+    frame.AddrStack.Mode = AddrModeFlat;
+
+    while (StackWalk(IMAGE_FILE_MACHINE_AMD64, process, thread, &frame, &context,
+                     nullptr, SymFunctionTableAccess, SymGetModuleBase, nullptr)) {
+        StackFrame f;
+        f.address = bit_cast<void*>(frame.AddrPC.Offset);
+
+        f.module = [&] {
+            DWORD64 module_base = SymGetModuleBase(process, frame.AddrPC.Offset);
+            if (module_base == 0)
+                return fmt::format("?unknown_module{}", GetLastError());
+
+            std::array<char, MAX_PATH> buf;
+            size_t path_size = GetModuleFileName(bit_cast<HMODULE>(module_base), buf.data(), static_cast<DWORD>(buf.size()));
+            if (path_size == 0)
+                return fmt::format("?unknown_module_file{}", GetLastError());
+
+            std::string_view module_path{buf.data(), path_size};
+
+            size_t idx = module_path.rfind('\\');
+            return std::string{idx == std::string_view::npos ? module_path : module_path.substr(idx + 1)};
+        }();
+
+        DWORD64 offset = 0;
+
+        char symbolBuffer[sizeof(IMAGEHLP_SYMBOL) + 255];
+        PIMAGEHLP_SYMBOL symbol = (PIMAGEHLP_SYMBOL)symbolBuffer;
+        symbol->SizeOfStruct = (sizeof IMAGEHLP_SYMBOL) + 255;
+        symbol->MaxNameLength = 254;
+
+        if (SymGetSymFromAddr(process, frame.AddrPC.Offset, &offset, symbol)) {
+            f.function = symbol->Name;
+        }
+        else {
+            DWORD error = GetLastError();
+            f.function = fmt::format("?unknown_function{}", error);
+        }
+
+        IMAGEHLP_LINE line;
+        line.SizeOfStruct = sizeof(IMAGEHLP_LINE);
+
+        DWORD offset_ln = 0;
+        if (SymGetLineFromAddr(process, frame.AddrPC.Offset, &offset_ln, &line)) {
+            f.file = line.FileName;
+            f.line = line.LineNumber;
+        }
+        else {
+            f.line = 0;
+        }
+
+        if (!first) {
+            r.push_back(f);
+        }
+        first = false;
+    }
+
+    return r;
+
+#    endif
     return {};
 }
 
@@ -166,14 +274,14 @@ std::vector<std::string> stacktrace()
     std::array<void*, 100> pointers;
     int nr_frames = backtrace(pointers.data(), pointers.size());
 
-    auto frames = utils::make_c_ptr<char*, free_charpp>(backtrace_symbols(pointers.data(), nr_frames));
-    if (!frames)
+    auto r = utils::make_c_ptr<char*, free_charpp>(backtrace_symbols(pointers.data(), nr_frames));
+    if (!r)
         throw MAKE_EXCEPTION("could not get stacktrace symbols");
 
     std::vector<std::string> r;
     r.resize(nr_frames);
     for (int i = 0; i < nr_frames; ++i)
-        r[i] = frames.get()[i];
+        r[i] = r.get()[i];
     return r;
 }
 

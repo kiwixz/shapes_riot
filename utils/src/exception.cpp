@@ -40,9 +40,11 @@ void terminate() noexcept
     }
 
     std::string trace = "stacktrace:";
-    std::vector<std::string> frames = stacktrace();
-    for (size_t i = 0; i < frames.size(); ++i)
-        trace += fmt::format("\n#{:02d}  {}", i, frames[i]);
+    std::vector<StackFrame> frames = stacktrace();
+    for (size_t i = 0; i < frames.size(); ++i) {
+        const StackFrame& f = frames[i];
+        trace += fmt::format("\n#{:02d}  {}  {}  {}  {}:{}", i, f.module, f.function, f.address, f.file, f.line);
+    }
     logger(utils::LogLevel::fatal, trace);
 
     std::abort();
