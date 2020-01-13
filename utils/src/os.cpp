@@ -10,12 +10,12 @@
 #include "utils/global_handle.h"
 
 #ifdef _WIN32
-#    include <ShlObj.h>
-#    include <dbghelp.h>
-
 #    define WIN32_LEAN_AND_MEAN
 #    define NOMINMAX
 #    include <Windows.h>
+
+#    include <DbgHelp.h>
+#    include <ShlObj.h>
 #else
 #    include <execinfo.h>
 #    include <pthread.h>
@@ -116,12 +116,12 @@ std::vector<StackFrame> stacktrace()
             SymSetOptions(SYMOPT_DEFERRED_LOADS | SYMOPT_LOAD_LINES);
             if (!SymInitialize(GetCurrentProcess(), nullptr, true))
                 throw MAKE_EXCEPTION("could not initialize dbghelp");
-        };
+        }
 
         ~DbgHandle()
         {
             SymCleanup(GetCurrentProcess());
-        };
+        }
 
         DbgHandle(const DbgHandle&) = delete;
         DbgHandle& operator=(const DbgHandle&) = delete;
@@ -182,13 +182,13 @@ std::vector<StackFrame> stacktrace()
         f.function = [&] {
             DWORD64 offset = 0;
             std::aligned_storage_t<sizeof(SYMBOL_INFO) + MAX_SYM_NAME - 1, alignof(SYMBOL_INFO)> buf;
-            SYMBOL_INFO* symbol = new (&buf) SYMBOL_INFO;
+            auto* symbol = new (&buf) SYMBOL_INFO;
             symbol->SizeOfStruct = sizeof(SYMBOL_INFO);
             symbol->MaxNameLen = MAX_SYM_NAME;
             if (!SymFromAddr(process, frame.AddrPC.Offset, &offset, symbol))
                 return fmt::format("?unknown_function{}", GetLastError());
-            else
-                return std::string{symbol->Name, symbol->NameLen};
+
+            return std::string{symbol->Name, symbol->NameLen};
         }();
 
         DWORD offset = 0;
