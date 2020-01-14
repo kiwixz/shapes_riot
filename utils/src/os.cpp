@@ -14,6 +14,7 @@
 #    define NOMINMAX
 #    include <Windows.h>
 
+// after Windows.h
 #    include <DbgHelp.h>
 #    include <ShlObj.h>
 #else
