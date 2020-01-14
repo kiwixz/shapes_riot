@@ -28,9 +28,7 @@ macro (set_defaults_flags_cpp)
         set(CMAKE_CXX_FLAGS
             "${CMAKE_CXX_FLAGS} -march=haswell -Weverything  \
             -Wno-c++98-compat-pedantic -Wno-ctad-maybe-unsupported -Wno-double-promotion -Wno-exit-time-destructors  \
-            -Wno-float-equal -Wno-padded -Wno-sign-conversion -Wno-weak-vtables  \
-            \
-            -Wno-unused-macros"
+            -Wno-float-equal -Wno-padded -Wno-sign-conversion -Wno-weak-vtables"
         )
         set(CMAKE_CXX_FLAGS_DEBUG "-D DEBUG -Og -g -fno-omit-frame-pointer -fsanitize=address,undefined")
         set(CMAKE_CXX_FLAGS_RELEASE "-D NDEBUG -O3 -flto=thin")

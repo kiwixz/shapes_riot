@@ -16,3 +16,9 @@ endif ()
 target_link_libraries("${target}"
     "fmt::fmt"
 )
+
+if (WIN32)
+    target_link_libraries("${target}"
+        "Dbghelp"
+    )
+endif ()
