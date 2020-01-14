@@ -1,6 +1,7 @@
 #pragma once
 
-#include "gfx/glad_glfw.h"
+#include <GLFW/glfw3.h>
+
 #include "utils/global_handle.h"
 
 namespace gfx {

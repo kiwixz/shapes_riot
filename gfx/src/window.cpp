@@ -1,5 +1,7 @@
 #include "gfx/window.h"
 
+#include <glad/glad.h>
+
 #include "utils/exception.h"
 
 namespace gfx {

@@ -6,7 +6,8 @@
 #include <string_view>
 #include <vector>
 
-#include "gfx/glad_glfw.h"
+#include <GLFW/glfw3.h>
+
 #include "gfx/glfw_handle.h"
 #include "gfx/window_event.h"
 #include "gfx/window_state.h"
