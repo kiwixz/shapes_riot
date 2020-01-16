@@ -32,12 +32,11 @@ jobs:
           CXXFLAGS: -fdiagnostics-color=always
           LDFLAGS: -fdiagnostics-color=always
         run: |
+          export "CXX=${{ matrix.cxx }}"
           if [[ "${{ matrix.cxx }}" == "clang++" ]]; then
             export "CC=clang"
-            export "CXX=clang++"
           elif [[ "${{ matrix.cxx }}" == "g++" ]]; then
             export "CC=gcc"
-            export "CXX=g++"
           fi
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -S "." -B "build"
 
@@ -59,7 +58,7 @@ jobs:
       fail-fast: false
       matrix:
         build_type: ["Debug", "Release"]
-        cxx: ["cl", "clang"]
+        cxx: ["cl", "clang++"]
     runs-on: windows-latest
     env:
       VCVARS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat"
@@ -68,7 +67,7 @@ jobs:
         shell: cmd
         run: |
           choco install nasm
-          if "${{ matrix.cxx }}"=="clang" (
+          if "${{ matrix.cxx }}"=="clang++" (
             choco install llvm
           )
 
@@ -86,14 +85,13 @@ jobs:
         shell: cmd
         run: |
           call "%VCVARS%"
+          set "CXX=${{ matrix.cxx }}"
           if "${{ matrix.cxx }}"=="cl" (
             set "CC=cl"
-            set "CXX=cl"
           )
-          if "${{ matrix.cxx }}"=="clang" (
+          if "${{ matrix.cxx }}"=="clang++" (
             set "PATH=C:\\Program Files\\LLVM\\bin;%PATH%"
             set "CC=clang"
-            set "CXX=clang++"
           )
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -S "." -B "build"
 
@@ -108,7 +106,7 @@ jobs:
         run: |
           call "%VCVARS%"
           cd "build"
-          if "${{ matrix.cxx }}"=="clang" (
+          if "${{ matrix.cxx }}"=="clang++" (
             set "PATH=C:\\Program Files\\LLVM\\bin;%PATH%"
             ctest --verbose
           ) else (
@@ -154,12 +152,11 @@ jobs:
           CXXFLAGS: -fdiagnostics-color=always
           LDFLAGS: -fdiagnostics-color=always
         run: |
+          export "CXX=${{ matrix.cxx }}"
           if [[ "${{ matrix.cxx }}" == "clang++" ]]; then
             export "CC=clang"
-            export "CXX=clang++"
           elif [[ "${{ matrix.cxx }}" == "g++" ]]; then
             export "CC=gcc"
-            export "CXX=g++"
           fi
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -S "." -B "build"
 
