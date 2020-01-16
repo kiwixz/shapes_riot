@@ -153,9 +153,9 @@ jobs:
           LDFLAGS: -fdiagnostics-color=always
         run: |
           export "CXX=${{ matrix.cxx }}"
-          if [[ "${{ matrix.cxx }}" == "clang++" ]]; then
+          if [ "${{ matrix.cxx }}" = "clang++" ]; then
             export "CC=clang"
-          elif [[ "${{ matrix.cxx }}" == "g++" ]]; then
+          elif [ "${{ matrix.cxx }}" = "g++" ]; then
             export "CC=gcc"
           fi
           cmake -G Ninja -D "CMAKE_BUILD_TYPE=${{ matrix.build_type }}" -S "." -B "build"
