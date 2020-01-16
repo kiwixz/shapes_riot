@@ -130,7 +130,7 @@ jobs:
           apt -y full-upgrade
           apt -y install  \
               git openssh-client  \
-              cmake gcc nasm ninja-build python3  \
+              cmake g++ nasm ninja-build python3  \
               libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev  `# glfw`
           apt -y install curl gnupg
           curl "https://apt.llvm.org/llvm-snapshot.gpg.key" | apt-key add -
