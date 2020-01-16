@@ -173,4 +173,5 @@ jobs:
           UBSAN_OPTIONS: print_stacktrace=1
         run: |
           cd "build"
-          ctest --verbose
+          ctest --verbose -E "check_clang_tidy"
+          ctest --verbose -R "check_clang_tidy" || :
