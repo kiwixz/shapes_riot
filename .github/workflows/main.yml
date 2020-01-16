@@ -138,7 +138,7 @@ jobs:
           curl "https://apt.llvm.org/llvm-snapshot.gpg.key" | apt-key add -
           echo "deb https://apt.llvm.org/buster llvm-toolchain-buster main" > "/etc/apt/sources.list.d/llvm.list"
           apt update
-          apt -y install clang lld
+          apt -y install clang clang-format clang-tidy lld
 
       - name: Dump packages versions
         run: |
