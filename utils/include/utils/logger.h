@@ -10,7 +10,7 @@
 namespace utils {
 
 struct Logger {
-    Logger(std::string tag);
+    explicit Logger(std::string tag);
 
     bool operator()(LogLevel level, std::string_view message) const;
 

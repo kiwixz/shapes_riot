@@ -25,14 +25,14 @@ struct Guarded {
         std::unique_lock<Mutex> lock_;
     };
 
+    template <typename... Args, std::enable_if_t<!is_pack_same<Guarded, Args...>, int> = 0>
+    explicit Guarded(Args&&... args);
+
     ~Guarded() = default;
     Guarded(const Guarded&) = delete;
     Guarded& operator=(const Guarded&) = delete;
     Guarded(Guarded&&) noexcept = default;
     Guarded& operator=(Guarded&&) noexcept = default;
-
-    template <typename... Args, std::enable_if_t<!is_pack_same<Guarded, Args...>, int> = 0>
-    Guarded(Args&&... args);
 
     Handle lock();                     ///< Thread-safe
     std::optional<Handle> try_lock();  ///< Thread-safe

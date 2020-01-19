@@ -8,7 +8,7 @@ TEST_SUITE("guarded")
 {
     TEST_CASE("simple")
     {
-        Guarded<int> c = 10;
+        Guarded<int> c{10};
 
         {
             Guarded<int>::Handle a = c.lock();
