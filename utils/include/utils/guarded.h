@@ -31,8 +31,8 @@ struct Guarded {
     ~Guarded() = default;
     Guarded(const Guarded&) = delete;
     Guarded& operator=(const Guarded&) = delete;
-    Guarded(Guarded&&) noexcept = default;
-    Guarded& operator=(Guarded&&) noexcept = default;
+    Guarded(Guarded&&) noexcept = delete;
+    Guarded& operator=(Guarded&&) noexcept = delete;
 
     Handle lock();                     ///< Thread-safe
     std::optional<Handle> try_lock();  ///< Thread-safe

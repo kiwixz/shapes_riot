@@ -5,6 +5,7 @@
 #include <type_traits>
 
 #include "utils/pp.h"
+
 namespace utils {
 
 /// Allow custom lifetime management.  You have to manually destroy objects you create.
