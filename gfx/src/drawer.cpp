@@ -10,12 +10,15 @@ Drawer::Drawer(utils::ResourceManager& resource_manager)
 {
     resource_manager.get_to("gfx_drawer_program", program_, [] {
         constexpr std::string_view vertex_source = R"(
-            #version 450
+            #version 330
+            #extension GL_ARB_separate_shader_objects : require
+
             layout(location=0) in vec4 pos;
             layout(location=1) in vec4 rgb;
             layout(location=2) in vec2 uv;
             layout(location=0) out vec4 rgb_;
             layout(location=1) out vec2 uv_;
+
             void main() {
                 gl_Position = pos;
                 rgb_ = rgb;
@@ -23,11 +26,14 @@ Drawer::Drawer(utils::ResourceManager& resource_manager)
             }
         )";
         constexpr std::string_view fragment_source = R"(
-            #version 450
+            #version 330
+            #extension GL_ARB_separate_shader_objects : require
+
             uniform sampler2D tex;
             layout(location=0) in vec4 rgb_;
             layout(location=1) in vec2 uv_;
             out vec4 color;
+
             void main() {
                 color = rgb_ * texture(tex, uv_);
             }

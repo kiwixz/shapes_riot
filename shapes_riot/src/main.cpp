@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include <fmt/printf.h>
+#include <glad/glad.h>
 
 #include "gfx/window.h"
 #include "utils/exception.h"
@@ -22,14 +23,23 @@ int main(int /*argc*/, char** /*argv*/)
 
     gfx::Window window{"Shapes Riot", {1600, 900}};
 
-    glDebugMessageControl(GL_DONT_CARE, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION,
-                          0, nullptr, GL_FALSE);
-    glDebugMessageCallback([](GLenum source, GLenum type, GLuint id, GLenum severity,
-                              GLsizei /*length*/, const GLchar* message, const void* /*userParam*/) {
-        utils::Logger{"OpenGL"}(utils::LogLevel::info, "source:{:#x} type:{:#x} id:{:#x} severity:{:#x}\n\t {}",
-                                source, type, id, severity, message);
-    },
-                           nullptr);
+    if (!GL_ARB_direct_state_access)
+        throw MAKE_EXCEPTION("missing gl extension ARB_direct_state_access");
+
+    if (GLAD_GL_KHR_debug) {
+        glDebugMessageControl(GL_DONT_CARE, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION,
+                              0, nullptr, GL_FALSE);
+        glDebugMessageCallback([](GLenum source, GLenum type, GLuint id, GLenum severity,
+                                  GLsizei /*length*/, const GLchar* message, const void* /*userParam*/) {
+            utils::Logger{"OpenGL"}(utils::LogLevel::info,
+                                    "source:{:#x} type:{:#x} id:{:#x} severity:{:#x}\n\t {}",
+                                    source, type, id, severity, message);
+        },
+                               nullptr);
+    }
+    else {
+        utils::Logger{"OpenGL"}(utils::LogLevel::warning, "missing extension KHR_debug");
+    }
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
