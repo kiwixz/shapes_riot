@@ -131,6 +131,10 @@ function (_set_defaults_flags_cpp_linker)
         endif ()
     endif ()
 
+    if (NOT WIN32)
+        set(ld_flags "${ld_flags} -Wl,--as-needed,--no-undefined")
+    endif ()
+
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ld_flags}" PARENT_SCOPE)
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ld_flags}" PARENT_SCOPE)
     set(CMAKE_STATIC_LINKER_FLAGS"${CMAKE_STATIC_LINKER_FLAGS} ${ld_flags}" PARENT_SCOPE)
