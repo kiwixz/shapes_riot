@@ -23,7 +23,7 @@ int main(int /*argc*/, char** /*argv*/)
 
     gfx::Window window{"Shapes Riot", {1600, 900}};
 
-    if (!GL_ARB_direct_state_access)
+    if (!GLAD_GL_ARB_direct_state_access)
         throw MAKE_EXCEPTION("missing gl extension ARB_direct_state_access");
 
     if (GLAD_GL_KHR_debug) {
